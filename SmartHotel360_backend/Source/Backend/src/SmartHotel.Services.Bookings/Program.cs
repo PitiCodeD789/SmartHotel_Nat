@@ -18,8 +18,9 @@ namespace SmartHotel.Services.Bookings
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
+                        .UseStartup<Startup>()
+                        .UseUrls("http://*:40000")
+                        .UseApplicationInsights()
+                        .Build();
     }
 }

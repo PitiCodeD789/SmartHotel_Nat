@@ -17,6 +17,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SmartHotel.Services.Hotels.Services;
+using SmartHotel.Services.Hotels.Commands;
+using SmartHotel.Services.Hotels.Data.Repositories;
 
 namespace SmartHotel.Services.Hotels
 {
@@ -56,7 +58,10 @@ namespace SmartHotel.Services.Hotels
             services.AddTransient<ConferenceRoomSearchQuery>();
             services.AddTransient<CitiesQuery>();
             services.AddTransient<MenusSearchQuery>();
-
+            services.AddTransient<CreateOrderCommand>();
+            services.AddTransient<HotelRepository>();
+            services.AddTransient<ServiceTaskSearchQuery>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Hotels Api", Version = "v1" });

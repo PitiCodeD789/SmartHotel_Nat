@@ -54,7 +54,7 @@ namespace SmartHotel.Clients.Core
             defaultSuggestionsEndpoint = $"{root}suggestions-api";
             defaultNotificationsEndpoint = $"{root}notifications-api";
             //defaultSettingsFileUrl = $"{root}configuration-api/cfg/aks";
-            defaultSettingsFileUrl = $"https://api.jsonbin.io/b/5d96aa6406fe544bf3610de1";
+            defaultSettingsFileUrl = $"https://api.npoint.io/ea8eb354a9f4053ce289";
         }
         
         // Azure B2C settings
