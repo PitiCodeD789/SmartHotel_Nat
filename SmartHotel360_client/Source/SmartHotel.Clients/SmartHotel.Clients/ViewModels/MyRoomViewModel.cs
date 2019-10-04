@@ -201,8 +201,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         Task GoMyRestaurantAsync()
         {
             
-                return NavigationService.NavigateToAsync<RestaurantViewModel>();
-            
+                return NavigationService.NavigateToAsync<RestaurantViewModel>();            
          
         }
 
