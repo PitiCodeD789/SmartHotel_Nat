@@ -1,0 +1,172 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "westus2"
+    },
+    "kubernetesVersion": {
+      "type": "string",
+      "defaultValue": "1.12.8",
+      "metadata": {
+        "description": "The version of Kubernetes."
+      }
+    },
+    "servicePrincipalClientId": {
+      "metadata": {
+        "description": "Client ID (used by cloudprovider)"
+      },
+      "type": "securestring"
+    },
+    "servicePrincipalClientSecret": {
+      "metadata": {
+        "description": "The Service Principal Client Secret."
+      },
+      "type": "securestring"
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D4s_v3"
+    },
+    "aksClusterName": {
+      "type": "string"
+    },
+    "registryName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "registry_name": "[if(empty(parameters('registryName')), concat('acr', uniqueString(resourceGroup().id)), parameters('registryName'))]",
+    "akscluster_name": "[if(empty(parameters('aksClusterName')), concat('aks', uniqueString(resourceGroup().id)), parameters('aksClusterName'))]",
+    "oms_workspace": "[concat('workspace', uniqueString(resourceGroup().id))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.ContainerRegistry/registries",
+      "sku": {
+        "name": "Standard"
+      },
+      "name": "[variables('registry_name')]",
+      "apiVersion": "2017-10-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "adminUserEnabled": true
+      }
+    },
+    {
+      "apiVersion": "2018-03-31",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'WorkspaceDeployment')]"
+      ],
+      "type": "Microsoft.ContainerService/managedClusters",
+      "location": "[parameters('location')]",
+      "name": "[variables('akscluster_name')]",
+      "properties": {
+        "kubernetesVersion": "[parameters('kubernetesVersion')]",
+        "enableRBAC": false,
+        "dnsPrefix": "[concat('smarthotel360', uniqueString(resourceGroup().id))]",
+        "addonProfiles": {
+          "httpApplicationRouting": {
+            "enabled": true
+          },
+          "omsagent": {
+            "enabled": true,
+            "config": {
+              "logAnalyticsWorkspaceResourceID": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('oms_workspace'))]"
+            }
+          }
+        },
+        "agentPoolProfiles": [
+          {
+            "name": "agentpool",
+            "osDiskSizeGB": 0,
+            "count": 1,
+            "vmSize": "[parameters('vmSize')]",
+            "osType": "Linux",
+            "storageProfile": "ManagedDisks"
+          }
+        ],
+        "servicePrincipalProfile": {
+          "ClientId": "[parameters('servicePrincipalClientId')]",
+          "Secret": "[parameters('servicePrincipalClientSecret')]"
+        },
+        "networkProfile": {
+          "networkPlugin": "kubenet"
+        }
+      },
+      "tags": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "SolutionDeployment",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
+          "resources": [
+            {
+              "apiVersion": "2015-11-01-preview",
+              "type": "Microsoft.OperationsManagement/solutions",
+              "location": "East US",
+              "name": "[variables('oms_workspace')]",
+              "properties": {
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('oms_workspace'))]"
+              },
+              "plan": {
+                "name": "[variables('oms_workspace')]",
+                "product": "OMSGallery/ContainerInsights",
+                "promotionCode": "",
+                "publisher": "Microsoft"
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'WorkspaceDeployment')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "WorkspaceDeployment",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {},
+          "resources": [
+            {
+              "apiVersion": "2015-11-01-preview",
+              "type": "Microsoft.OperationalInsights/workspaces",
+              "location": "East US",
+              "name": "[variables('oms_workspace')]",
+              "properties": {
+                "sku": {
+                  "name": "standalone"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "AKS": {
+      "type": "string",
+      "value": "[variables('akscluster_name')]"
+    },
+    "ACR": {
+      "type": "string",
+      "value": "[variables('registry_name')]"
+    }
+  }
+}
