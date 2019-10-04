@@ -612,8 +612,7 @@
                                         </OnPlatform>
                                     </controls:ToggleButton.UnCheckedImage>
                                 </controls:ToggleButton>
-                                <controls:ToggleButton
-                                    x:Name="Toggle"
+                                <controls:ToggleButton                                 
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Animate="True"
@@ -634,6 +633,35 @@
                                     <controls:ToggleButton.UnCheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
                                             <On Platform="Android, iOS" Value="ic_leak_off.png" />
+                                            <On Platform="UWP" Value="Assets/ic_leak_off.png" />
+                                        </OnPlatform>
+                                    </controls:ToggleButton.UnCheckedImage>
+                                </controls:ToggleButton>
+                                <controls:ToggleButton
+                                    x:Name="Toggle"
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Animate="True"
+                                    Checked="False">
+                                    <controls:ToggleButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GoMyRestaurantCommand}"/>
+                                    </controls:ToggleButton.GestureRecognizers>
+                                    <controls:ToggleButton.WidthRequest>
+                                        <OnIdiom
+                                            x:TypeArguments="x:Double"
+                                            Desktop="150"
+                                            Phone="110"
+                                            Tablet="150" />
+                                    </controls:ToggleButton.WidthRequest>
+                                    <controls:ToggleButton.CheckedImage>
+                                        <OnPlatform x:TypeArguments="ImageSource">
+                                            <On Platform="Android, iOS" Value="ic_restaurant_on.png" />
+                                            <On Platform="UWP" Value="Assets/ic_leak_on.png" />
+                                        </OnPlatform>
+                                    </controls:ToggleButton.CheckedImage>
+                                    <controls:ToggleButton.UnCheckedImage>
+                                        <OnPlatform x:TypeArguments="ImageSource">
+                                            <On Platform="Android, iOS" Value="ic_restaurant_off.png" />
                                             <On Platform="UWP" Value="Assets/ic_leak_off.png" />
                                         </OnPlatform>
                                     </controls:ToggleButton.UnCheckedImage>

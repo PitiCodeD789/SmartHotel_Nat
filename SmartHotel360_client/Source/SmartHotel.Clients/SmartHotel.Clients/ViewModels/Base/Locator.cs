@@ -72,6 +72,7 @@ namespace SmartHotel.Clients.Core.ViewModels.Base
             containerBuilder.RegisterType<NotificationsViewModel>();
             containerBuilder.RegisterType<OpenDoorViewModel>();
             containerBuilder.RegisterType<SuggestionsViewModel>();
+            containerBuilder.RegisterType<RestaurantViewModel>();
 
             containerBuilder.RegisterType(typeof(SettingsViewModel<RemoteSettings>));
             containerBuilder.RegisterType<ExtendedSplashViewModel>();

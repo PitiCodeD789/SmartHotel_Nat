@@ -182,7 +182,9 @@ namespace SmartHotel.Clients.Core.ViewModels
 
 		public ICommand EcoModeCommand => new Command( EcoMode );
 
-		public override async Task InitializeAsync( object navigationData )
+        public ICommand GoMyRestaurantCommand => new AsyncCommand(GoMyRestaurantAsync);
+
+        public override async Task InitializeAsync( object navigationData )
 		{
 			IsBusy = true;
 
@@ -196,8 +198,15 @@ namespace SmartHotel.Clients.Core.ViewModels
 			IsBusy = false;
 			isInitialized = true;
 		}
+        Task GoMyRestaurantAsync()
+        {
+            
+                return NavigationService.NavigateToAsync<RestaurantViewModel>();
+            
+         
+        }
 
-		async Task GetRoomSensorData( bool isInitializing = false )
+        async Task GetRoomSensorData( bool isInitializing = false )
 		{
 			var roomTemperature = await roomDevicesDataService.GetRoomTemperatureAsync();
 			var roomAmbientLight = await roomDevicesDataService.GetRoomAmbientLightAsync();
