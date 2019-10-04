@@ -60,6 +60,7 @@ namespace SmartHotel.Services.Hotels
             services.AddTransient<MenusSearchQuery>();
             services.AddTransient<CreateOrderCommand>();
             services.AddTransient<HotelRepository>();
+            services.AddTransient<ServiceTaskSearchQuery>();
             
             services.AddSwaggerGen(c =>
             {

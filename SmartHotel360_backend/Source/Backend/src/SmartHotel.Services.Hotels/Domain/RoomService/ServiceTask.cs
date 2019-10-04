@@ -15,5 +15,6 @@ namespace SmartHotel.Services.Hotels.Domain.RoomService
         public int ServiceTaskType { get; set; }
         public int OrderItemId { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int HotelId { get; set; }
     }
 }

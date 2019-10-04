@@ -15,15 +15,18 @@ namespace SmartHotel.Services.Hotels.Controllers
     {
         private readonly HotelsSearchQuery _hotelsSearchQuery;
         private readonly MenusSearchQuery _menusSearchQuery;
+        private readonly ServiceTaskSearchQuery _serviceTaskSearchQuery;
         private readonly CreateOrderCommand _createOrderCommand;
         
 
         public RoomServiceController(
             HotelsSearchQuery hotelsSearchQuery,
             MenusSearchQuery menusSearchQuery,
+            ServiceTaskSearchQuery serviceTaskSearchQuery,
             CreateOrderCommand createOrderCommand
             )
         {
+            _serviceTaskSearchQuery = serviceTaskSearchQuery;
             _createOrderCommand = createOrderCommand;
             _hotelsSearchQuery = hotelsSearchQuery;
             _menusSearchQuery = menusSearchQuery;
@@ -51,9 +54,42 @@ namespace SmartHotel.Services.Hotels.Controllers
             //{
             //    return BadRequest("If userId is used its value must be the logged user id");
             //}
+            if (request.BookingId == 0 || request.HotelId == 0 || request.ServiceTaskType == 0 || string.IsNullOrEmpty(request.UserId))
+            {
+                return BadRequest();
+            }
             await _createOrderCommand.Execute(request);
             return Ok();
         }
 
+        [HttpGet("order/{hotelId}")]
+        //[Authorize]
+        public async Task<ActionResult> GetAllServiceTasksByHotel(int hotelId)
+        {
+            if (hotelId == 0)
+                return BadRequest();
+            //var userId = User.Claims.First(c => c.Type == "emails").Value;
+            //if (!string.IsNullOrEmpty(command.UserId) && command.UserId != userId)
+            //{
+            //    return BadRequest("If userId is used its value must be the logged user id");
+            //}
+            var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByHotel(hotelId);
+            return Ok(serviceTasks);
+        }
+
+        [HttpGet("order/booking/{bookingId}")]
+        //[Authorize]
+        public async Task<ActionResult> GetAllServiceTasksByBookingId(int bookingId)
+        {
+            if (bookingId == 0)
+                return BadRequest();
+            //var userId = User.Claims.First(c => c.Type == "emails").Value;
+            //if (!string.IsNullOrEmpty(command.UserId) && command.UserId != userId)
+            //{
+            //    return BadRequest("If userId is used its value must be the logged user id");
+            //}
+            var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByBookingId(bookingId);
+            return Ok(serviceTasks);
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace SmartHotel.Services.Hotels.Commands
 {
     public class RoomServiceRequest
     {
+        public int HotelId { get; set; }
         public int BookingId { get; set; }
         public string UserId { get; set; }
         public string RoomNumber { get; set; }
@@ -31,6 +32,7 @@ namespace SmartHotel.Services.Hotels.Commands
             var items = roomServiceRequest.OrderItems;
             var service = new ServiceTask()
             {
+                HotelId = roomServiceRequest.HotelId,
                 BookingId = roomServiceRequest.BookingId,
                 RoomNumber = roomServiceRequest.RoomNumber,
                 ServiceTaskType = roomServiceRequest.ServiceTaskType
