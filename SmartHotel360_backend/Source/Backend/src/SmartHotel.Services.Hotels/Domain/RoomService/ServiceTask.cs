@@ -9,6 +9,7 @@ namespace SmartHotel.Services.Hotels.Domain.RoomService
     {
         public int Id { get; set; }
         public int BookingId { get; set; }
+        public string RoomNumber { get; set; }
         public int ServiceTaskType { get; set; }
         public int OrderItemId { get; set; }
     }
