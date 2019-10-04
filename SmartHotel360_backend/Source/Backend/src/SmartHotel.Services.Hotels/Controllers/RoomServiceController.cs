@@ -10,18 +10,21 @@ using SmartHotel.Services.Hotels.Queries;
 
 namespace SmartHotel.Services.Hotels.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/RoomService")]
+    [Route("[controller]")]
     public class RoomServiceController : Controller
     {
         private readonly HotelsSearchQuery _hotelsSearchQuery;
         private readonly MenusSearchQuery _menusSearchQuery;
+        private readonly CreateOrderCommand _createOrderCommand;
+        
 
         public RoomServiceController(
             HotelsSearchQuery hotelsSearchQuery,
-            MenusSearchQuery menusSearchQuery
+            MenusSearchQuery menusSearchQuery,
+            CreateOrderCommand createOrderCommand
             )
         {
+            _createOrderCommand = createOrderCommand;
             _hotelsSearchQuery = hotelsSearchQuery;
             _menusSearchQuery = menusSearchQuery;
         }
@@ -40,16 +43,15 @@ namespace SmartHotel.Services.Hotels.Controllers
         }
 
         [HttpPost("order")]
-        [Authorize]
-        public async Task<ActionResult> OrderMenu()
+        //[Authorize]
+        public async Task<ActionResult> OrderMenu([FromBody]RoomServiceRequest request)
         {
-            RoomServiceRequest command = new RoomServiceRequest();
-            var userId = User.Claims.First(c => c.Type == "emails").Value;
-            if (!string.IsNullOrEmpty(command.UserId) && command.UserId != userId)
-            {
-                return BadRequest("If userId is used its value must be the logged user id");
-            }
-            command.UserId = userId;
+            //var userId = User.Claims.First(c => c.Type == "emails").Value;
+            //if (!string.IsNullOrEmpty(command.UserId) && command.UserId != userId)
+            //{
+            //    return BadRequest("If userId is used its value must be the logged user id");
+            //}
+            await _createOrderCommand.Execute(request);
             return Ok();
         }
 

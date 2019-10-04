@@ -18,13 +18,14 @@ namespace SmartHotel.Services.Hotels.Data.Repositories
         public void AddTask(List<OrderItem> items,ServiceTask service)
         {
             _db.ServiceTasks.Add(service);
+            _db.SaveChanges();
             int serviceId = service.Id;
             foreach (var item in items)
             {
                 item.ServiceTaskId = serviceId;
             }
             _db.OrderItems.AddRange(items);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
     }
 }

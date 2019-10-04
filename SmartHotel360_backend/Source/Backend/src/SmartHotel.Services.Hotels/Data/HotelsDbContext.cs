@@ -15,7 +15,10 @@ namespace SmartHotel.Services.Hotels.Data
         public HotelsDbContext(DbContextOptions options) : base(options)
         {
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
 
         public DbSet<HotelService> HotelServices { get; set; }
         public DbSet<RoomService> RoomServices { get; set; }
@@ -49,21 +52,16 @@ namespace SmartHotel.Services.Hotels.Data
 
             modelBuilder.Entity<ServicePerRoom>().HasKey(sph => new { sph.RoomTypeId, sph.ServiceId });
 
-            modelBuilder.Entity<City>().Property(c => c.Id).ValueGeneratedNever();
 
-            modelBuilder.Entity<Menu>().Property(m => m.Id).ValueGeneratedNever();
             modelBuilder.Entity<Menu>().HasKey(m => m.Id);
 
-            modelBuilder.Entity<Category>().Property(c => c.Id).ValueGeneratedNever();
             modelBuilder.Entity<Category>().HasKey(c => c.Id);
 
-            modelBuilder.Entity<OrderItem>().Property(o => o.Id).ValueGeneratedNever();
             modelBuilder.Entity<OrderItem>().HasKey(o => o.Id);
 
-            modelBuilder.Entity<ServiceTask>().Property(s => s.Id).ValueGeneratedNever();
             modelBuilder.Entity<ServiceTask>().HasKey(s => s.Id);
+            modelBuilder.Entity<ServiceTask>().Property(s => s.CreatedDate).HasDefaultValueSql("GetDate()");
 
-            modelBuilder.Entity<ServiceTaskType>().Property(s => s.Id).ValueGeneratedNever();
             modelBuilder.Entity<ServiceTaskType>().HasKey(s => s.Id);
         }
     }
