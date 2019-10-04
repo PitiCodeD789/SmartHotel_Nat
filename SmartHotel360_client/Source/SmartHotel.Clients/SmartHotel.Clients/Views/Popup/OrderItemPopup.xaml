@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SmartHotel.Clients.Core.Views.Component"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="SmartHotel.Clients.Core.Views.Popup.OrderItemPopup">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.8"
+            ScaleOut="0.8"
+            DurationIn="200"
+            DurationOut="200"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <StackLayout BackgroundColor="Gray" VerticalOptions="CenterAndExpand">
+        <Frame>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding ItemDetail}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="StartAndExpand" 
+                       Grid.Column="0"/>
+                <Label Text="{Binding ItemPrice}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                       Grid.Column="1"/>
+            </Grid>
+        </Frame>
+        <Frame>
+            <StackLayout>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="คำแนะนำพิเศษ " FontSize="22" TextColor="Black"/>
+                                <Span Text="ไม่จำเป็นต้องระบุ"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Entry Text="{Binding OrderComment}" Placeholder="เช่นไม่เผ็ด"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Quantity}"/>
+                    <Stepper Value="{Binding Quantity}" Minimum="0"/>
+                </StackLayout>
+                <local:OrderButton TextButton="{Binding TextButton}" Command="{Binding OrderCommand}"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

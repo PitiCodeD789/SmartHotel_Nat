@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:local="clr-namespace:SmartHotel.Clients.Core.Views.Component"
+             x:Class="SmartHotel.Clients.Core.Views.ConfirmOrderView">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Gray">
+            <Frame>
+                <Label Text="ห้องหมายเลข 101"
+                HorizontalOptions="CenterAndExpand" 
+                   FontSize="Large"/>
+            </Frame>
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="สรุปยอดสั่ง" TextColor="White"/>
+                        <Label Text="เพิ่มรายการ" TextColor="Blue"
+                       HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <Frame>
+                        <StackLayout>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="15*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                        <ColumnDefinition Width="15*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="1X" Grid.Column="0"/>
+                                    <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
+                                    <Label Text="60" Grid.Column="2"/>
+                                </Grid>
+                                <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="15*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                        <ColumnDefinition Width="15*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="1X" Grid.Column="0"/>
+                                    <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
+                                    <Label Text="60" Grid.Column="2"/>
+                                </Grid>
+                                <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                            <!--<Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="85*"/>
+                                    <ColumnDefinition Width="15*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="รวมค่าอาหาร" Grid.Column="0" Grid.Row="0"/>
+                                <Label Text="฿145" Grid.Column="1" Grid.Row="0"/>
+
+                            </Grid>-->
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+            <Frame VerticalOptions="EndAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="รวมทั้งหมด"/>
+                    <Label Text="฿150" HorizontalOptions="EndAndExpand"/>
+                    <local:OrderButton TextButton="สั่ง"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
