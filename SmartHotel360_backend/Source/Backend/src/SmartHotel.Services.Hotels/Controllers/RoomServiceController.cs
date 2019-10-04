@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartHotel.Services.Hotels.Commands;
+using SmartHotel.Services.Hotels.Domain.RoomService;
 using SmartHotel.Services.Hotels.Queries;
 
 namespace SmartHotel.Services.Hotels.Controllers
@@ -17,15 +18,19 @@ namespace SmartHotel.Services.Hotels.Controllers
         private readonly MenusSearchQuery _menusSearchQuery;
         private readonly ServiceTaskSearchQuery _serviceTaskSearchQuery;
         private readonly CreateOrderCommand _createOrderCommand;
+        private readonly OrderItemSearchQuery _orderItemSearchQuery;
         
+
 
         public RoomServiceController(
             HotelsSearchQuery hotelsSearchQuery,
             MenusSearchQuery menusSearchQuery,
+            OrderItemSearchQuery orderItemSearchQuery,
             ServiceTaskSearchQuery serviceTaskSearchQuery,
             CreateOrderCommand createOrderCommand
             )
         {
+            _orderItemSearchQuery = orderItemSearchQuery;
             _serviceTaskSearchQuery = serviceTaskSearchQuery;
             _createOrderCommand = createOrderCommand;
             _hotelsSearchQuery = hotelsSearchQuery;
@@ -74,7 +79,25 @@ namespace SmartHotel.Services.Hotels.Controllers
             //    return BadRequest("If userId is used its value must be the logged user id");
             //}
             var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByHotel(hotelId);
-            return Ok(serviceTasks);
+            List<RoomServiceRequest> serviceTaskList = new List<RoomServiceRequest>();
+            foreach (var task in serviceTasks)
+            {
+                List<OrderItem> orderItems = new List<OrderItem>(); 
+                if (task.ServiceTaskType == 1)
+                {
+                    orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
+                }
+                serviceTaskList.Add(new RoomServiceRequest 
+                {
+                    BookingId = task.BookingId,
+                    HotelId = task.HotelId,
+                    ServiceTaskType = task.ServiceTaskType,
+                    RoomNumber = task.RoomNumber,
+                    OrderItems = orderItems
+                });
+
+            }
+            return Ok(serviceTaskList);
         }
 
         [HttpGet("order/booking/{bookingId}")]
@@ -89,7 +112,25 @@ namespace SmartHotel.Services.Hotels.Controllers
             //    return BadRequest("If userId is used its value must be the logged user id");
             //}
             var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByBookingId(bookingId);
-            return Ok(serviceTasks);
+            List<RoomServiceRequest> serviceTaskList = new List<RoomServiceRequest>();
+            foreach (var task in serviceTasks)
+            {
+                List<OrderItem> orderItems = new List<OrderItem>();
+                if (task.ServiceTaskType == 1)
+                {
+                    orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
+                }
+                serviceTaskList.Add(new RoomServiceRequest
+                {
+                    BookingId = task.BookingId,
+                    HotelId = task.HotelId,
+                    ServiceTaskType = task.ServiceTaskType,
+                    RoomNumber = task.RoomNumber,
+                    OrderItems = orderItems
+                });
+
+            }
+            return Ok(serviceTaskList);
         }
     }
 }
