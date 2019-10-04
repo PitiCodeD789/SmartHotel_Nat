@@ -28,7 +28,7 @@
                    FontSize="Large" TextColor="Black"/>
             <StackLayout Orientation="Horizontal" HeightRequest="50">
                 <local:OrderButton TextButton="Yes" HorizontalOptions="FillAndExpand" Command="{Binding YesCommand}"/>
-                <local:OrderButton TextButton="No" ButtonBackgroundColor="Red"
+                <local:OrderButton TextButton="No" BackgroundButton="Red"
                                    HorizontalOptions="FillAndExpand" Command="{Binding NoCommand}"/>
             </StackLayout>
         </StackLayout>
