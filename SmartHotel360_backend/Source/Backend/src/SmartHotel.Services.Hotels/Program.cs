@@ -23,7 +23,9 @@ namespace SmartHotel.Services.Hotels
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                         .UseStartup<Startup>()
+                        .UseUrls("http://*:54523")
                         .UseApplicationInsights()
                         .Build();
+
     }
 }

@@ -23,7 +23,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             ISettingsService<TRemoteSettingsModel> settingsService)
         {
             this.settingsService = settingsService;
-
+            this.settingsService.RemoteFileUrl = "https://api.jsonbin.io/b/5d96aa6406fe544bf3610de1";
             settingsFileUrl = new ValidatableObject<string>();
 
             AddValidations();

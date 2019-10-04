@@ -39,7 +39,6 @@ namespace SmartHotel.Clients.Maintenance.iOS
             UINavigationBar.Appearance.BackgroundColor = Styles.BlackTextColor;
             UINavigationBar.Appearance.BarStyle = UIBarStyle.Black;
             UINavigationBar.Appearance.TintColor = UIColor.White;
-
             return true;
         }
 

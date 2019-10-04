@@ -335,7 +335,7 @@
                     Grid.Column="1"
                     HorizontalOptions="Fill"
                     VerticalOptions="Center"
-                    HeightRequest="{Binding Width, Source={x:Reference PopupContent}, Converter={StaticResource FactorConverter}, ConverterParameter=1.5}}"
+                    HeightRequest="{Binding Width, Source={x:Reference PopupContent}, Converter={StaticResource FactorConverter}, ConverterParameter=1.5}"
                     RowSpacing="0"
                     BackgroundColor="{StaticResource WhiteColor}">
                     <Grid.RowDefinitions>
