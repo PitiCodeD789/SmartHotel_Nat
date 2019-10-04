@@ -79,5 +79,18 @@ namespace SmartHotel.Clients.Core.Views.Component
         }
         #endregion
 
+        #region BackgroundColor
+        private Color buttonBackgroundColor;
+
+        public Color ButtonBackgroundColor
+        {
+            get { return buttonBackgroundColor; }
+            set
+            {
+                buttonBackgroundColor = value;
+                mButton.BackgroundColor = ButtonBackgroundColor;
+            }
+        }
+        #endregion
     }
 }

@@ -7,17 +7,17 @@
              xmlns:local="clr-namespace:SmartHotel.Clients.Core.Views.Component"
              x:Class="SmartHotel.Clients.Core.Views.ConfirmOrderView">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Gray">
+        <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
-                <Label Text="ห้องหมายเลข 101"
+                <Label Text="Room No. 101"
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>
             </Frame>
             <ScrollView>
                 <StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="สรุปยอดสั่ง" TextColor="White"/>
-                        <Label Text="เพิ่มรายการ" TextColor="Blue"
+                        <Label Text="   TotalOrder" TextColor="Black"/>
+                        <Label Text="AddOrder   " TextColor="Blue"
                        HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <Frame>
@@ -63,10 +63,12 @@
                 </StackLayout>
             </ScrollView>
             <Frame VerticalOptions="EndAndExpand">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="รวมทั้งหมด"/>
-                    <Label Text="฿150" HorizontalOptions="EndAndExpand"/>
-                    <local:OrderButton TextButton="สั่ง"/>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="TotalPrice"/>
+                        <Label Text="฿150" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <local:OrderButton TextButton="Order"/>
                 </StackLayout>
             </Frame>
         </StackLayout>

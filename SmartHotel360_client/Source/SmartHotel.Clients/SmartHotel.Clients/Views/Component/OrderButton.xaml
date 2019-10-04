@@ -9,7 +9,7 @@
         <Frame Padding="0" HasShadow="True" CornerRadius="7">
             <Button x:Name="mButton" Text="{Binding TextButton}" Clicked="MButton_Clicked" 
                     BackgroundColor="#00B14F"  TextColor="White" CornerRadius="5"
-                    FontAttributes="Bold" FontSize="21"/>
+                    FontAttributes="Bold" FontSize="18"/>
         </Frame>
     </ContentView.Content>
 </ContentView>

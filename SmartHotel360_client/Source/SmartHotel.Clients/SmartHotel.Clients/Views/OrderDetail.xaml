@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SmartHotel.Clients.Core.Views.OrderDetail">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#d6d6d6">
+            <Frame>
+                <Label Text="25 Sep 2019 18:11 น."
+                HorizontalOptions="CenterAndExpand" 
+                   FontSize="Large"/>
+            </Frame>
+            <Frame VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Order No."/>
+                        <Label Text="ADR-123456789-8-123" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <Label Text="Order Detail"/>
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15*"/>
+                                <ColumnDefinition Width="70*"/>
+                                <ColumnDefinition Width="15*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="1X" Grid.Column="0"/>
+                            <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
+                            <Label Text="60" Grid.Column="2"/>
+                        </Grid>
+                        <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15*"/>
+                                <ColumnDefinition Width="70*"/>
+                                <ColumnDefinition Width="15*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="1X" Grid.Column="0"/>
+                            <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
+                            <Label Text="60" Grid.Column="2"/>
+                        </Grid>
+                        <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total"/>
+                        <Label Text="฿200" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
