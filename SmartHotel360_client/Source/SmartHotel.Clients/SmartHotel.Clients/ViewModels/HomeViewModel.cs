@@ -256,6 +256,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             if (HasBooking)
             {
                 return NavigationService.NavigateToAsync<MyRoomViewModel>();
+               // return NavigationService.NavigateToAsync<RestaurantViewModel>();
             }
             return Task.FromResult(true);
         }

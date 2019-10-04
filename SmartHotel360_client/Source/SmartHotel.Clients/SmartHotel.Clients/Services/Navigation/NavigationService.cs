@@ -3,6 +3,7 @@ using SmartHotel.Clients.Core.Services.Authentication;
 using SmartHotel.Clients.Core.ViewModels;
 using SmartHotel.Clients.Core.ViewModels.Base;
 using SmartHotel.Clients.Core.Views;
+using SmartHotel.Clients.Core.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -157,6 +158,8 @@ namespace SmartHotel.Clients.Core.Services.Navigation
             mappings.Add(typeof(OpenDoorViewModel), typeof(OpenDoorView));
             mappings.Add(typeof(SettingsViewModel<RemoteSettings>), typeof(SettingsView));
             mappings.Add(typeof(ExtendedSplashViewModel), typeof(ExtendedSplashView));
+            mappings.Add(typeof(RestaurantViewModel), typeof(RestaurantView));
+            mappings.Add(typeof(OrderItemPopupViewModel), typeof(OrderItemPopup));
 
             if (Device.Idiom == TargetIdiom.Desktop)
             {
