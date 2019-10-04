@@ -4,12 +4,73 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:bd="clr-namespace:SmartHotel.Clients.Core.ViewModels"
              x:Class="SmartHotel.Clients.Core.Views.RestaurantView">
+    <ContentPage.BindingContext>
+        <bd:RestaurantViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+
+        <Grid RowSpacing="0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                
+                <Image Grid.Row="0" Source="FoodImage" HeightRequest="200" Aspect="Fill"/>
+                <Grid Grid.Row="1">
+                    <StackLayout  Orientation="Horizontal" HorizontalOptions="Center" Padding="5" >
+                        <Label  Text="ร้านอาหาร" FontSize="30" />
+                        <Label Text="โรงแรม พระราม 3" FontSize="30"/>
+                    </StackLayout>
+                </Grid>
+                
+                    <StackLayout Grid.Row="2">                        
+                    <ListView ItemsSource="{Binding ListMenu}" HasUnevenRows="False" SelectedItem="{Binding RestaurantMenu}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ManuComment,Mode=TwoWay}"/>
+                                            <Label Text="test list"/>
+
+                                        </StackLayout>
+                                        
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        
+                    </ListView>
+                        <!--<Label  Text="test add grid"/>-->
+                        <!--<ListView ItemsSource="{Binding testData}" Margin="30,0,30,0"  
+                  SelectedItem="{Binding ShiftSelect}"
+                  HeightRequest="500" HasUnevenRows="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+
+                                        <StackLayout VerticalOptions="Start">
+                                            <Label Text="{Binding CreateDateTime,StringFormat='{}{0:dd ddd}'}" 
+                                   TextColor="Black"
+                                   FontSize="Large"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding CreateDateTime,StringFormat='{}{0:hh tt} -'}"  />
+                                                <Label Text="{Binding UpdateDateTime,StringFormat='{}{0:hh tt} '}"  />
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </StackLayout>
+                    
+                    
+            
+
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
