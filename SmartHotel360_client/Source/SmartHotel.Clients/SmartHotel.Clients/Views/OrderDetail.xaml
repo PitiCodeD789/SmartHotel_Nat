@@ -19,31 +19,24 @@
                         <Label Text="ADR-123456789-8-123" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <Label Text="Order Detail"/>
-                    <StackLayout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15*"/>
-                                <ColumnDefinition Width="70*"/>
-                                <ColumnDefinition Width="15*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Text="1X" Grid.Column="0"/>
-                            <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
-                            <Label Text="60" Grid.Column="2"/>
-                        </Grid>
-                        <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                    <StackLayout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15*"/>
-                                <ColumnDefinition Width="70*"/>
-                                <ColumnDefinition Width="15*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Text="1X" Grid.Column="0"/>
-                            <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
-                            <Label Text="60" Grid.Column="2"/>
-                        </Grid>
-                        <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                    <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="15*"/>
+                                            <ColumnDefinition Width="70*"/>
+                                            <ColumnDefinition Width="15*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="1X" Grid.Column="0"/>
+                                        <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
+                                        <Label Text="60" Grid.Column="2"/>
+                                    </Grid>
+                                    <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Total"/>
