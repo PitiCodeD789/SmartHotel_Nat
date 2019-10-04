@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartHotel.Services.Hotels.Domain;
 using SmartHotel.Services.Hotels.Domain.Hotel;
+using SmartHotel.Services.Hotels.Domain.RoomService;
 using SmartHotel.Services.Hotels.Domain.Review;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,11 @@ namespace SmartHotel.Services.Hotels.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Menu> Menus { get; set; } 
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ServiceTask> ServiceTasks { get; set; }
+        public DbSet<ServiceTaskType> ServiceTaskTypes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,7 +50,16 @@ namespace SmartHotel.Services.Hotels.Data
             modelBuilder.Entity<ServicePerRoom>().HasKey(sph => new { sph.RoomTypeId, sph.ServiceId });
 
             modelBuilder.Entity<City>().Property(c => c.Id).ValueGeneratedNever();
-        }
 
+            modelBuilder.Entity<Menu>().Property(c => c.Id).ValueGeneratedNever();
+
+            modelBuilder.Entity<Category>().Property(c => c.Id).ValueGeneratedNever();
+
+            modelBuilder.Entity<OrderItem>().Property(c => c.Id).ValueGeneratedNever();
+
+            modelBuilder.Entity<ServiceTask>().Property(c => c.Id).ValueGeneratedNever();
+
+            modelBuilder.Entity<ServiceTaskType>().Property(c => c.Id).ValueGeneratedNever();
+        }
     }
 }

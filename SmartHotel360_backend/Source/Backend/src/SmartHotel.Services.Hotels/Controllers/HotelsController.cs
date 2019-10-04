@@ -18,11 +18,14 @@ namespace SmartHotel.Services.Hotels.Controllers
         private readonly HotelDetailQuery _hotelDetailQuery;
         private readonly DiscountService _discountSvc;
         private readonly CurrencySettings _currencyConf;
+        private readonly MenusSearchQuery _menusSearchQuery;
+
 
         public HotelsController(
             HotelsSearchQuery hotelsSearchQuery,
             HotelDetailQuery hotelDetailQuery,
             DiscountService discountService,
+            MenusSearchQuery menusSearchQuery,
             IOptions<CurrencySettings> currencyConf
             )
         {
@@ -30,6 +33,7 @@ namespace SmartHotel.Services.Hotels.Controllers
             _hotelDetailQuery = hotelDetailQuery;
             _discountSvc = discountService;
             _currencyConf = currencyConf.Value;
+            _menusSearchQuery = menusSearchQuery;
         }
 
         [HttpGet("search")]
@@ -92,6 +96,19 @@ namespace SmartHotel.Services.Hotels.Controllers
             }
 
             return Ok(rooms);
+        }
+
+        [HttpGet("{hotelId:int}/menus")]
+        public async Task<ActionResult> GetMenusByHotel(int hotelId)
+        {
+            var menus = await _menusSearchQuery.Get(hotelId);
+
+            if (menus == null)
+            {
+                return NotFound($"Hotel {hotelId} could not be found");
+            }
+
+            return Ok(menus);
         }
     }
 }
