@@ -12,65 +12,68 @@
     <ContentPage.Content>
 
         <Grid RowSpacing="0">
+            <ScrollView>
+                
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="50"/>
+
                 </Grid.RowDefinitions>
                 
                 <Image Grid.Row="0" Source="FoodImage" HeightRequest="200" Aspect="Fill"/>
-                <Grid Grid.Row="1">
-                    <StackLayout  Orientation="Horizontal" HorizontalOptions="Center" Padding="5" >
-                        <Label  Text="ร้านอาหาร" FontSize="30" />
-                        <Label Text="โรงแรม พระราม 3" FontSize="30"/>
-                    </StackLayout>
-                </Grid>
+             
                 
-                    <StackLayout Grid.Row="2">                        
-                    <ListView ItemsSource="{Binding ListMenu}" HasUnevenRows="False" SelectedItem="{Binding RestaurantMenu}" >
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                        <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding ManuComment,Mode=TwoWay}"/>
-                                            <Label Text="test list"/>
-
-                                        </StackLayout>
-                                        
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
+                    <StackLayout Grid.Row="1">
+                  
                         
-                    </ListView>
-                        <!--<Label  Text="test add grid"/>-->
-                        <!--<ListView ItemsSource="{Binding testData}" Margin="30,0,30,0"  
-                  SelectedItem="{Binding ShiftSelect}"
-                  HeightRequest="500" HasUnevenRows="True">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-
-                                        <StackLayout VerticalOptions="Start">
-                                            <Label Text="{Binding CreateDateTime,StringFormat='{}{0:dd ddd}'}" 
-                                   TextColor="Black"
-                                   FontSize="Large"/>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding CreateDateTime,StringFormat='{}{0:hh tt} -'}"  />
-                                                <Label Text="{Binding UpdateDateTime,StringFormat='{}{0:hh tt} '}"  />
-                                            </StackLayout>
-
-                                        </StackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>-->
+                    <StackLayout BindableLayout.ItemsSource="{Binding CatagoriesList}" Padding="5" BackgroundColor="LightGray">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="WhiteSmoke" HasShadow="True" CornerRadius="30">                                   
+                               
+                                <StackLayout>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding .}"/>
+                                            </StackLayout.GestureRecognizers>
+                                <Label Text="{Binding CatagoryName}"  Margin="15,0,15,0" FontSize="30" />
+                                <StackLayout BindableLayout.ItemsSource="{Binding RestaurantMenuItemList}" 
+                                             Padding="0" Margin="15, 2, 15, 0" IsVisible="{Binding IsVisble}" >
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>                                               
+                                                    
+                                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                                        <Image  HeightRequest="90" WidthRequest="90" VerticalOptions="CenterAndExpand" 
+                                                               Aspect="AspectFit" Source="{Binding ManuImg}"/>
+                                                        <StackLayout VerticalOptions="CenterAndExpand">
+                                                            <Label   VerticalOptions="CenterAndExpand" FontSize="20"
+                                                               Text="{Binding ManuName, Mode=TwoWay}" />
+                                                            <Label  Text="{Binding ManuComment, Mode=TwoWay}" VerticalOptions="Start" FontSize="20"  />
+                                                        </StackLayout>
+                                                        <Label Text="{Binding MunuPrice}" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
+                                                    </StackLayout>
+                                            
+                                         </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                    
+                                </StackLayout>                                
+                                </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                        
+                    </StackLayout>
+                 
+               
                     </StackLayout>
                     
                     
             
 
             </Grid>
+            
+            </ScrollView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

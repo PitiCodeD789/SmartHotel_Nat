@@ -13,18 +13,29 @@ namespace SmartHotel.Clients.Core.ViewModels
     {
         private RestaurantMenuItem restaurantMenu;
         private ObservableRangeCollection<RestaurantMenuItem> listMenu;
+        private ObservableRangeCollection<RestaurantCatagoriesList> catagoriesList;
+
+      
+
+
         public RestaurantViewModel()
         {
             ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
             {
-                new RestaurantMenuItem{ id = 0, ManuComment="testAdd" , ManuImg = "FoodImage" , ManuName = "Food Name", MunuPrice = 500 },
-                new RestaurantMenuItem{ id = 1, ManuComment="testAdd2" , ManuImg = "FoodImage" , ManuName = "Food Name2", MunuPrice = 400 },
-                new RestaurantMenuItem{ id = 2, ManuComment="testAdd3" , ManuImg = "FoodImage" , ManuName = "Food Name3", MunuPrice = 300 },
-                new RestaurantMenuItem{ id = 3, ManuComment="testAdd4" , ManuImg = "FoodImage" , ManuName = "Food Name4", MunuPrice = 200 },
-                new RestaurantMenuItem{ id = 4, ManuComment="testAdd5" , ManuImg = "FoodImage" , ManuName = "Food Name5", MunuPrice = 100 },
-                new RestaurantMenuItem{ id = 5, ManuComment="testAdd6" , ManuImg = "FoodImage" , ManuName = "Food Name6", MunuPrice = 50 }
+                new RestaurantMenuItem{ id = 0, ManuComment="testAdd" , ManuImg = "Babyfood38" , ManuName = "Food Name", MunuPrice = 500 },
+                new RestaurantMenuItem{ id = 1, ManuComment="testAdd2" , ManuImg = "Babyfood39" , ManuName = "Food Name2", MunuPrice = 400 },
+                new RestaurantMenuItem{ id = 2, ManuComment="testAdd3" , ManuImg = "Babyfood42" , ManuName = "Food Name3", MunuPrice = 300 },
+               
+            };
+
+            CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>()
+            {
+               new RestaurantCatagoriesList{ CatagoryName = "Catagory1", IsVisble = true, RestaurantMenuItemList = ListMenu},
+                 new RestaurantCatagoriesList{ CatagoryName = "Catagory2", IsVisble = false,  RestaurantMenuItemList = ListMenu},
+                 new RestaurantCatagoriesList{ CatagoryName = "Catagory3", IsVisble = false, RestaurantMenuItemList = ListMenu},
 
             };
+          
         }
 
         public RestaurantMenuItem RestaurantMenu
@@ -35,11 +46,16 @@ namespace SmartHotel.Clients.Core.ViewModels
                 if(value != null)
                 {
                     OrderItemPopupAsync();
+                    
                 }
-            }
-        
-           
-        
+            }       
+                   
+        }
+
+        public ObservableRangeCollection<RestaurantCatagoriesList> CatagoriesList
+        {
+            get => catagoriesList;
+            set => SetProperty(ref catagoriesList, value);            
         }
 
         public ObservableRangeCollection<RestaurantMenuItem> ListMenu
