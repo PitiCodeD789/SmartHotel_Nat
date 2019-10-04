@@ -20,14 +20,16 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    <Frame BorderColor="Black" CornerRadius="7">
-        <StackLayout>
+    <Frame BorderColor="Black" CornerRadius="7" HeightRequest="250">
+        <StackLayout VerticalOptions="CenterAndExpand">
             <Label Text="Confirmation"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <StackLayout Orientation="Horizontal">
-                <local:OrderButton TextButton="Yes"/>
-                <local:OrderButton TextButton="No" ButtonBackgroundColor="Red" />
+                HorizontalOptions="CenterAndExpand"
+                   FontSize="Large" TextColor="Black"/>
+            <StackLayout Orientation="Horizontal" HeightRequest="50">
+                <local:OrderButton TextButton="Yes" HorizontalOptions="FillAndExpand" Command="{Binding YesCommand}"/>
+                <local:OrderButton TextButton="No" ButtonBackgroundColor="Red"
+                                   HorizontalOptions="FillAndExpand" Command="{Binding NoCommand}"/>
             </StackLayout>
         </StackLayout>
     </Frame>
