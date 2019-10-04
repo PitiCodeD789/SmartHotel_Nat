@@ -11,9 +11,10 @@ using System;
 namespace SmartHotel.Services.Hotels.Migrations
 {
     [DbContext(typeof(HotelsDbContext))]
-    partial class HotelsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191004120329_FixKey")]
+    partial class FixKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
