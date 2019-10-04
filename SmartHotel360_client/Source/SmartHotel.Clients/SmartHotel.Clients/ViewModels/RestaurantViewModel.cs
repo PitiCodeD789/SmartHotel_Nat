@@ -5,6 +5,7 @@ using SmartHotel.Clients.Core.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SmartHotel.Clients.Core.ViewModels
 {
@@ -33,7 +34,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 if(value != null)
                 {
-                    
+                    OrderItemPopupAsync();
                 }
             }
         
@@ -46,6 +47,8 @@ namespace SmartHotel.Clients.Core.ViewModels
             get => listMenu;
             set => SetProperty(ref listMenu, value);
         }
+
+        Task OrderItemPopupAsync() => NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(true);
 
     }
 }
