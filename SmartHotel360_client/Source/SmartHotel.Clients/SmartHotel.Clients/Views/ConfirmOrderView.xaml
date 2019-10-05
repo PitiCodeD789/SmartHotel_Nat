@@ -51,7 +51,7 @@
                         <Label Text="TotalPrice"/>
                         <Label Text="{Binding TotalPrice}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
-                    <local:OrderButton SetText="Confirm Order" WidthRequest="50"/>
+                    <local:OrderButton SetText="Confirm Order" Command="{Binding ConfirmOrderCommand}" WidthRequest="50"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
