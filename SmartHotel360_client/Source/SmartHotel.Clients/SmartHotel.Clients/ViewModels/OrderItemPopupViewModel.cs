@@ -1,4 +1,5 @@
-﻿using SmartHotel.Clients.Core.Models;
+﻿using Rg.Plugins.Popup.Services;
+using SmartHotel.Clients.Core.Models;
 using SmartHotel.Clients.Core.ViewModels.Base;
 using SmartHotel.Services.Hotels.Domain.RoomService;
 using System;
@@ -34,13 +35,17 @@ namespace SmartHotel.Clients.Core.ViewModels
                 ItemDetail = SelectedItem.MenuName;
                 ItemPrice = SelectedItem.MenuPrice;
                 TextButton = SetTextButton();
-                //if (App.OrderingCart.Where(item => item.id == SelectedItem.id) == null || (App.OrderingCart.Where(item=>item.id == SelectedItem.id)?.Count()) != 0)
-                //{
-                //    var Item = App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault();
-                //    Quantity = Item.Amount;
-                //    orderComment = Item.MenuComment;
-                //    IsAdded = true;
-                //}
+                if (App.OrderingCart == null)
+                {
+                    App.OrderingCart = new List<RestaurantMenuItem>();
+                }
+                if (App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault() != null)
+                {
+                    var Item = App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault();
+                    Quantity = Item.Amount;
+                    orderComment = Item.MenuComment;
+                    IsAdded = true;
+                }
             }
         }
 
@@ -51,6 +56,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().Amount = Quantity;
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().MenuComment = OrderComment;
+                
             }
             else
             {
@@ -64,13 +70,26 @@ namespace SmartHotel.Clients.Core.ViewModels
                 Orderlist.Add(SelectedItem);
                 App.OrderingCart = Orderlist;
             }
+
+            Pop();
         }
         private void DeleteOrder()
         {
-            if (IsAdd)
+            if (IsAdded)
             {
                 App.OrderingCart.RemoveAll(item => item.id == SelectedItem.id);
+                Pop();
             }
+        }
+
+        public void Pop()
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
+
+        Task GoToConfirmOrderViewModel()
+        {
+            return NavigationService.NavigateToAsync<ConfirmOrderViewModel>();
         }
 
         public virtual ICommand AddOrderCommand { get; set; }
