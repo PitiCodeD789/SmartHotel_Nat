@@ -15,7 +15,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 {
     public class RestaurantViewModel : ViewModelBase
     {
-        private RestaurantMenuItem restaurantMenu;
+       // private RestaurantMenuItem restaurantMenu;
         private ObservableRangeCollection<RestaurantMenuItem> listMenu;
         private ObservableRangeCollection<RestaurantCatagoriesList> catagoriesList;
         private IRestaurantService restaurantService;
@@ -23,27 +23,9 @@ namespace SmartHotel.Clients.Core.ViewModels
         public RestaurantViewModel()
         {
             restaurantService = new RestaurantService();
-
-            //ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
-            //{
-            //    new RestaurantMenuItem{ id = 0, MenuComment="testAdd" , MenuImg = "Babyfood38" , MenuName = "Food Name", MenuPrice = 500 },
-            //    new RestaurantMenuItem{ id = 1, MenuComment="testAdd2" , MenuImg = "Babyfood39" , MenuName = "Food Name2", MenuPrice = 400 },
-            //    new RestaurantMenuItem{ id = 2, MenuComment="testAdd3" , MenuImg = "Babyfood42" , MenuName = "Food Name3", MenuPrice = 300 },
-               
-            //};
-
-            //CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>()
-            //{
-            //   new RestaurantCatagoriesList{ CatagoryName = "Catagory1", IsVisble = true, RestaurantMenuItemList = ListMenu},
-            //     new RestaurantCatagoriesList{ CatagoryName = "Catagory2", IsVisble = false,  RestaurantMenuItemList = ListMenu},
-            //     new RestaurantCatagoriesList{ CatagoryName = "Catagory3", IsVisble = false, RestaurantMenuItemList = ListMenu},
-
-            //};
-          
         }
         public override async Task InitializeAsync(object navigationData)
-        {
-          
+        {          
             var res = await restaurantService.GetMenusAsync();
             CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>();
             var recommendedMenu = res.Where(c => c.IsRecommended == true).
@@ -55,42 +37,73 @@ namespace SmartHotel.Clients.Core.ViewModels
                     MenuName = s.Item,
                      MenuPrice = s.Price
                 }).ToList();
-
-            var catagoryName = res.Select(c => new Category() { CategoryName = c.Category.CategoryName, HotelId = c.Category.HotelId, Id = c.Category.Id }).Distinct().ToList();
-            
-
-           
             ObservableRangeCollection<RestaurantMenuItem> restaurant = new ObservableRangeCollection<RestaurantMenuItem>();
             foreach (RestaurantMenuItem item in recommendedMenu)
             {
                 restaurant.Add(item);
             }
-
             RestaurantCatagoriesList recommendedList = new RestaurantCatagoriesList() { CatagoryName = "Recommended", IsVisble = true, RestaurantMenuItemList = restaurant };
             CatagoriesList.Add(recommendedList);
 
+            var catagoryName = res.Select(c => c.Category.CategoryName).Distinct().ToList();
+            foreach (string catName in catagoryName)
+            {
+                var catagoriesMenu = res.Where(c => c.Category.CategoryName == catName).
+               Select(s => new RestaurantMenuItem()
+               {
+                   id = s.Id,
+                   Amount = 0,
+                   MenuComment = s.Description,
+                   MenuImg = "Babyfood42",
+                   MenuName = s.Item,
+                   MenuPrice = s.Price
+               }).ToList();
+                ObservableRangeCollection<RestaurantMenuItem> menuByCatagories = new ObservableRangeCollection<RestaurantMenuItem>();
+                foreach (RestaurantMenuItem item in catagoriesMenu)
+                {
+                    menuByCatagories.Add(item);
+                }
+                RestaurantCatagoriesList catList = new RestaurantCatagoriesList() { CatagoryName = catName, IsVisble = false, RestaurantMenuItemList = menuByCatagories };
+                CatagoriesList.Add(catList);
+
+                //List<RestaurantMenuItem> orderingCart =  
+                var orderingCart = res.Select(s => new RestaurantMenuItem()
+                {
+                    id = s.Id,
+                    Amount = 0,
+                    MenuComment = s.Description,
+                    MenuImg = "Babyfood42",
+                    MenuName = s.Item,
+                    MenuPrice = s.Price
+                }).ToList();
+
+                App.OrderingCart = orderingCart;
+
+            }
+
         }
 
-        public RestaurantMenuItem RestaurantMenu
-        {
-            get => restaurantMenu;
-            set
-            {
-                if(value != null)
-                {
-                    OrderItemPopupAsync();
+        //public RestaurantMenuItem RestaurantMenu
+        //{
+        //    get => restaurantMenu;
+        //    set
+        //    {
+        //        if(value != null)
+        //        {
+        //            OrderItemPopupAsync();
                     
-                }
-            }       
+        //        }
+        //    }       
                    
-        }
+        //}
 
         public ICommand GoToAddCartCommand => new Command(GoToAddCart);
 
         private void GoToAddCart(object obj)
         {
             int id = int.Parse(obj.ToString());
-            RestaurantMenuItem data = ListMenu.FirstOrDefault(c => c.id == id);
+            List<RestaurantMenuItem> ListMenuMaster = App.OrderingCart;
+            RestaurantMenuItem data = ListMenuMaster.FirstOrDefault(c => c.id == id);
             var navigationParameter = new Dictionary<string, object>
             {
                 { "SelectItem", data} ,

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "316621718895",
+    "firebase_url": "https://enixergroup1.firebaseio.com",
+    "project_id": "enixergroup1",
+    "storage_bucket": "enixergroup1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316621718895:android:516637b7b9f477de73549a",
+        "android_client_info": {
+          "package_name": "com.companyname.smarthotel.clients.maintenance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316621718895-f4n9e54r6k5qk7922763t1k9kmfpmk6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDESEcaPD5U6kyMm1CxssfsxBoym9j2jXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316621718895-f4n9e54r6k5qk7922763t1k9kmfpmk6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

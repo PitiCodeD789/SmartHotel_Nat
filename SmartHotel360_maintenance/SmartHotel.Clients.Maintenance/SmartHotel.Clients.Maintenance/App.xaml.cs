@@ -1,5 +1,6 @@
 ﻿using SmartHotel.Clients.Maintenance.Views;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +15,10 @@ namespace SmartHotel.Clients.Maintenance
             MainPage = new NavigationPage( new MainPage());
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
-            // Handle when your app starts
+            //var available = await SecureStorage.GetAsync("Available");
+            //await App.Current.MainPage.DisplayAlert("Message", available, "OK");
         }
 
         protected override void OnSleep()

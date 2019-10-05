@@ -161,6 +161,8 @@ namespace SmartHotel.Clients.Core.Services.Navigation
             mappings.Add(typeof(RestaurantViewModel), typeof(RestaurantView));
             mappings.Add(typeof(OrderItemPopupViewModel), typeof(OrderItemPopup));
             mappings.Add(typeof(ConfirmOrderViewModel), typeof(ConfirmOrderView));
+            mappings.Add(typeof(OrderHistoryViewModel), typeof(OrderHistoryView));
+            mappings.Add(typeof(OrderDetailViewModel), typeof(OrderDetail));
 
             if (Device.Idiom == TargetIdiom.Desktop)
             {
