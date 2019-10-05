@@ -25,15 +25,20 @@ namespace SmartHotel.Clients.Core.ViewModels
             restaurantService = new RestaurantService();
         }
         public override async Task InitializeAsync(object navigationData)
-        {          
+        {
+          
+            if (App.CatagoriesList == null )
+            {
+
             var res = await restaurantService.GetMenusAsync();
             CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>();
             var recommendedMenu = res.Where(c => c.IsRecommended == true).
                 Select(s => new RestaurantMenuItem()
                 { id = s.Id,
                  Amount = 0,
-                  MenuComment = s.Description,
+                  MenuDescription = s.Description,
                    MenuImg = "Babyfood42",
+
                     MenuName = s.Item,
                      MenuPrice = s.Price
                 }).ToList();
@@ -53,7 +58,7 @@ namespace SmartHotel.Clients.Core.ViewModels
                {
                    id = s.Id,
                    Amount = 0,
-                   MenuComment = s.Description,
+                   MenuDescription = s.Description,
                    MenuImg = "Babyfood42",
                    MenuName = s.Item,
                    MenuPrice = s.Price
@@ -67,42 +72,34 @@ namespace SmartHotel.Clients.Core.ViewModels
                 CatagoriesList.Add(catList);
 
                 //List<RestaurantMenuItem> orderingCart =  
-                var orderingCart = res.Select(s => new RestaurantMenuItem()
+                var restaurantMenus = res.Select(s => new RestaurantMenuItem()
                 {
                     id = s.Id,
                     Amount = 0,
-                    MenuComment = s.Description,
+                    MenuDescription = s.Description,
                     MenuImg = "Babyfood42",
                     MenuName = s.Item,
                     MenuPrice = s.Price
                 }).ToList();
+                App.CatagoriesList = CatagoriesList;
+                App.RestaurantMenus = restaurantMenus;
+            }
 
-                App.OrderingCart = orderingCart;
+
+
 
             }
 
         }
 
-        //public RestaurantMenuItem RestaurantMenu
-        //{
-        //    get => restaurantMenu;
-        //    set
-        //    {
-        //        if(value != null)
-        //        {
-        //            OrderItemPopupAsync();
-                    
-        //        }
-        //    }       
-                   
-        //}
+ 
 
         public ICommand GoToAddCartCommand => new Command(GoToAddCart);
 
         private void GoToAddCart(object obj)
         {
             int id = int.Parse(obj.ToString());
-            List<RestaurantMenuItem> ListMenuMaster = App.OrderingCart;
+            List<RestaurantMenuItem> ListMenuMaster = App.RestaurantMenus;
             RestaurantMenuItem data = ListMenuMaster.FirstOrDefault(c => c.id == id);
             var navigationParameter = new Dictionary<string, object>
             {
