@@ -183,5 +183,6 @@ namespace SmartHotel.Clients.Core
 		    get => Preferences.Get(nameof(RoomId), defaultRoomId);
 		    set => Preferences.Set(nameof(RoomId), value);
 	    }
+        public static int HotelId { get;  set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using MvvmHelpers;
 using SmartHotel.Clients.Core.Models;
+using SmartHotel.Clients.Core.Services.Restaurant;
 using SmartHotel.Clients.Core.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -17,26 +18,57 @@ namespace SmartHotel.Clients.Core.ViewModels
         private RestaurantMenuItem restaurantMenu;
         private ObservableRangeCollection<RestaurantMenuItem> listMenu;
         private ObservableRangeCollection<RestaurantCatagoriesList> catagoriesList;
+        private IRestaurantService restaurantService;
 
-    
         public RestaurantViewModel()
         {
-            ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
-            {
-                new RestaurantMenuItem{ id = 0, MenuComment="testAdd" , MenuImg = "Babyfood38" , MenuName = "Food Name", MenuPrice = 500 },
-                new RestaurantMenuItem{ id = 1, MenuComment="testAdd2" , MenuImg = "Babyfood39" , MenuName = "Food Name2", MenuPrice = 400 },
-                new RestaurantMenuItem{ id = 2, MenuComment="testAdd3" , MenuImg = "Babyfood42" , MenuName = "Food Name3", MenuPrice = 300 },
+            restaurantService = new RestaurantService();
+
+            //ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
+            //{
+            //    new RestaurantMenuItem{ id = 0, MenuComment="testAdd" , MenuImg = "Babyfood38" , MenuName = "Food Name", MenuPrice = 500 },
+            //    new RestaurantMenuItem{ id = 1, MenuComment="testAdd2" , MenuImg = "Babyfood39" , MenuName = "Food Name2", MenuPrice = 400 },
+            //    new RestaurantMenuItem{ id = 2, MenuComment="testAdd3" , MenuImg = "Babyfood42" , MenuName = "Food Name3", MenuPrice = 300 },
                
-            };
+            //};
 
-            CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>()
-            {
-               new RestaurantCatagoriesList{ CatagoryName = "Catagory1", IsVisble = true, RestaurantMenuItemList = ListMenu},
-                 new RestaurantCatagoriesList{ CatagoryName = "Catagory2", IsVisble = false,  RestaurantMenuItemList = ListMenu},
-                 new RestaurantCatagoriesList{ CatagoryName = "Catagory3", IsVisble = false, RestaurantMenuItemList = ListMenu},
+            //CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>()
+            //{
+            //   new RestaurantCatagoriesList{ CatagoryName = "Catagory1", IsVisble = true, RestaurantMenuItemList = ListMenu},
+            //     new RestaurantCatagoriesList{ CatagoryName = "Catagory2", IsVisble = false,  RestaurantMenuItemList = ListMenu},
+            //     new RestaurantCatagoriesList{ CatagoryName = "Catagory3", IsVisble = false, RestaurantMenuItemList = ListMenu},
 
-            };
+            //};
           
+        }
+        public override async Task InitializeAsync(object navigationData)
+        {
+          
+            var res = await restaurantService.GetMenusAsync();
+            CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>();
+            var recommendedMenu = res.Where(c => c.IsRecommended == true).
+                Select(s => new RestaurantMenuItem()
+                { id = s.Id,
+                 Amount = 0,
+                  MenuComment = s.Description,
+                   MenuImg = "Babyfood42",
+                    MenuName = s.Item,
+                     MenuPrice = s.Price
+                }).ToList();
+
+            var catagoryName = res.Select(c => new Category() { CategoryName = c.Category.CategoryName, HotelId = c.Category.HotelId, Id = c.Category.Id }).Distinct().ToList();
+            
+
+           
+            ObservableRangeCollection<RestaurantMenuItem> restaurant = new ObservableRangeCollection<RestaurantMenuItem>();
+            foreach (RestaurantMenuItem item in recommendedMenu)
+            {
+                restaurant.Add(item);
+            }
+
+            RestaurantCatagoriesList recommendedList = new RestaurantCatagoriesList() { CatagoryName = "Recommended", IsVisble = true, RestaurantMenuItemList = restaurant };
+            CatagoriesList.Add(recommendedList);
+
         }
 
         public RestaurantMenuItem RestaurantMenu
