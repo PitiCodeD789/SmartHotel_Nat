@@ -131,7 +131,8 @@ namespace SmartHotel.Clients.Core.ViewModels
             {                
                   OrderItemAmount = c.Amount,
                    OrderItemDescription = c.MenuComment,
-                    ServiceTaskId = serviceTaskType, OrderItemId = c.id
+                   Item = c.MenuName,
+                     OrderItemId = c.id
             }).ToList();
 
             RoomServiceRequest roomServiceRequest = new RoomServiceRequest()
