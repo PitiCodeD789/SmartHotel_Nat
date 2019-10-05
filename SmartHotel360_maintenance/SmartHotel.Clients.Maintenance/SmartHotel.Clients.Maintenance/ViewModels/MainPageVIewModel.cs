@@ -21,11 +21,15 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             DeliverServiceCommand = new Command<ServiceTask>(DeliverService);
         }
         public Command DeliverServiceCommand { get; set; }
-        void DeliverService(ServiceTask task)
+        async void DeliverService(ServiceTask task)
         {
-            var x = task.GetType();
-            Application.Current.MainPage.DisplayAlert("", task.Id + task.RoomNumber + task.TaskName, "Ok");
-            UpdateServiceTask();
+            var dialogResult = await Application.Current.MainPage.DisplayAlert("Resolve Task", $"Resolving task {task.TaskName} from room {task.RoomNumber} \n This operation cannot be undone.", "Ok", "Cancel");
+            if (dialogResult)
+            {
+                UpdateServiceRequest request = new UpdateServiceRequest { TaskId = task.Id, UserId = "Username" };
+                var result = _httpConnectionService.HttpPost<UpdateServiceRequest>(ServiceEnumerables.Url.UpdateServiceTask, request);
+                UpdateServiceTask();
+            }
         }
 
         private ServiceTaskList GetServiceTasks(int hotelId)
@@ -105,7 +109,7 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         public int PendingCount
         {
             get { return _pendingCount; }
-            set { _pendingCount = value; }
+            set { _pendingCount = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

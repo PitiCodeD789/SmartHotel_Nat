@@ -62,8 +62,61 @@ namespace SmartHotel.Clients.Maintenance.Services
                 result.Message = ServiceEnumerables.HttpConnectionError.UnknownError;
                 return result;
             }
-
         }
 
+
+        public async Task<ResultModel<T>> HttpPost<T>(ServiceEnumerables.Url enumerables, object postObject) where T : class
+        {
+            ResultModel<T> result = new ResultModel<T>();
+            try
+            {
+                var client = new HttpClient();
+                string accessToken = null;
+                try
+                {
+                    accessToken = await SecureStorage.GetAsync("AccessToken");
+                }
+                catch (Exception e)
+                {
+                    result.IsError = true;
+                    result.Message = ServiceEnumerables.HttpConnectionError.CannotRetrieveSecureStorage;
+                    return result;
+                }
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                string url = ServiceEnumerables.UrlString[(int)enumerables];
+                client.Timeout = TimeSpan.FromSeconds(5);
+                var json = JsonConvert.SerializeObject(postObject);
+                var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(url, requestBody).Result;
+                result.HttpStatusCode = response.StatusCode;
+                T resultModel;
+                try
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        result.IsError = true;
+                        result.Message = ServiceEnumerables.HttpConnectionError.NotSuccess;
+                        return result;
+                    }
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    resultModel = JsonConvert.DeserializeObject<T>(responseBody);
+                }
+                catch (Exception e)
+                {
+                    result.IsError = true;
+                    result.Message = ServiceEnumerables.HttpConnectionError.DeserializeJsonError;
+                    return result;
+                }
+
+                result.Model = resultModel;
+                return result;
+            }
+            catch (Exception e)
+            {
+                result.IsError = true;
+                result.Message = ServiceEnumerables.HttpConnectionError.UnknownError;
+                return result;
+            }
+        }
     }
 }
