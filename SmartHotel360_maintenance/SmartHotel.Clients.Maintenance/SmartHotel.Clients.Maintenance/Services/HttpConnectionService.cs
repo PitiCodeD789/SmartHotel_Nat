@@ -31,7 +31,7 @@ namespace SmartHotel.Clients.Maintenance.Services
                 }
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                 string url = ServiceEnumerables.UrlString[(int)enumerables] + valueToGet;
-                client.Timeout = TimeSpan.FromSeconds(5);
+                client.Timeout = TimeSpan.FromSeconds(30);
                 HttpResponseMessage response = client.GetAsync(url).Result;
                 result.HttpStatusCode = response.StatusCode;
                 T resultModel;

@@ -9,6 +9,7 @@ namespace SmartHotel.Clients.Maintenance.Models
         public int Id { get; set; }
         public int ServiceTaskId { get; set; }
         public int OrderItemId { get; set; }
+        public string Item { get; set; }
         public int OrderItemAmount { get; set; }
         public string OrderItemDescription { get; set; }
     }

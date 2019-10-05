@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SmartHotel.Clients.Maintenance.Views.MenuPage">
+    <ContentPage.Content>
+        <StackLayout Padding="20,0">
+            <Label Text="Menu List" TextColor="Black" FontSize="Large" FontAttributes="Bold" Margin="0,10"/>
+            <ListView ItemsSource="{Binding CurrentOrder}" x:Name="ListView" SelectionMode="None" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Item}"/>
+                                <Label Text="{Binding OrderItemAmount, StringFormat='x {0}'}"/>
+                                <Label Text="{Binding OrderItemDescription}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Deliver" HorizontalOptions="FillAndExpand" BackgroundColor="#46989D" FontAttributes="Bold" Command="{Binding CompleteMenuDeliveryCommand}" Margin="0,10" TextColor="White" IsVisible="{Binding CurrentTask.IsIncompleted}"/>
+            <Button Text="Delivered" HorizontalOptions="FillAndExpand" BackgroundColor="LightGray" FontAttributes="Bold"  Margin="0,10" TextColor="White" IsVisible="{Binding CurrentTask.IsCompleted}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

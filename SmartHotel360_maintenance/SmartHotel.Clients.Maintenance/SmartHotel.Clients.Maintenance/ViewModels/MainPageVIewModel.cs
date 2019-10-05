@@ -1,5 +1,6 @@
 ﻿using SmartHotel.Clients.Maintenance.Models;
 using SmartHotel.Clients.Maintenance.Services;
+using SmartHotel.Clients.Maintenance.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,10 +20,34 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         {
             UpdateServiceTask();
             DeliverServiceCommand = new Command<ServiceTask>(DeliverService);
+            CompleteDeliveryCommand = new Command<ServiceTask>(CompleteDelivery);
+            CompleteMenuDeliveryCommand = new Command(CompleteMenuDelivery); 
         }
         public Command DeliverServiceCommand { get; set; }
+        public Command CompleteDeliveryCommand { get; set; }
+        public Command CompleteMenuDeliveryCommand { get; set; }
+
         async void DeliverService(ServiceTask task)
         {
+            if (task.OrderItems.Count > 0 && task.TaskName == GetTaskName(1))
+            {
+                CurrentOrder = task.OrderItems;
+                CurrentTask = task;
+                await Application.Current.MainPage.Navigation.PushAsync(new MenuPage(this));
+            }
+            else
+            {
+                CompleteDelivery(task);
+            }
+        }
+
+        public async void CompleteDelivery(ServiceTask task)
+        {
+            if (task.IsCompleted)
+            {
+                await Application.Current.MainPage.DisplayAlert("Resolved", "Resolved task cannot be edited", "Ok");
+                return;
+            }
             var dialogResult = await Application.Current.MainPage.DisplayAlert("Resolve Task", $"Resolving task {task.TaskName} from room {task.RoomNumber} \n This operation cannot be undone.", "Ok", "Cancel");
             if (dialogResult)
             {
@@ -32,10 +57,28 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             }
         }
 
+        public async void CompleteMenuDelivery()
+        {
+            var task = CurrentTask;
+            var dialogResult = await Application.Current.MainPage.DisplayAlert("Resolve Task", $"Resolving task {task.TaskName} from room {task.RoomNumber} \n This operation cannot be undone.", "Ok", "Cancel");
+            if (dialogResult)
+            {
+                UpdateServiceRequest request = new UpdateServiceRequest { TaskId = task.Id, UserId = "Username" };
+                var result = _httpConnectionService.HttpPost<UpdateServiceRequest>(ServiceEnumerables.Url.UpdateServiceTask, request);
+                UpdateServiceTask();
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
+        }
+
         private ServiceTaskList GetServiceTasks(int hotelId)
         {
             var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId.ToString()).Result;
             var roomService = httpResult.Model;
+            if (httpResult.IsError)
+            {
+                Application.Current.MainPage.DisplayAlert("Error", httpResult.Message.ToString(), "Ok");
+                return null;
+            }
             ServiceTaskList result = new ServiceTaskList();
             foreach (var item in roomService)
             {
@@ -58,6 +101,8 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             var list = new List<ServiceTaskList>();
             #region TestDataRegion
             var req = GetServiceTasks(hotelId);
+            if (req == null)
+                return;
             var groupByDateTime = req.GroupBy(r => r.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy")).ToList();
             foreach (var item in groupByDateTime)
             {
@@ -104,6 +149,21 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             get { return _listOfTasks; } 
             set { _listOfTasks = value; OnPropertyChanged(); } 
         }
+
+        private List<OrderItem> _currentOrder;
+        public List<OrderItem> CurrentOrder
+        {
+            get { return _currentOrder; }
+            set { _currentOrder = value; }
+        }
+
+        private ServiceTask currentTask;
+        public ServiceTask CurrentTask
+        {
+            get { return currentTask; }
+            set { currentTask = value; }
+        }
+
 
         private int _pendingCount;
         public int PendingCount
