@@ -102,7 +102,8 @@ namespace SmartHotel.Clients.Core.ViewModels
         private void GoToAddCart(object obj)
         {
             int id = int.Parse(obj.ToString());
-            RestaurantMenuItem data = ListMenu.FirstOrDefault(c => c.id == id);
+            List<RestaurantMenuItem> ListMenuMaster = App.OrderingCart;
+            RestaurantMenuItem data = ListMenuMaster.FirstOrDefault(c => c.id == id);
             var navigationParameter = new Dictionary<string, object>
             {
                 { "SelectItem", data} ,
