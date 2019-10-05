@@ -81,7 +81,9 @@ namespace SmartHotel.Clients.Core.ViewModels
             if (IsAdded)
             {
                 App.OrderingCart.RemoveAll(item => item.id == SelectedItem.id);
+                
                 Pop();
+                restaurantViewModel.update();
             }
         }
 

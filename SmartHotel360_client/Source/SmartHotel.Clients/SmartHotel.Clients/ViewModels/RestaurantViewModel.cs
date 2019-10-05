@@ -73,7 +73,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 
         private async Task ConfirmOrder()
         {
-           await NavigationService.NavigateToPopupAsync<ConfirmOrderViewModel>( true);
+           await NavigationService.NavigateToAsync<ConfirmOrderViewModel>( true);
         }
 
         private void ShowCatagaries(object obj)
