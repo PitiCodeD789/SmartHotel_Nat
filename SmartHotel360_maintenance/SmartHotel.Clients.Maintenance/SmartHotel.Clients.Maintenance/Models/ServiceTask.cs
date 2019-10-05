@@ -7,6 +7,7 @@ namespace SmartHotel.Clients.Maintenance.Models
 {
     public class ServiceTask
     {
+        public int Id { get; set; }
         public string RoomNumber { get; set; }
         public string TaskName { get; set; }
         public DateTime CreatedDate { get; set; }

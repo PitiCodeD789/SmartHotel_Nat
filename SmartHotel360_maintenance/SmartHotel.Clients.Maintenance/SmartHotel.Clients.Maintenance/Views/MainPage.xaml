@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:Name="MainPageView"
              x:Class="SmartHotel.Clients.Maintenance.Views.MainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -71,6 +72,9 @@
                                 BackgroundColor="White"
                                 Padding="10"
                                 Margin="10,5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.DeliverServiceCommand, Source={x:Reference MainPageView}}" CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>

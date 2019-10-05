@@ -3,16 +3,53 @@ using SmartHotel.Clients.Maintenance.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Maintenance.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
         public HttpConnectionService _httpConnectionService = new HttpConnectionService();
         private int hotelId { get; set; } = 11;
         public MainPageViewModel()
+        {
+            UpdateServiceTask();
+            DeliverServiceCommand = new Command<ServiceTask>(DeliverService);
+        }
+        public Command DeliverServiceCommand { get; set; }
+        void DeliverService(ServiceTask task)
+        {
+            var x = task.GetType();
+            Application.Current.MainPage.DisplayAlert("", task.Id + task.RoomNumber + task.TaskName, "Ok");
+            UpdateServiceTask();
+        }
+
+        private ServiceTaskList GetServiceTasks(int hotelId)
+        {
+            var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId.ToString()).Result;
+            var roomService = httpResult.Model;
+            ServiceTaskList result = new ServiceTaskList();
+            foreach (var item in roomService)
+            {
+                result.Add(
+                    new ServiceTask() 
+                    { 
+                        Id = item.Id,
+                        RoomNumber = item.RoomNumber,
+                        TaskName = GetTaskName(item.ServiceTaskType), 
+                        IsCompleted = item.IsCompleted,
+                        CreatedDate = item.CreatedDate,
+                        OrderItems = item.OrderItems
+                    }
+                );
+            }
+            return result;
+        }
+        private void UpdateServiceTask()
         {
             var list = new List<ServiceTaskList>();
             #region TestDataRegion
@@ -44,28 +81,6 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
                 PendingCount += task.Count(s => s.IsCompleted == false);
             }
         }
-
-        private ServiceTaskList GetServiceTasks(int hotelId)
-        {
-            var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId.ToString()).Result;
-            var roomService = httpResult.Model;
-            ServiceTaskList result = new ServiceTaskList();
-            foreach (var item in roomService)
-            {
-                result.Add(
-                    new ServiceTask() 
-                    { 
-                        RoomNumber = item.RoomNumber, 
-                        TaskName = GetTaskName(item.ServiceTaskType), 
-                        IsCompleted = item.IsCompleted,
-                        CreatedDate = item.CreatedDate,
-                        OrderItems = item.OrderItems
-                    }
-                );
-            }
-            return result;
-        }
-
         private string GetTaskName(int taskId)
         {
             switch (taskId)
@@ -83,7 +98,7 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         public List<ServiceTaskList> ListOfTasks 
         { 
             get { return _listOfTasks; } 
-            set { _listOfTasks = value;} 
+            set { _listOfTasks = value; OnPropertyChanged(); } 
         }
 
         private int _pendingCount;
@@ -91,6 +106,12 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         {
             get { return _pendingCount; }
             set { _pendingCount = value; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

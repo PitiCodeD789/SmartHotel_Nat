@@ -90,6 +90,7 @@ namespace SmartHotel.Services.Hotels.Controllers
                 }
                 serviceTaskList.Add(new RoomServiceViewModel
                 {
+                    Id = task.Id,
                     BookingId = task.BookingId,
                     HotelId = task.HotelId,
                     ServiceTaskType = task.ServiceTaskType,
@@ -124,6 +125,7 @@ namespace SmartHotel.Services.Hotels.Controllers
                 }
                 serviceTaskList.Add(new RoomServiceViewModel
                 {
+                    Id = task.Id,
                     BookingId = task.BookingId,
                     HotelId = task.HotelId,
                     ServiceTaskType = task.ServiceTaskType,
