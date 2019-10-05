@@ -21,12 +21,13 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             UpdateServiceTask();
             DeliverServiceCommand = new Command<ServiceTask>(DeliverService);
             CompleteDeliveryCommand = new Command<ServiceTask>(CompleteDelivery);
-            CompleteMenuDeliveryCommand = new Command(CompleteMenuDelivery); 
+            CompleteMenuDeliveryCommand = new Command(CompleteMenuDelivery);
+            RefreshListCommand = new Command(UpdateServiceTask);
         }
         public Command DeliverServiceCommand { get; set; }
         public Command CompleteDeliveryCommand { get; set; }
         public Command CompleteMenuDeliveryCommand { get; set; }
-
+        public Command RefreshListCommand { get; set; }
         async void DeliverService(ServiceTask task)
         {
             if (task.OrderItems.Count > 0 && task.TaskName == GetTaskName(1))
@@ -88,6 +89,7 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
                         Id = item.Id,
                         RoomNumber = item.RoomNumber,
                         TaskName = GetTaskName(item.ServiceTaskType), 
+                        ImageSource = GetTaskImage(item.ServiceTaskType),
                         IsCompleted = item.IsCompleted,
                         CreatedDate = item.CreatedDate,
                         OrderItems = item.OrderItems
@@ -139,6 +141,18 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
                 case 3: return "Toothbrush";
                 case 4: return "Towels";
                 case 5: return "Leaks";
+                default: return "";
+            }
+        }
+        private string GetTaskImage(int taskId)
+        {
+            switch (taskId)
+            {
+                case 1: return "ic_room_service";
+                case 2: return "ic_ice";
+                case 3: return "ic_toothbrush_off";
+                case 4: return "ic_towel";
+                case 5: return "ic_leak";
                 default: return "";
             }
         }

@@ -86,10 +86,10 @@ namespace SmartHotel.Services.Hotels.Controllers
             List<RoomServiceViewModel> serviceTaskList = new List<RoomServiceViewModel>();
             foreach (var task in serviceTasks)
             {
-                List<OrderItem> orderItems = new List<OrderItem>(); 
+                List<OrderItemViewModel> orderItems = new List<OrderItemViewModel>(); 
                 if (task.ServiceTaskType == 1)
                 {
-                    orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
+                    orderItems = await _orderItemSearchQuery.GetOrderItemViewModelByTaskId(task.Id);
                 }
                 serviceTaskList.Add(new RoomServiceViewModel
                 {
@@ -121,10 +121,10 @@ namespace SmartHotel.Services.Hotels.Controllers
             List<RoomServiceViewModel> serviceTaskList = new List<RoomServiceViewModel>();
             foreach (var task in serviceTasks)
             {
-                List<OrderItem> orderItems = new List<OrderItem>();
+                List<OrderItemViewModel> orderItems = new List<OrderItemViewModel>();
                 if (task.ServiceTaskType == 1)
                 {
-                    orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
+                    orderItems = await _orderItemSearchQuery.GetOrderItemViewModelByTaskId(task.Id);
                 }
                 serviceTaskList.Add(new RoomServiceViewModel
                 {

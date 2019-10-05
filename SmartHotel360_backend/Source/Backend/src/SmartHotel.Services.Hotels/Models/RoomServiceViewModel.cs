@@ -16,6 +16,6 @@ namespace SmartHotel.Services.Hotels.Models
         public int ServiceTaskType { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime CreatedDate { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItemViewModel> OrderItems { get; set; }
     }
 }
