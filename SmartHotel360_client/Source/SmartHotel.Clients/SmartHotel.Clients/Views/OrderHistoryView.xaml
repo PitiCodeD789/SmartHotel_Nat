@@ -16,58 +16,63 @@
                 <ScrollView>
                     <StackLayout>
                         <Label Text="Pending"/>
-                        <Frame BackgroundColor="#fafafa">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                    <ColumnDefinition Width="15*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Aug 12, 17:48" Grid.Column="0"
+                        <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Frame BackgroundColor="#fafafa">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="25*"/>
+                                                    <ColumnDefinition Width="60*"/>
+                                                    <ColumnDefinition Width="15*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="Aug 12, 17:48" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
                                        FontSize="10"/>
-                                <StackLayout Grid.Column="1">
-                                    <Label Text="foodddddd"/>
-                                    <Label Text="1 รายการ"/>
-                                </StackLayout>
-                                <Label Text="฿250" Grid.Column="2"/>
-                            </Grid>
-                        </Frame>
+                                                <StackLayout Grid.Column="1">
+                                                    <Label Text="foodddddd"/>
+                                                    <Label Text="1 รายการ"/>
+                                                </StackLayout>
+                                                <Label Text="฿250" Grid.Column="2"/>
+                                            </Grid>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                         <Label Text="Delivered"/>
-                        <Frame BackgroundColor="#fafafa">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                    <ColumnDefinition Width="15*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Aug 12, 17:48" Grid.Column="0"
+                        <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Frame BackgroundColor="#fafafa">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="25*"/>
+                                                    <ColumnDefinition Width="60*"/>
+                                                    <ColumnDefinition Width="15*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="Aug 12, 17:48" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
                                        FontSize="10"/>
-                                <StackLayout Grid.Column="1">
-                                    <Label Text="foodddddd"/>
-                                    <Label Text="1 รายการ"/>
-                                </StackLayout>
-                                <Label Text="฿250" Grid.Column="2"/>
-                            </Grid>
-                        </Frame>
-                        <Frame BackgroundColor="#fafafa">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                    <ColumnDefinition Width="15*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Aug 12, 17:48" Grid.Column="0"
-                                       HorizontalOptions="StartAndExpand"
-                                       FontSize="10"/>
-                                <StackLayout Grid.Column="1">
-                                    <Label Text="foodddddd"/>
-                                    <Label Text="1 รายการ"/>
-                                </StackLayout>
-                                <Label Text="฿250" Grid.Column="2"/>
-                            </Grid>
-                        </Frame>
+                                                <StackLayout Grid.Column="1">
+                                                    <Label Text="foodddddd"/>
+                                                    <Label Text="1 รายการ"/>
+                                                </StackLayout>
+                                                <Label Text="฿250" Grid.Column="2"/>
+                                            </Grid>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </StackLayout>
                 </ScrollView>
             </Frame>

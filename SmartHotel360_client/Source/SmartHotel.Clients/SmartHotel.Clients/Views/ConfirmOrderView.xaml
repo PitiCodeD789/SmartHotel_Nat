@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
-                <Label Text="Room No. 101"
+                <Label Text="{Binding Room}"
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>
             </Frame>
@@ -56,7 +56,7 @@
                         <Label Text="TotalPrice"/>
                         <Label Text="{Binding TotalPrice}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
-                    <local:OrderButton TextButton="{Binding OrderText}"/>
+                    <local:OrderButton TextButton="{Binding OrderText}" WidthRequest="50"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
