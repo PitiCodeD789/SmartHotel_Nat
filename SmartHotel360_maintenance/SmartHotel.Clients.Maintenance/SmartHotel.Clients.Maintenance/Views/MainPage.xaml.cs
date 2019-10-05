@@ -16,7 +16,7 @@ namespace SmartHotel.Clients.Maintenance.Views
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainPageVIewModel();
+            BindingContext = new MainPageViewModel();
         }
     }
 }

@@ -65,7 +65,7 @@
                 </StackLayout>
                 <Grid>
                     <local:OrderButton TextButton = "{Binding TextButton}" Command="{Binding AddOrderCommand}" BackgroundButton="#00B14F" IsVisible="{Binding IsAdd}"/>
-                    <local:OrderButton SetText="Delete" Command="{Binding AddOrderCommand}" BackgroundButton="Red" IsVisible="{Binding IsDelete}"/>
+                    <local:OrderButton SetText="Delete" Command="{Binding DeleteOderCommand}" BackgroundButton="Red" IsVisible="{Binding IsDelete}"/>
                 </Grid>
             </StackLayout>
         </Frame>
