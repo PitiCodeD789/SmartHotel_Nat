@@ -16,6 +16,7 @@ namespace SmartHotel.Services.Hotels.Queries
         public Category Category { get; set; }
         public bool IsRecommended { get; set; }
         public bool IsAvailable { get; set; }
+        public string Image { get; set; }
     }
 
 
@@ -47,6 +48,7 @@ namespace SmartHotel.Services.Hotels.Queries
                     IsRecommended = menu.IsRecommended,
                     Item = menu.Item,
                     Price = menu.Price,
+                    Image = menu.Image,
                     Category = categories.Where(cat => cat.Id == menu.CategoryId).FirstOrDefault()
                 })
            .ToList();
