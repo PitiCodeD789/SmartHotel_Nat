@@ -1,7 +1,9 @@
-﻿using SmartHotel.Clients.Core.ViewModels.Base;
+﻿using SmartHotel.Clients.Core.Models;
+using SmartHotel.Clients.Core.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,10 +11,10 @@ namespace SmartHotel.Clients.Core.ViewModels
 {
     public class OrderItemPopupViewModel : ViewModelBase
     {
+        
         public OrderItemPopupViewModel()
-        {
-            ItemDetail = "ข้าวแกง";
-            ItemPrice = 45M;
+        {          
+          
             TextButton = SetTextButton();
             AddOrderCommand = new Command(AddOrder);
             DeleteOderCommand = new Command(DeleteOrder);
@@ -20,6 +22,20 @@ namespace SmartHotel.Clients.Core.ViewModels
             IsDelete = true;
             IsAdd = false;
         }
+
+        public override async Task InitializeAsync(object navigationData)
+        {
+            if (navigationData != null)
+            {
+                var navigationParameter = navigationData as Dictionary<string, object>;
+                ItemDetail = (string)navigationParameter["ItemDetail"] ;
+                ItemPrice = (decimal)navigationParameter["ItemPrice"];
+                TextButton = SetTextButton();
+            }
+
+            
+        }
+
 
         private void AddOrder()
         {
@@ -41,7 +57,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         public decimal ItemPrice
         {
             get { return itemPrice; }
-            set { itemPrice = value; }
+            set { itemPrice = value; OnPropertyChanged(); }
         }
 
         private string itemDetail;
@@ -49,7 +65,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         public string ItemDetail
         {
             get { return itemDetail; }
-            set { itemDetail = value; }
+            set { itemDetail = value; OnPropertyChanged(); }
         }
 
 
