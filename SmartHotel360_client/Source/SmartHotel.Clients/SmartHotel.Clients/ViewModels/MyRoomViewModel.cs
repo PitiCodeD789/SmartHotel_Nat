@@ -183,6 +183,8 @@ namespace SmartHotel.Clients.Core.ViewModels
 		public ICommand EcoModeCommand => new Command( EcoMode );
 
         public ICommand GoMyRestaurantCommand => new AsyncCommand(GoMyRestaurantAsync);
+        public ICommand GoServiceHistoryommand => new AsyncCommand(GoServiceHistoryAsync);
+
 
         public override async Task InitializeAsync( object navigationData )
 		{
@@ -203,6 +205,12 @@ namespace SmartHotel.Clients.Core.ViewModels
             
                 return NavigationService.NavigateToAsync<RestaurantViewModel>();            
          
+        }
+        Task GoServiceHistoryAsync()
+        {
+
+            return NavigationService.NavigateToAsync<OrderHistoryViewModel>();
+
         }
 
         async Task GetRoomSensorData( bool isInitializing = false )

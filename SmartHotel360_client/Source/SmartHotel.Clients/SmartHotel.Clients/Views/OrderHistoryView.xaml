@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="PageRef"
              mc:Ignorable="d"
              x:Class="SmartHotel.Clients.Core.Views.OrderHistoryView">
     <ContentPage.Content>
@@ -21,7 +22,7 @@
                                 <DataTemplate>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="" />
+                                            <TapGestureRecognizer Command="{Binding BindingContext.PendingSelectedCommand,Source={x:Reference PageRef}}" CommandParameter="{Binding Id}" />
                                         </StackLayout.GestureRecognizers>
                                         <Frame BackgroundColor="#fafafa">
                                             <Grid>
@@ -32,9 +33,9 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Label Text="{Binding DateString}" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
-                                       FontSize="10"/>
+                                       FontSize="12"/>
                                                 <StackLayout Grid.Column="1">
-                                                    <Label Text="{Binding FirstItem}"/>
+                                                    <Label Text="{Binding ServiceType}"/>
                                                     <Label Text="{Binding ItemCount}"/>
                                                 </StackLayout>
                                                 <Label Text="{Binding TotalPrice}" Grid.Column="2"/>
@@ -50,7 +51,7 @@
                                 <DataTemplate>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="" />
+                                            <TapGestureRecognizer Command="{Binding BindingContext.DeliveredSelectedCommand,Source={x:Reference PageRef}}" CommandParameter="{Binding Id}" />
                                         </StackLayout.GestureRecognizers>
                                         <Frame BackgroundColor="#fafafa">
                                             <Grid>
@@ -61,9 +62,9 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Label Text="{Binding DateString}" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
-                                       FontSize="10"/>
+                                       FontSize="12"/>
                                                 <StackLayout Grid.Column="1">
-                                                    <Label Text="{Binding FirstItem}"/>
+                                                    <Label Text="{Binding ServiceType}"/>
                                                     <Label Text="{Binding ItemCount}"/>
                                                 </StackLayout>
                                                 <Label Text="{Binding TotalPrice}" Grid.Column="2"/>

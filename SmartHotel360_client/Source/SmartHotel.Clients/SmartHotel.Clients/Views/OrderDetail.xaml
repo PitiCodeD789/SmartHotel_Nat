@@ -8,15 +8,15 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
-                <Label Text="25 Sep 2019 18:11 น."
+                <Label Text="{Binding SelectedItem.DateString}"
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>
             </Frame>
             <Frame VerticalOptions="FillAndExpand">
                 <StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Order No."/>
-                        <Label Text="ADR-123456789-8-123" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Order Id."/>
+                        <Label Text="{Binding SelectedItem.Id}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <Label Text="Order Detail"/>
                     <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
@@ -29,9 +29,18 @@
                                             <ColumnDefinition Width="70*"/>
                                             <ColumnDefinition Width="15*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="1X" Grid.Column="0"/>
-                                        <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
-                                        <Label Text="60" Grid.Column="2"/>
+                                        <Label Grid.Column="0">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <FormattedString.Spans>
+                                                        <Span Text="{Binding OrderItemAmount}"/>
+                                                        <Span Text="X"/>
+                                                    </FormattedString.Spans>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding Item}" Grid.Column="1"/>
+                                        <Label Text="{Binding Price}" Grid.Column="2"/>
                                     </Grid>
                                     <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
                                 </StackLayout>
@@ -40,7 +49,7 @@
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Total"/>
-                        <Label Text="฿200" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding TotalPrice}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
