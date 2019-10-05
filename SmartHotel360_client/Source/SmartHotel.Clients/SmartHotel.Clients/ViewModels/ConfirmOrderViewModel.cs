@@ -7,5 +7,11 @@ namespace SmartHotel.Clients.Core.ViewModels
 {
     class ConfirmOrderViewModel : ViewModelBase
     {
+        public ConfirmOrderViewModel()
+        {
+            
+        }
+
+       
     }
 }
