@@ -11,6 +11,9 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Firebase.Messaging;
+using Java.Lang;
+using SmartHotel.Clients.Maintenance.Views;
+using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Maintenance.Droid
 {
