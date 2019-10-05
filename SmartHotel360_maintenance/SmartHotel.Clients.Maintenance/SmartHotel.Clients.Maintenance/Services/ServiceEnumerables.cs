@@ -9,6 +9,7 @@ namespace SmartHotel.Clients.Maintenance.Services
         public enum Url
         {
             GetRoomServices,
+            UpdateServiceTask
         }
         public enum HttpConnectionError
         {
@@ -22,6 +23,7 @@ namespace SmartHotel.Clients.Maintenance.Services
             = new List<string>()
             {
                 Values.BaseUrl+"RoomService/order/",
+                Values.BaseUrl+"RoomService/UpdateServiceTask/",
             };
     }
 }

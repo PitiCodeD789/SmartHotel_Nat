@@ -1,33 +1,76 @@
-﻿using System;
+﻿using SmartHotel.Clients.Maintenance.Models;
+using SmartHotel.Clients.Maintenance.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Maintenance.ViewModels
 {
-    public class MainPageVIewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
-        public MainPageVIewModel()
+        public HttpConnectionService _httpConnectionService = new HttpConnectionService();
+        private int hotelId { get; set; } = 11;
+        public MainPageViewModel()
+        {
+            UpdateServiceTask();
+            DeliverServiceCommand = new Command<ServiceTask>(DeliverService);
+        }
+        public Command DeliverServiceCommand { get; set; }
+        async void DeliverService(ServiceTask task)
+        {
+            var dialogResult = await Application.Current.MainPage.DisplayAlert("Resolve Task", $"Resolving task {task.TaskName} from room {task.RoomNumber} \n This operation cannot be undone.", "Ok", "Cancel");
+            if (dialogResult)
+            {
+                UpdateServiceRequest request = new UpdateServiceRequest { TaskId = task.Id, UserId = "Username" };
+                var result = _httpConnectionService.HttpPost<UpdateServiceRequest>(ServiceEnumerables.Url.UpdateServiceTask, request);
+                UpdateServiceTask();
+            }
+        }
+
+        private ServiceTaskList GetServiceTasks(int hotelId)
+        {
+            var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId.ToString()).Result;
+            var roomService = httpResult.Model;
+            ServiceTaskList result = new ServiceTaskList();
+            foreach (var item in roomService)
+            {
+                result.Add(
+                    new ServiceTask() 
+                    { 
+                        Id = item.Id,
+                        RoomNumber = item.RoomNumber,
+                        TaskName = GetTaskName(item.ServiceTaskType), 
+                        IsCompleted = item.IsCompleted,
+                        CreatedDate = item.CreatedDate,
+                        OrderItems = item.OrderItems
+                    }
+                );
+            }
+            return result;
+        }
+        private void UpdateServiceTask()
         {
             var list = new List<ServiceTaskList>();
-            for (int i = 0; i < 4; i++)
+            #region TestDataRegion
+            var req = GetServiceTasks(hotelId);
+            var groupByDateTime = req.GroupBy(r => r.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy")).ToList();
+            foreach (var item in groupByDateTime)
             {
-                var sList = new ServiceTaskList()
-                {
-                    new ServiceTask() { RoomNumber = i+"01", TaskName = "Clean Room", IsCompleted = true},
-                    new ServiceTask() { RoomNumber = i+"02", TaskName = "Change Towels", IsCompleted = false },
-                    new ServiceTask() { RoomNumber = i+"03", TaskName = "Room Service", IsCompleted = true }
-                };
-                var incompleted = sList.Where(s => s.IsCompleted == false).ToList();
-                var completed = sList.Where(s => s.IsCompleted == true).ToList(); //TODO: Add orderby datetime
+                var sList = new ServiceTaskList();
+                var incompleted = req.Where(s => s.IsCompleted == false && s.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy") == item.Key).ToList();
+                var completed = req.Where(s => s.IsCompleted == true && s.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy") == item.Key).ToList(); //TODO: Add orderby datetime
                 sList.Clear();
                 sList.AddRange(incompleted);
                 sList.AddRange(completed);
-                sList.CreatedOn = DateTime.Now.AddDays(-i).Date.ToString("dddd, MMMM dd, yyyy");
+                sList.CreatedOn = item.Key;
                 list.Add(sList);
             }
-
+            #endregion
             ListOfTasks = list;
             ListOfTasks = ListOfTasks.OrderByDescending(l => Convert.ToDateTime(l.CreatedOn)).ToList();
             PendingCount = 0;
@@ -42,36 +85,43 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
                 PendingCount += task.Count(s => s.IsCompleted == false);
             }
         }
+        private string GetTaskName(int taskId)
+        {
+            switch (taskId)
+            {
+                case 1: return "Room Service";
+                case 2: return "Ice";
+                case 3: return "Toothbrush";
+                case 4: return "Towels";
+                case 5: return "Leaks";
+                default: return "";
+            }
+        }
 
         private List<ServiceTaskList> _listOfTasks;
         public List<ServiceTaskList> ListOfTasks 
         { 
             get { return _listOfTasks; } 
-            set { _listOfTasks = value;} 
+            set { _listOfTasks = value; OnPropertyChanged(); } 
         }
 
         private int _pendingCount;
         public int PendingCount
         {
             get { return _pendingCount; }
-            set { _pendingCount = value; }
+            set { _pendingCount = value; OnPropertyChanged(); }
         }
 
-    }
-    
-
-    public class ServiceTask
-    {
-        public string RoomNumber { get; set; }
-        public string TaskName { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool IsIncompleted { get { return !IsCompleted; } }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
-    public class ServiceTaskList : List<ServiceTask>
-    {
-        public bool IsToday { get { return (Convert.ToDateTime(CreatedOn) == DateTime.Now.Date); } }
-        public string CreatedOn { get; set; }
-        public List<ServiceTask> ServiceTasks => this;
-    }
+
+
+
+
+
 }

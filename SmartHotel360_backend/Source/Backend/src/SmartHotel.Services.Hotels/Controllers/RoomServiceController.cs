@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartHotel.Services.Hotels.Commands;
 using SmartHotel.Services.Hotels.Domain.RoomService;
+using SmartHotel.Services.Hotels.Models;
 using SmartHotel.Services.Hotels.Queries;
 
 namespace SmartHotel.Services.Hotels.Controllers
@@ -18,6 +19,7 @@ namespace SmartHotel.Services.Hotels.Controllers
         private readonly MenusSearchQuery _menusSearchQuery;
         private readonly ServiceTaskSearchQuery _serviceTaskSearchQuery;
         private readonly CreateOrderCommand _createOrderCommand;
+        private readonly UpdateServiceCommand _updateServiceCommand;
         private readonly OrderItemSearchQuery _orderItemSearchQuery;
         
 
@@ -27,9 +29,11 @@ namespace SmartHotel.Services.Hotels.Controllers
             MenusSearchQuery menusSearchQuery,
             OrderItemSearchQuery orderItemSearchQuery,
             ServiceTaskSearchQuery serviceTaskSearchQuery,
+            UpdateServiceCommand updateServiceCommand,
             CreateOrderCommand createOrderCommand
             )
         {
+            _updateServiceCommand = updateServiceCommand;
             _orderItemSearchQuery = orderItemSearchQuery;
             _serviceTaskSearchQuery = serviceTaskSearchQuery;
             _createOrderCommand = createOrderCommand;
@@ -79,7 +83,7 @@ namespace SmartHotel.Services.Hotels.Controllers
             //    return BadRequest("If userId is used its value must be the logged user id");
             //}
             var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByHotel(hotelId);
-            List<RoomServiceRequest> serviceTaskList = new List<RoomServiceRequest>();
+            List<RoomServiceViewModel> serviceTaskList = new List<RoomServiceViewModel>();
             foreach (var task in serviceTasks)
             {
                 List<OrderItem> orderItems = new List<OrderItem>(); 
@@ -87,15 +91,17 @@ namespace SmartHotel.Services.Hotels.Controllers
                 {
                     orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
                 }
-                serviceTaskList.Add(new RoomServiceRequest 
+                serviceTaskList.Add(new RoomServiceViewModel
                 {
+                    Id = task.Id,
                     BookingId = task.BookingId,
                     HotelId = task.HotelId,
                     ServiceTaskType = task.ServiceTaskType,
                     RoomNumber = task.RoomNumber,
-                    OrderItems = orderItems
+                    OrderItems = orderItems,
+                    CreatedDate = task.CreatedDate,
+                    IsCompleted = task.IsCompleted
                 });
-
             }
             return Ok(serviceTaskList);
         }
@@ -112,7 +118,7 @@ namespace SmartHotel.Services.Hotels.Controllers
             //    return BadRequest("If userId is used its value must be the logged user id");
             //}
             var serviceTasks = await _serviceTaskSearchQuery.GetAllServiceTasksByBookingId(bookingId);
-            List<RoomServiceRequest> serviceTaskList = new List<RoomServiceRequest>();
+            List<RoomServiceViewModel> serviceTaskList = new List<RoomServiceViewModel>();
             foreach (var task in serviceTasks)
             {
                 List<OrderItem> orderItems = new List<OrderItem>();
@@ -120,17 +126,38 @@ namespace SmartHotel.Services.Hotels.Controllers
                 {
                     orderItems = await _orderItemSearchQuery.GetOrderItemsByTaskId(task.Id);
                 }
-                serviceTaskList.Add(new RoomServiceRequest
+                serviceTaskList.Add(new RoomServiceViewModel
                 {
+                    Id = task.Id,
                     BookingId = task.BookingId,
                     HotelId = task.HotelId,
                     ServiceTaskType = task.ServiceTaskType,
                     RoomNumber = task.RoomNumber,
-                    OrderItems = orderItems
+                    OrderItems = orderItems,
+                    CreatedDate = task.CreatedDate,
+                    IsCompleted = task.IsCompleted
                 });
 
             }
             return Ok(serviceTaskList);
+        }
+
+
+        [HttpPost("UpdateServiceTask")]
+        //[Authorize]
+        public async Task<ActionResult> UpdateServiceTask([FromBody]UpdateServiceRequest request)
+        {
+            //var userId = User.Claims.First(c => c.Type == "emails").Value;
+            //if (!string.IsNullOrEmpty(command.UserId) && command.UserId != userId)
+            //{
+            //    return BadRequest("If userId is used its value must be the logged user id");
+            //}
+            if (request == null || request.TaskId == 0 || string.IsNullOrEmpty(request.UserId))
+            {
+                return BadRequest();
+            }
+            await _updateServiceCommand.Execute(request);
+            return Ok();
         }
     }
 }
