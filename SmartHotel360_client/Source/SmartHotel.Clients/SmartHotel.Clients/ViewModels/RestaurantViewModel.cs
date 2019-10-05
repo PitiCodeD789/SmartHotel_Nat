@@ -57,7 +57,14 @@ namespace SmartHotel.Clients.Core.ViewModels
 
         private void GoToAddCart(object obj)
         {
-            NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(true);
+            int id = int.Parse(obj.ToString());
+            RestaurantMenuItem data = ListMenu.FirstOrDefault(c => c.id == id);
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { "ItemDetail", data.ManuName },
+                { "ItemPrice", data.MunuPrice },                
+            };
+            NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(navigationParameter, true);
         }
 
         public ICommand ShowCatagariesCommand => new Command(ShowCatagaries);
