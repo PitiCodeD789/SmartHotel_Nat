@@ -95,7 +95,6 @@ namespace SmartHotel.Services.Hotels.Controllers
                     RoomNumber = task.RoomNumber,
                     OrderItems = orderItems
                 });
-
             }
             return Ok(serviceTaskList);
         }
