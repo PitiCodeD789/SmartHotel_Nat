@@ -12,6 +12,8 @@ using Firebase.Messaging;
 using Android.Gms.Common;
 using Firebase;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using SmartHotel.Clients.Maintenance.ViewModels;
 
 namespace SmartHotel.Clients.Maintenance.Droid
 {
@@ -20,7 +22,10 @@ namespace SmartHotel.Clients.Maintenance.Droid
     {
         public MainActivity()
         {
-
+            MessagingCenter.Subscribe<InputPageViewModel, string>(this, "Topic", (sender, arg) =>
+            {
+                FirebaseMessaging.Instance.SubscribeToTopic(arg);
+            });
         }
         public void CallAllAgain()
         {
