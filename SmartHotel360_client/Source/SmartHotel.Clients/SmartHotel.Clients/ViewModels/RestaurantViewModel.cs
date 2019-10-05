@@ -4,8 +4,11 @@ using SmartHotel.Clients.Core.Models;
 using SmartHotel.Clients.Core.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Core.ViewModels
 {
@@ -15,9 +18,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         private ObservableRangeCollection<RestaurantMenuItem> listMenu;
         private ObservableRangeCollection<RestaurantCatagoriesList> catagoriesList;
 
-      
-
-
+    
         public RestaurantViewModel()
         {
             ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
@@ -52,10 +53,56 @@ namespace SmartHotel.Clients.Core.ViewModels
                    
         }
 
+        public ICommand GoToAddCartCommand => new Command(GoToAddCart);
+
+        private void GoToAddCart(object obj)
+        {
+            NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(true);
+        }
+
+        public ICommand ShowCatagariesCommand => new Command(ShowCatagaries);
+
+        private void ShowCatagaries(object obj)
+        {
+            if(obj != null)
+            {           
+               
+                string catName = obj.ToString();
+                ObservableRangeCollection<RestaurantCatagoriesList> itemData = new ObservableRangeCollection<RestaurantCatagoriesList>();  
+                foreach (RestaurantCatagoriesList item in CatagoriesList)
+                {
+                    if(item.CatagoryName == catName)
+                    {
+                        bool isVis = !item.IsVisble;
+                        item.IsVisble = isVis;
+                        itemData.Add(item);
+                    }
+                    else
+                    {
+                        itemData.Add(item);
+                    }
+
+                }
+                CatagoriesList = itemData;
+
+                OnPropertyChanged("CatagoriesList");
+            }
+           
+        }
+
+
         public ObservableRangeCollection<RestaurantCatagoriesList> CatagoriesList
         {
             get => catagoriesList;
-            set => SetProperty(ref catagoriesList, value);            
+            set 
+            { if(value != null)
+                {
+                    SetProperty(ref catagoriesList, value);
+                    OnPropertyChanged();
+
+                }
+                
+            }      
         }
 
         public ObservableRangeCollection<RestaurantMenuItem> ListMenu
@@ -63,6 +110,8 @@ namespace SmartHotel.Clients.Core.ViewModels
             get => listMenu;
             set => SetProperty(ref listMenu, value);
         }
+
+    
 
         Task OrderItemPopupAsync() => NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(true);
 

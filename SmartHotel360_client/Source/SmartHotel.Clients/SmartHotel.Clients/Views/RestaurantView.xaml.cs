@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartHotel.Clients.Core.Helpers;
+using SmartHotel.Clients.Core.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,13 @@ namespace SmartHotel.Clients.Core.Views
         public RestaurantView()
         {
             InitializeComponent();
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            StackLayout stack = sender as StackLayout;
+            View child = stack.Children.Where(c => c.GetType() == typeof(StackLayout)).FirstOrDefault();
+            child.IsVisible = !child.IsVisible;
         }
     }
 }
