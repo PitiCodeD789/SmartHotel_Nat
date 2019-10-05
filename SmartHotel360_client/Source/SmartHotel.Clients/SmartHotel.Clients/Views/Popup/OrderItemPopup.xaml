@@ -21,7 +21,7 @@
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
     <StackLayout BackgroundColor="Gray" VerticalOptions="CenterAndExpand">
-        <Frame>
+        <Frame HasShadow="True">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="85*"/>
@@ -37,7 +37,7 @@
                        Grid.Column="1"/>
             </Grid>
         </Frame>
-        <Frame>
+        <Frame HasShadow="True">
             <StackLayout>
                 <Label>
                     <Label.FormattedText>
@@ -51,10 +51,22 @@
                 </Label>
                 <Entry Text="{Binding OrderComment}" Placeholder="เช่นไม่เผ็ด"/>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding Quantity}"/>
-                    <Stepper Value="{Binding Quantity}" Minimum="0"/>
+                    <Stepper Value="{Binding Quantity,Mode=TwoWay}" Minimum="0"/>
+                    <Label VerticalOptions="CenterAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Qty: "/>
+                                    <Span Text="{Binding Quantity}"/>
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
-                <local:OrderButton TextButton="{Binding TextButton}" Command="{Binding OrderCommand}"/>
+                <Grid>
+                    <local:OrderButton TextButton = "{Binding TextButton}" Command="{Binding AddOrderCommand}" BackgroundButton="#00B14F" IsVisible="{Binding IsAdd}"/>
+                    <local:OrderButton SetText="Delete" Command="{Binding AddOrderCommand}" BackgroundButton="Red" IsVisible="{Binding IsDelete}"/>
+                </Grid>
             </StackLayout>
         </Frame>
     </StackLayout>
