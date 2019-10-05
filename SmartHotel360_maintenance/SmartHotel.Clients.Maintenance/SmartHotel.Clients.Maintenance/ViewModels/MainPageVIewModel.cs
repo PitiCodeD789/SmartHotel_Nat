@@ -19,6 +19,11 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
                     new ServiceTask() { RoomNumber = i+"02", TaskName = "Change Towels", IsCompleted = false },
                     new ServiceTask() { RoomNumber = i+"03", TaskName = "Room Service", IsCompleted = true }
                 };
+                var incompleted = sList.Where(s => s.IsCompleted == false).ToList();
+                var completed = sList.Where(s => s.IsCompleted == true).ToList(); //TODO: Add orderby datetime
+                sList.Clear();
+                sList.AddRange(incompleted);
+                sList.AddRange(completed);
                 sList.CreatedOn = DateTime.Now.AddDays(-i).Date.ToString("dddd, MMMM dd, yyyy");
                 list.Add(sList);
             }
@@ -26,9 +31,15 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             ListOfTasks = list;
             ListOfTasks = ListOfTasks.OrderByDescending(l => Convert.ToDateTime(l.CreatedOn)).ToList();
             PendingCount = 0;
+            List<ServiceTaskList> tempListOfTasks = new List<ServiceTaskList>();
             foreach (var task in ListOfTasks)
             {
-                PendingCount += task.ServiceTasks.Count(s => s.IsCompleted == false);
+                int taskIndex = ListOfTasks.FindIndex(t => t == task);
+                tempListOfTasks.Add(new ServiceTaskList
+                {
+                    CreatedOn = task.CreatedOn,
+                });
+                PendingCount += task.Count(s => s.IsCompleted == false);
             }
         }
 
@@ -47,7 +58,6 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         }
 
     }
-
     
 
     public class ServiceTask
@@ -56,13 +66,6 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         public string TaskName { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsIncompleted { get { return !IsCompleted; } }
-        public string DisplayName
-        {
-            get
-            {
-                return $"{TaskName}, {RoomNumber}";
-            }
-        }
     }
 
     public class ServiceTaskList : List<ServiceTask>
