@@ -45,11 +45,19 @@ namespace SmartHotel.Clients.Core.Views.Component
 
         public static readonly BindableProperty TextButtonProperty =
             BindableProperty.Create(
-                propertyName: "TextEntry",
+                propertyName: "TextButton",
                 returnType: typeof(string),
                 declaringType: typeof(OrderButton),
                 defaultBindingMode: BindingMode.TwoWay);
         #endregion
+
+        private string setText;
+
+        public string SetText
+        {
+            get { return setText; }
+            set { setText = value; mButton.Text = SetText; }
+        }
 
         #region BackgroundButton
         private Color backgroundButton;
@@ -65,6 +73,22 @@ namespace SmartHotel.Clients.Core.Views.Component
         }
         #endregion
 
+        //#region BindableBackgroundButton
+        //public Color BindableBackgroundButton
+        //{
+        //    get { return (Color)GetValue(BackgroundButtonProperty); }
+        //    set { SetValue(BackgroundButtonProperty, value); }
+        //}
+
+        //public static readonly BindableProperty BackgroundButtonProperty =
+        //    BindableProperty.Create(
+        //        propertyName: "BindableBackgroundButton",
+        //        returnType: typeof(Color),
+        //        declaringType: typeof(OrderButton),
+        //        defaultValue: Color.FromHex("#00B14F"),
+        //        defaultBindingMode: BindingMode.TwoWay);
+        //#endregion
+
         #region TextColor
         private Color textColor;
 
@@ -75,20 +99,6 @@ namespace SmartHotel.Clients.Core.Views.Component
             {
                 textColor = value;
                 mButton.TextColor = textColor;
-            }
-        }
-        #endregion
-
-        #region BackgroundColor
-        private Color buttonBackgroundColor;
-
-        public Color ButtonBackgroundColor
-        {
-            get { return buttonBackgroundColor; }
-            set
-            {
-                buttonBackgroundColor = value;
-                mButton.BackgroundColor = ButtonBackgroundColor;
             }
         }
         #endregion
