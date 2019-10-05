@@ -13,6 +13,7 @@ namespace SmartHotel.Clients.Maintenance.Models
         public DateTime CreatedDate { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsIncompleted { get { return !IsCompleted; } }
+        public string ImageSource { get; set; }
         public List<OrderItem> OrderItems { get; set; }
     }
 }
