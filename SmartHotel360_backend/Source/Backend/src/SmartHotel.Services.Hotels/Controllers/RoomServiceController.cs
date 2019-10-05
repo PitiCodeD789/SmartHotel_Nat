@@ -68,7 +68,7 @@ namespace SmartHotel.Services.Hotels.Controllers
                 return BadRequest();
             }
             await _createOrderCommand.Execute(request);
-            return Ok();
+            return Ok(new { Status = "Success" });
         }
 
         [HttpGet("order/{hotelId}")]
