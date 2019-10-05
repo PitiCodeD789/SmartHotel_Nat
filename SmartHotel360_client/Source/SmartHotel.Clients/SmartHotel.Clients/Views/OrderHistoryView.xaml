@@ -16,7 +16,7 @@
                 <ScrollView>
                     <StackLayout>
                         <Label Text="Pending"/>
-                        <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                        <StackLayout BindableLayout.ItemsSource="{Binding PendingRoomService}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout>
@@ -30,14 +30,14 @@
                                                     <ColumnDefinition Width="60*"/>
                                                     <ColumnDefinition Width="15*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Text="Aug 12, 17:48" Grid.Column="0"
+                                                <Label Text="{Binding DateString}" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
                                        FontSize="10"/>
                                                 <StackLayout Grid.Column="1">
-                                                    <Label Text="foodddddd"/>
-                                                    <Label Text="1 รายการ"/>
+                                                    <Label Text="{Binding FirstItem}"/>
+                                                    <Label Text="{Binding ItemCount}"/>
                                                 </StackLayout>
-                                                <Label Text="฿250" Grid.Column="2"/>
+                                                <Label Text="{Binding TotalPrice}" Grid.Column="2"/>
                                             </Grid>
                                         </Frame>
                                     </StackLayout>
@@ -45,7 +45,7 @@
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
                         <Label Text="Delivered"/>
-                        <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                        <StackLayout BindableLayout.ItemsSource="{Binding DeliveredRoomService}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout>
@@ -59,14 +59,14 @@
                                                     <ColumnDefinition Width="60*"/>
                                                     <ColumnDefinition Width="15*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Text="Aug 12, 17:48" Grid.Column="0"
+                                                <Label Text="{Binding DateString}" Grid.Column="0"
                                        HorizontalOptions="StartAndExpand"
                                        FontSize="10"/>
                                                 <StackLayout Grid.Column="1">
-                                                    <Label Text="foodddddd"/>
-                                                    <Label Text="1 รายการ"/>
+                                                    <Label Text="{Binding FirstItem}"/>
+                                                    <Label Text="{Binding ItemCount}"/>
                                                 </StackLayout>
-                                                <Label Text="฿250" Grid.Column="2"/>
+                                                <Label Text="{Binding TotalPrice}" Grid.Column="2"/>
                                             </Grid>
                                         </Frame>
                                     </StackLayout>

@@ -23,7 +23,7 @@ namespace SmartHotel.Clients.Core.Services.Restaurant
             Hotelid = 11;
 
 
-            builder.AppendToPath($"roomservice/{Hotelid}/menus");
+            builder.AppendToPath($"roomservice/order/booking/{bookingId}");
 
             var uri = builder.ToString();
 
