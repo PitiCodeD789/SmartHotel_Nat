@@ -7,7 +7,8 @@
              x:Name="PageRef"
              xmlns:local="clr-namespace:SmartHotel.Clients.Core.Views.Component"
              x:Class="SmartHotel.Clients.Core.Views.ConfirmOrderView"
-             xmlns:ViewModel="clr-namespace:SmartHotel.Clients.Core.ViewModels">
+             xmlns:ViewModel="clr-namespace:SmartHotel.Clients.Core.ViewModels"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
@@ -17,15 +18,7 @@
             </Frame>
             <ScrollView>
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal">
                         <Label Text="   TotalOrder" TextColor="Black"/>
-                        <Label Text="AddOrder   " TextColor="Blue"
-                       HorizontalOptions="EndAndExpand">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BackCommand}"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
                     <Frame>
                         <StackLayout x:Name="Stack" BindableLayout.ItemsSource="{Binding ItemList}">
                             <BindableLayout.ItemTemplate>
