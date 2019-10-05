@@ -116,6 +116,8 @@ namespace SmartHotel.Services.Hotels.Migrations
 
                     b.Property<int>("HotelId");
 
+                    b.Property<string>("Image");
+
                     b.Property<bool>("IsAvailable");
 
                     b.Property<bool>("IsRecommended");
@@ -228,6 +230,8 @@ namespace SmartHotel.Services.Hotels.Migrations
                     b.Property<int>("BookingId");
 
                     b.Property<int>("OrderItemId");
+
+                    b.Property<string>("RoomNumber");
 
                     b.Property<int>("ServiceTaskType");
 

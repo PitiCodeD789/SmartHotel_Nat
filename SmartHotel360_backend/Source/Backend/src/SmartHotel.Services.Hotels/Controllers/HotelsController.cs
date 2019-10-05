@@ -8,6 +8,7 @@ using SmartHotel.Services.Hotels.Queries;
 using SmartHotel.Services.Hotels.Services;
 using Microsoft.Extensions.Options;
 using SmartHotel.Services.Hotels.Settings;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartHotel.Services.Hotels.Controllers
 {
@@ -98,17 +99,6 @@ namespace SmartHotel.Services.Hotels.Controllers
             return Ok(rooms);
         }
 
-        [HttpGet("{hotelId:int}/menus")]
-        public async Task<ActionResult> GetMenusByHotel(int hotelId)
-        {
-            var menus = await _menusSearchQuery.Get(hotelId);
 
-            if (menus == null)
-            {
-                return NotFound($"Hotel {hotelId} could not be found");
-            }
-
-            return Ok(menus);
-        }
     }
 }
