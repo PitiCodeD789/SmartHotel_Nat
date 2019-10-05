@@ -61,12 +61,20 @@ namespace SmartHotel.Clients.Core.ViewModels
             RestaurantMenuItem data = ListMenu.FirstOrDefault(c => c.id == id);
             var navigationParameter = new Dictionary<string, object>
             {
-                { "SelectItem", data}            
+                { "SelectItem", data} ,
+                { "RestaurantViewModel", this}
             };
             NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(navigationParameter, true);
         }
 
         public ICommand ShowCatagariesCommand => new Command(ShowCatagaries);
+
+        public ICommand ConfirmOrderCommand => new AsyncCommand(ConfirmOrder);
+
+        private async Task ConfirmOrder()
+        {
+           await NavigationService.NavigateToPopupAsync<ConfirmOrderViewModel>( true);
+        }
 
         private void ShowCatagaries(object obj)
         {
@@ -120,6 +128,55 @@ namespace SmartHotel.Clients.Core.ViewModels
     
 
         Task OrderItemPopupAsync() => NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(true);
+
+        public void update()
+        {
+            var order = App.OrderingCart;
+            decimal totalAmounnt = 0;
+            foreach(RestaurantMenuItem item in order)
+            {
+                totalAmounnt = totalAmounnt + (item.MenuPrice * item.Amount);
+
+            }
+
+            int numItem = order.Count;
+            if(numItem > 0)
+            {
+                IsVisbleCart = true;
+            DetailInCart = $"Item = {numItem}    Price = {totalAmounnt}";
+
+            }
+            else
+            {
+                IsVisbleCart = false;
+            }
+            
+        }
+
+        private string detailInCart;
+
+        public string DetailInCart
+        {
+            get 
+            { 
+                return detailInCart; 
+            }
+            set
+            {
+                SetProperty(ref detailInCart, value);
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isVisbleCart;
+
+        public bool IsVisbleCart
+        {
+            get { return isVisbleCart; }
+            set { isVisbleCart = value; OnPropertyChanged(); }
+        }
+
+     
 
     }
 }

@@ -25,5 +25,11 @@ namespace SmartHotel.Clients.Core.Views
             View child = stack.Children.Where(c => c.GetType() == typeof(StackLayout)).FirstOrDefault();
             child.IsVisible = !child.IsVisible;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
     }
 }

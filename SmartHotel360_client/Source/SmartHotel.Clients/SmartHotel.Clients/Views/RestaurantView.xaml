@@ -6,28 +6,29 @@
              mc:Ignorable="d"
              x:Name="me"
              xmlns:bd="clr-namespace:SmartHotel.Clients.Core.ViewModels"
+             xmlns:component="clr-namespace:SmartHotel.Clients.Core.Views.Component"
              x:Class="SmartHotel.Clients.Core.Views.RestaurantView">
     <ContentPage.BindingContext>
         <bd:RestaurantViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
 
-        <Grid RowSpacing="0">
-            <ScrollView>
-                
-            <Grid >
+        <Grid RowSpacing="0" BackgroundColor="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView>        
+            <Grid  Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>                   
 
-                </Grid.RowDefinitions>
-                
+                </Grid.RowDefinitions>                                   
                 <Image Grid.Row="0" Source="FoodImage" HeightRequest="200" Aspect="Fill"/>
              
                 
                     <StackLayout Grid.Row="1">
-                     
                         <StackLayout BindableLayout.ItemsSource="{Binding CatagoriesList}" Padding="5" BackgroundColor="LightGray">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
@@ -69,10 +70,15 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
-               
+                     
                     </StackLayout>
-            </Grid>
+             </Grid>
             </ScrollView>
+         
+            <Button Grid.Row="1" Text="{Binding DetailInCart,Mode=TwoWay}" IsVisible="{Binding IsVisbleCart}" Margin="30,0,30,0" Padding="10"
+                    CornerRadius="7" BackgroundColor="#00B14F" HeightRequest="60" Command="{Binding ConfirmOrderCommand, Mode=TwoWay}"
+                      HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+        
         </Grid>
     </ContentPage.Content>
 </ContentPage>

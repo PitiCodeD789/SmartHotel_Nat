@@ -14,7 +14,8 @@ namespace SmartHotel.Clients.Core.ViewModels
     public class OrderItemPopupViewModel : ViewModelBase
     {
         public RestaurantMenuItem SelectedItem { get; set; }
-        public OrderItemPopupViewModel()
+        public RestaurantViewModel restaurantViewModel;
+    public OrderItemPopupViewModel()
         {          
           
             TextButton = SetTextButton();
@@ -31,6 +32,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 var navigationParameter = navigationData as Dictionary<string, object>;
                 SelectedItem = (RestaurantMenuItem)navigationParameter["SelectItem"];
+                restaurantViewModel = (RestaurantViewModel)navigationParameter["RestaurantViewModel"];               
                 ItemDetail = SelectedItem.MenuName;
                 ItemPrice = SelectedItem.MenuPrice;
                 TextButton = SetTextButton();
@@ -51,6 +53,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().Amount = Quantity;
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().MenuComment = OrderComment;
+                restaurantViewModel.update();
             }
             else
             {
@@ -63,6 +66,7 @@ namespace SmartHotel.Clients.Core.ViewModels
                 }
                 Orderlist.Add(SelectedItem);
                 App.OrderingCart = Orderlist;
+                restaurantViewModel.update();
             }
         }
         private void DeleteOrder()
