@@ -25,6 +25,10 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             CompleteDeliveryCommand = new Command<ServiceTask>(CompleteDelivery);
             CompleteMenuDeliveryCommand = new Command(CompleteMenuDelivery);
             RefreshListCommand = new Command(UpdateServiceTask);
+            MessagingCenter.Subscribe<IMyMessagingService>(this, "ReData", (sender) =>
+            {
+                UpdateServiceTask();
+            });
 
             //TODO : Pre Delete
             Clear = new Command(ClearSecureStorage);

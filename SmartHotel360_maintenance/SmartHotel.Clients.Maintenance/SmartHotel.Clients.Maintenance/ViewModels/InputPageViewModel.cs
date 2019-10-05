@@ -119,8 +119,9 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             string select = hotelDatas.Where(x => x.Name == selectHotel).Select(y => y.Id).FirstOrDefault().ToString();
             await SecureStorage.SetAsync("Topic", select);
 
-            Environment.Exit(0);
-            //Application.Current.MainPage = new NavigationPage(new MainPage());
+            MessagingCenter.Send<InputPageViewModel, string>(this, "Topic", select);
+            //Environment.Exit(0);
+            Application.Current.MainPage = new NavigationPage(new MainPage());
         }
 
 
