@@ -7,9 +7,10 @@ namespace SmartHotel.Clients.Core.Models
     public class RestaurantMenuItem
     {
         public int id { get; set; }
-        public decimal MunuPrice { get; set; }
-        public string ManuName { get; set; }
-        public string ManuComment { get; set; }
-        public string ManuImg { get; set; }
+        public decimal MenuPrice { get; set; }
+        public string MenuName { get; set; }
+        public string MenuComment { get; set; }
+        public string MenuImg { get; set; }
+        public int Amount { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using SmartHotel.Clients.Core.Models;
 using SmartHotel.Clients.Core.ViewModels.Base;
+using SmartHotel.Services.Hotels.Domain.RoomService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,7 +13,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 {
     public class OrderItemPopupViewModel : ViewModelBase
     {
-        
+        public RestaurantMenuItem SelectedItem { get; set; }
         public OrderItemPopupViewModel()
         {          
           
@@ -28,30 +30,53 @@ namespace SmartHotel.Clients.Core.ViewModels
             if (navigationData != null)
             {
                 var navigationParameter = navigationData as Dictionary<string, object>;
-                ItemDetail = (string)navigationParameter["ItemDetail"] ;
-                ItemPrice = (decimal)navigationParameter["ItemPrice"];
+                SelectedItem = (RestaurantMenuItem)navigationParameter["SelectItem"];
+                ItemDetail = SelectedItem.MenuName;
+                ItemPrice = SelectedItem.MenuPrice;
                 TextButton = SetTextButton();
+                //if (App.OrderingCart.Where(item => item.id == SelectedItem.id) == null || (App.OrderingCart.Where(item=>item.id == SelectedItem.id)?.Count()) != 0)
+                //{
+                //    var Item = App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault();
+                //    Quantity = Item.Amount;
+                //    orderComment = Item.MenuComment;
+                //    IsAdded = true;
+                //}
             }
-
-            
         }
 
 
         private void AddOrder()
         {
-            //TODO แอด Item ลง List ของหน้าที่แล้ว
-            throw new NotImplementedException();
+            if (IsAdded)
+            {
+                App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().Amount = Quantity;
+                App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().MenuComment = OrderComment;
+            }
+            else
+            {
+                SelectedItem.Amount = Quantity;
+                SelectedItem.MenuComment = OrderComment;
+                var Orderlist = App.OrderingCart;
+                if (Orderlist==null)
+                {
+                    Orderlist = new List<RestaurantMenuItem>();
+                }
+                Orderlist.Add(SelectedItem);
+                App.OrderingCart = Orderlist;
+            }
         }
         private void DeleteOrder()
         {
-            //TODO ถ้ามีให้ลบออกจากลิส ถ้าไม่มีก็ไม่ต้องทำอะไร ปิดป็อปอัพไปเฉยๆ
-            throw new NotImplementedException();
+            if (IsAdd)
+            {
+                App.OrderingCart.RemoveAll(item => item.id == SelectedItem.id);
+            }
         }
 
         public virtual ICommand AddOrderCommand { get; set; }
         public virtual ICommand DeleteOderCommand { get; set; }
 
-
+        public bool IsAdded { get; set; } = false;
         private decimal itemPrice;
 
         public decimal ItemPrice
@@ -80,6 +105,15 @@ namespace SmartHotel.Clients.Core.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string orderComment;
+
+        public string OrderComment
+        {
+            get { return orderComment; }
+            set { orderComment = value; OnPropertyChanged(); }
+        }
+
 
         private string SetTextButton()
         {

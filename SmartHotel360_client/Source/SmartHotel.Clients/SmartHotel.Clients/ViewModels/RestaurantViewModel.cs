@@ -23,9 +23,9 @@ namespace SmartHotel.Clients.Core.ViewModels
         {
             ListMenu = new ObservableRangeCollection<RestaurantMenuItem>()
             {
-                new RestaurantMenuItem{ id = 0, ManuComment="testAdd" , ManuImg = "Babyfood38" , ManuName = "Food Name", MunuPrice = 500 },
-                new RestaurantMenuItem{ id = 1, ManuComment="testAdd2" , ManuImg = "Babyfood39" , ManuName = "Food Name2", MunuPrice = 400 },
-                new RestaurantMenuItem{ id = 2, ManuComment="testAdd3" , ManuImg = "Babyfood42" , ManuName = "Food Name3", MunuPrice = 300 },
+                new RestaurantMenuItem{ id = 0, MenuComment="testAdd" , MenuImg = "Babyfood38" , MenuName = "Food Name", MenuPrice = 500 },
+                new RestaurantMenuItem{ id = 1, MenuComment="testAdd2" , MenuImg = "Babyfood39" , MenuName = "Food Name2", MenuPrice = 400 },
+                new RestaurantMenuItem{ id = 2, MenuComment="testAdd3" , MenuImg = "Babyfood42" , MenuName = "Food Name3", MenuPrice = 300 },
                
             };
 
@@ -61,8 +61,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             RestaurantMenuItem data = ListMenu.FirstOrDefault(c => c.id == id);
             var navigationParameter = new Dictionary<string, object>
             {
-                { "ItemDetail", data.ManuName },
-                { "ItemPrice", data.MunuPrice },                
+                { "SelectItem", data}            
             };
             NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(navigationParameter, true);
         }
