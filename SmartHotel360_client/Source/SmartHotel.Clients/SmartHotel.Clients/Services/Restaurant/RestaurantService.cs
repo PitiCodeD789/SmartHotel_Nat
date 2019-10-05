@@ -16,6 +16,14 @@ namespace SmartHotel.Clients.Core.Services.Restaurant
             requestService = new RequestService();
         }
 
+        public Task<RoomServiceRequest> ConfirmOrderAsync(RoomServiceRequest roomServiceRequest, string token = "")
+        {
+            var builder = new UriBuilder(AppSettings.HotelsEndpoint);
+            builder.AppendToPath($"roomservice/order");
+            var uri = builder.ToString();
+            return requestService.PostAsync<RoomServiceRequest>(uri, roomServiceRequest, token);
+        }
+
         public Task<IEnumerable<MenuSearchResult>> GetMenusAsync(string token = "")
         {
             var builder = new UriBuilder(AppSettings.HotelsEndpoint);
@@ -29,5 +37,6 @@ namespace SmartHotel.Clients.Core.Services.Restaurant
 
             return requestService.GetAsync<IEnumerable<Models.MenuSearchResult>>(uri, token);
         }
+
     }
 }

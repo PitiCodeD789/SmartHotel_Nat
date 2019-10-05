@@ -9,5 +9,6 @@ namespace SmartHotel.Clients.Core.Services.Restaurant
     {
         Task<IEnumerable<Models.MenuSearchResult>> GetMenusAsync(string token = "");
 
+        Task<Models.RoomServiceRequest> ConfirmOrderAsync(Models.RoomServiceRequest roomServiceRequest, string token = "");
     }
 }
