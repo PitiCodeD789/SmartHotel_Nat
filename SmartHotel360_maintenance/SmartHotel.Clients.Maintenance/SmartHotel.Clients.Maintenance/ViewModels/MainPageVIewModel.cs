@@ -1,4 +1,5 @@
-﻿using SmartHotel.Clients.Maintenance.Services;
+﻿using SmartHotel.Clients.Maintenance.Models;
+using SmartHotel.Clients.Maintenance.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,29 +11,25 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
     public class MainPageViewModel
     {
         public HttpConnectionService _httpConnectionService = new HttpConnectionService();
+        private int hotelId { get; set; } = 11;
         public MainPageViewModel()
         {
             var list = new List<ServiceTaskList>();
             #region TestDataRegion
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    var sList = new ServiceTaskList()
-            //    {
-            //        new ServiceTask() { RoomNumber = i+"01", TaskName = "Clean Room", IsCompleted = true},
-            //        new ServiceTask() { RoomNumber = i+"02", TaskName = "Change Towels", IsCompleted = false },
-            //        new ServiceTask() { RoomNumber = i+"03", TaskName = "Room Service", IsCompleted = true }
-            //    };
-            //    var incompleted = sList.Where(s => s.IsCompleted == false).ToList();
-            //    var completed = sList.Where(s => s.IsCompleted == true).ToList(); //TODO: Add orderby datetime
-            //    sList.Clear();
-            //    sList.AddRange(incompleted);
-            //    sList.AddRange(completed);
-            //    sList.CreatedOn = DateTime.Now.AddDays(-i).Date.ToString("dddd, MMMM dd, yyyy");
-            //    list.Add(sList);
-            //}
+            var req = GetServiceTasks(hotelId);
+            var groupByDateTime = req.GroupBy(r => r.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy")).ToList();
+            foreach (var item in groupByDateTime)
+            {
+                var sList = new ServiceTaskList();
+                var incompleted = req.Where(s => s.IsCompleted == false && s.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy") == item.Key).ToList();
+                var completed = req.Where(s => s.IsCompleted == true && s.CreatedDate.Date.ToString("dddd, MMMM dd, yyyy") == item.Key).ToList(); //TODO: Add orderby datetime
+                sList.Clear();
+                sList.AddRange(incompleted);
+                sList.AddRange(completed);
+                sList.CreatedOn = item.Key;
+                list.Add(sList);
+            }
             #endregion
-            var req = GetServiceTasks();
-            list.Add(req);
             ListOfTasks = list;
             ListOfTasks = ListOfTasks.OrderByDescending(l => Convert.ToDateTime(l.CreatedOn)).ToList();
             PendingCount = 0;
@@ -48,16 +45,22 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             }
         }
 
-        private ServiceTaskList GetServiceTasks()
+        private ServiceTaskList GetServiceTasks(int hotelId)
         {
-            string hotelId = "11";
-            var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId).Result;
+            var httpResult = _httpConnectionService.HttpGet<List<RoomServiceRequest>>(ServiceEnumerables.Url.GetRoomServices,hotelId.ToString()).Result;
             var roomService = httpResult.Model;
             ServiceTaskList result = new ServiceTaskList();
             foreach (var item in roomService)
             {
                 result.Add(
-                    new ServiceTask() { RoomNumber = item.RoomNumber, TaskName = GetTaskName(item.ServiceTaskType), IsCompleted = true }
+                    new ServiceTask() 
+                    { 
+                        RoomNumber = item.RoomNumber, 
+                        TaskName = GetTaskName(item.ServiceTaskType), 
+                        IsCompleted = item.IsCompleted,
+                        CreatedDate = item.CreatedDate,
+                        OrderItems = item.OrderItems
+                    }
                 );
             }
             return result;
@@ -91,38 +94,9 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         }
     }
 
-    public class RoomServiceRequest
-    {
-        public int HotelId { get; set; }
-        public int BookingId { get; set; }
-        public string UserId { get; set; }
-        public string RoomNumber { get; set; }
-        public int ServiceTaskType { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
-    }
-
-    public class OrderItem
-    {
-        public int Id { get; set; }
-        public int ServiceTaskId { get; set; }
-        public int OrderItemId { get; set; }
-        public int OrderItemAmount { get; set; }
-        public string OrderItemDescription { get; set; }
-    }
 
 
-    public class ServiceTask
-    {
-        public string RoomNumber { get; set; }
-        public string TaskName { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool IsIncompleted { get { return !IsCompleted; } }
-    }
 
-    public class ServiceTaskList : List<ServiceTask>
-    {
-        public bool IsToday { get { return (Convert.ToDateTime(CreatedOn) == DateTime.Now.Date); } }
-        public string CreatedOn { get; set; }
-        public List<ServiceTask> ServiceTasks => this;
-    }
+
+
 }

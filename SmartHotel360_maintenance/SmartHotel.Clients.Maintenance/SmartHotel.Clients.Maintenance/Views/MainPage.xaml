@@ -82,7 +82,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <BoxView HeightRequest="50" WidthRequest="50" Grid.RowSpan="2" VerticalOptions="FillAndExpand" BackgroundColor="#46989D" Margin="10,0"/>
-                                    <Label Text="{Binding RoomNumber, StringFormat='Room Number {0}'}" Grid.Column="1" Grid.Row="0" Style="{StaticResource Room}"/>
+                                    <Label Text="{Binding RoomNumber, StringFormat='Room {0}'}" Grid.Column="1" Grid.Row="0" Style="{StaticResource Room}"/>
                                     <Label Text="{Binding TaskName}" Grid.Column="1" Grid.Row="1" Style="{StaticResource Detail}"/>
                                     <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="0" VerticalOptions="Start" IsVisible="{Binding IsCompleted}" HorizontalOptions="End">
                                         <Label Text="Resolved" Style="{StaticResource CompleteStatus}" VerticalOptions="Center"/>
