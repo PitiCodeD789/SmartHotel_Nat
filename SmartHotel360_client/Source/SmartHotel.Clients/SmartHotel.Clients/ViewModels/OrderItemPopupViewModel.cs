@@ -15,7 +15,8 @@ namespace SmartHotel.Clients.Core.ViewModels
     public class OrderItemPopupViewModel : ViewModelBase
     {
         public RestaurantMenuItem SelectedItem { get; set; }
-        public RestaurantViewModel restaurantViewModel;
+        public RestaurantViewModel RestaurantViewModel;
+        public ConfirmOrderViewModel ConfirmOrderViewModel;
     public OrderItemPopupViewModel()
         {          
           
@@ -33,7 +34,15 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 var navigationParameter = navigationData as Dictionary<string, object>;
                 SelectedItem = (RestaurantMenuItem)navigationParameter["SelectItem"];
-                restaurantViewModel = (RestaurantViewModel)navigationParameter["RestaurantViewModel"];               
+                bool isConfirmPage = (bool)navigationParameter["IsConfirmPage"];
+                if (isConfirmPage)
+                {
+                    ConfirmOrderViewModel = (ConfirmOrderViewModel)navigationParameter["ViewModel"];
+                }
+                else
+                {
+                    RestaurantViewModel = (RestaurantViewModel)navigationParameter["ViewModel"];
+                }
                 ItemDetail = SelectedItem.MenuName;
                 ItemPrice = SelectedItem.MenuPrice;
                 TextButton = SetTextButton();
@@ -58,7 +67,6 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().Amount = Quantity;
                 App.OrderingCart.Where(item => item.id == SelectedItem.id).FirstOrDefault().MenuComment = OrderComment;
-                restaurantViewModel.update();
             }
             else
             {
@@ -71,7 +79,15 @@ namespace SmartHotel.Clients.Core.ViewModels
                 }
                 Orderlist.Add(SelectedItem);
                 App.OrderingCart = Orderlist;
-                restaurantViewModel.update();
+            }
+
+            if (ConfirmOrderViewModel == null)
+            {
+                RestaurantViewModel.update();
+            }
+            else
+            {
+                ConfirmOrderViewModel.update();
             }
 
             Pop();
@@ -83,18 +99,21 @@ namespace SmartHotel.Clients.Core.ViewModels
                 App.OrderingCart.RemoveAll(item => item.id == SelectedItem.id);
                 
                 Pop();
-                restaurantViewModel.update();
+
+                if (ConfirmOrderViewModel == null)
+                {
+                    RestaurantViewModel.update();
+                }
+                else
+                {
+                    ConfirmOrderViewModel.update();
+                }
             }
         }
 
         public void Pop()
         {
             PopupNavigation.Instance.PopAsync();
-        }
-
-        Task GoToConfirmOrderViewModel()
-        {
-            return NavigationService.NavigateToAsync<ConfirmOrderViewModel>();
         }
 
         public virtual ICommand AddOrderCommand { get; set; }

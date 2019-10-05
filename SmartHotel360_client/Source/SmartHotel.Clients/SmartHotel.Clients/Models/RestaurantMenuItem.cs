@@ -12,5 +12,16 @@ namespace SmartHotel.Clients.Core.Models
         public string MenuComment { get; set; }
         public string MenuImg { get; set; }
         public int Amount { get; set; }
+
+        public string TotalItemsPrice
+        {
+            get { return (MenuPrice*Amount).ToString("N0"); }
+        }
+        public string AmountX
+        {
+            get { return Amount+"X"; }
+        }
+
+
     }
 }

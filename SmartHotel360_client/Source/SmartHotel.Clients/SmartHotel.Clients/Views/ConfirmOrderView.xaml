@@ -4,8 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:Name="PageRef"
              xmlns:local="clr-namespace:SmartHotel.Clients.Core.Views.Component"
-             x:Class="SmartHotel.Clients.Core.Views.ConfirmOrderView">
+             x:Class="SmartHotel.Clients.Core.Views.ConfirmOrderView"
+             xmlns:ViewModel="clr-namespace:SmartHotel.Clients.Core.ViewModels">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
@@ -25,12 +27,12 @@
                         </Label>
                     </StackLayout>
                     <Frame>
-                        <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">
+                        <StackLayout x:Name="Stack" BindableLayout.ItemsSource="{Binding ItemList}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding EditOrder}"/>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.EditOrderCommand,Source={x:Reference PageRef}}" CommandParameter="{Binding id}"/>
                                         </StackLayout.GestureRecognizers>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -38,9 +40,9 @@
                                                 <ColumnDefinition Width="70*"/>
                                                 <ColumnDefinition Width="15*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="1X" Grid.Column="0"/>
-                                            <Label Text="ข้าวกระเพราหมูสับ + ไข่ดาว + น้ำเก็กฮวย + ซุปกระดูกหมู" Grid.Column="1"/>
-                                            <Label Text="60" Grid.Column="2"/>
+                                            <Label Text="{Binding AmountX}" Grid.Column="0"/>
+                                            <Label Text="{Binding MenuName}" Grid.Column="1"/>
+                                            <Label Text="{Binding TotalItemsPrice}" Grid.Column="2"/>
                                         </Grid>
                                         <BoxView BackgroundColor="Silver" HeightRequest="1"  HorizontalOptions="FillAndExpand"/>
                                     </StackLayout>
@@ -56,7 +58,7 @@
                         <Label Text="TotalPrice"/>
                         <Label Text="{Binding TotalPrice}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
-                    <local:OrderButton TextButton="{Binding OrderText}" WidthRequest="50"/>
+                    <local:OrderButton SetText="Confirm Order" WidthRequest="50"/>
                 </StackLayout>
             </Frame>
         </StackLayout>

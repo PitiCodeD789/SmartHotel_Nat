@@ -62,7 +62,8 @@ namespace SmartHotel.Clients.Core.ViewModels
             var navigationParameter = new Dictionary<string, object>
             {
                 { "SelectItem", data} ,
-                { "RestaurantViewModel", this}
+                { "ViewModel", this},
+                { "IsConfirmPage",false }
             };
             NavigationService.NavigateToPopupAsync<OrderItemPopupViewModel>(navigationParameter, true);
         }
@@ -132,14 +133,14 @@ namespace SmartHotel.Clients.Core.ViewModels
         public void update()
         {
             var order = App.OrderingCart;
+            int numItem = 0;
             decimal totalAmounnt = 0;
             foreach(RestaurantMenuItem item in order)
             {
                 totalAmounnt = totalAmounnt + (item.MenuPrice * item.Amount);
-
+                numItem = numItem + item.Amount;
             }
 
-            int numItem = order.Count;
             if(numItem > 0)
             {
                 IsVisbleCart = true;
