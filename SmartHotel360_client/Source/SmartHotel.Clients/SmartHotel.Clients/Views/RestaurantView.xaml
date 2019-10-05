@@ -54,9 +54,9 @@
                                                         <Image  HeightRequest="90" WidthRequest="90" VerticalOptions="CenterAndExpand" 
                                                                Aspect="AspectFit" Source="{Binding MenuImg}"/>
                                                             <StackLayout VerticalOptions="CenterAndExpand">
-                                                                <Label   VerticalOptions="CenterAndExpand" FontSize="20"
+                                                                <Label   VerticalOptions="CenterAndExpand" FontSize="18" LineBreakMode="TailTruncation"
                                                                Text="{Binding MenuName, Mode=TwoWay}" />
-                                                            <Label  Text="{Binding MenuComment, Mode=TwoWay}" VerticalOptions="Start" FontSize="20"  />
+                                                            <Label  Text="{Binding MenuComment, Mode=TwoWay}" VerticalOptions="Start" FontSize="15" LineBreakMode="TailTruncation"  />
                                                         </StackLayout>
                                                         <Label Text="{Binding MenuPrice}" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
                                                     </StackLayout>                                                    
