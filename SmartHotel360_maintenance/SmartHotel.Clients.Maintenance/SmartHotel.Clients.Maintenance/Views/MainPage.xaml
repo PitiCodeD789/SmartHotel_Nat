@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SmartHotel.Clients.Maintenance.Views.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="Room">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+            <Style TargetType="Label" x:Key="CompleteStatus">
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="#46989D"/>
+            </Style>
+            <Style TargetType="Label" x:Key="IncompleteStatus">
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="#ED0241"/>
+            </Style>
+            <Style TargetType="Label" x:Key="Detail">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="#46989D"/>
+            </Style>
+            <Style TargetType="Label" x:Key="Date">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="#46989D"/>
+            </Style>
+            <Style TargetType="Label" x:Key="Today">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <BoxView BackgroundColor="#203446" HeightRequest="50" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Label Text="REPORTS" TextColor="White" FontSize="Large" VerticalOptions="Center" Margin="20,20"/>
+            <Frame Padding="0" BackgroundColor="#ED0241" HeightRequest="30" WidthRequest="30" HorizontalOptions="End" VerticalOptions="Center" CornerRadius="15" Margin="20">
+                <Label Text="{Binding PendingCount}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Frame>
+            <ListView ItemsSource="{Binding ListOfTasks}"
+                      SelectionMode="None"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      IsGroupingEnabled="true"
+                      Grid.Row="1">
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="20,10">
+                                <Label Text="Today" Style="{StaticResource Today}" IsVisible="{Binding IsToday}"/>
+                                <Label Text="{Binding CreatedOn}" Style="{StaticResource Date}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
+                                VerticalOptions="Center"
+                                CornerRadius="4"
+                                HasShadow="True"
+                                BackgroundColor="White"
+                                Padding="10"
+                                Margin="10,5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <BoxView HeightRequest="50" WidthRequest="50" Grid.RowSpan="2" VerticalOptions="FillAndExpand" BackgroundColor="#46989D" Margin="10,0"/>
+                                    <Label Text="{Binding RoomNumber, StringFormat='Room Number {0}'}" Grid.Column="1" Grid.Row="0" Style="{StaticResource Room}"/>
+                                    <Label Text="{Binding TaskName}" Grid.Column="1" Grid.Row="1" Style="{StaticResource Detail}"/>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="0" VerticalOptions="Start" IsVisible="{Binding IsCompleted}" HorizontalOptions="End">
+                                        <Label Text="Resolved" Style="{StaticResource CompleteStatus}" VerticalOptions="Center"/>
+                                        <BoxView HeightRequest="10" WidthRequest="10" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#46989D" CornerRadius="20"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="2" Grid.Row="0" VerticalOptions="Start" IsVisible="{Binding IsIncompleted}" HorizontalOptions="End">
+                                        <Label Text="Pending" Style="{StaticResource IncompleteStatus}" VerticalOptions="Center"/>
+                                        <BoxView HeightRequest="10" WidthRequest="10" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#ED0241" CornerRadius="20"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
