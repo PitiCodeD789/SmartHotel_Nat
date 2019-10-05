@@ -10,6 +10,9 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using SmartHotel.Services.Hotels.Domain.RoomService;
+using System.Collections.Generic;
+using SmartHotel.Clients.Core.Models;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SmartHotel.Clients
@@ -17,6 +20,7 @@ namespace SmartHotel.Clients
     public partial class App : Application
     {
         public static PublicClientApplication AuthenticationClient { get; set; }
+        public static List<RestaurantMenuItem> OrderingCart { get; set; }
 
         static App()
         {

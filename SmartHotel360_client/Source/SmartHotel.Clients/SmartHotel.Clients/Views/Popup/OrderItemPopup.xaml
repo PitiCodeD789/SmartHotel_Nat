@@ -30,11 +30,11 @@
                 <Label Text="{Binding ItemDetail}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="StartAndExpand" 
-                       Grid.Column="0"/>
+                       Grid.Column="0" FontSize="22"/>
                 <Label Text="{Binding ItemPrice}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
-                       Grid.Column="1"/>
+                       Grid.Column="1" FontSize="22"/>
             </Grid>
         </Frame>
         <Frame HasShadow="True">

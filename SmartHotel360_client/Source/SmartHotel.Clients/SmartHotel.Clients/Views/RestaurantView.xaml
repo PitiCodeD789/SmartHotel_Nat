@@ -51,13 +51,13 @@
                                                                 </StackLayout.GestureRecognizers>
                                                           
                                                         <Image  HeightRequest="90" WidthRequest="90" VerticalOptions="CenterAndExpand" 
-                                                               Aspect="AspectFit" Source="{Binding ManuImg}"/>
+                                                               Aspect="AspectFit" Source="{Binding MenuImg}"/>
                                                             <StackLayout VerticalOptions="CenterAndExpand">
                                                                 <Label   VerticalOptions="CenterAndExpand" FontSize="20"
-                                                               Text="{Binding ManuName, Mode=TwoWay}" />
-                                                            <Label  Text="{Binding ManuComment, Mode=TwoWay}" VerticalOptions="Start" FontSize="20"  />
+                                                               Text="{Binding MenuName, Mode=TwoWay}" />
+                                                            <Label  Text="{Binding MenuComment, Mode=TwoWay}" VerticalOptions="Start" FontSize="20"  />
                                                         </StackLayout>
-                                                        <Label Text="{Binding MunuPrice}" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
+                                                        <Label Text="{Binding MenuPrice}" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
                                                     </StackLayout>                                                    
                                             
                                          </DataTemplate>
@@ -68,17 +68,10 @@
                                 </Frame>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
-                        
                     </StackLayout>
-                 
                
                     </StackLayout>
-                    
-                    
-            
-
             </Grid>
-            
             </ScrollView>
         </Grid>
     </ContentPage.Content>
