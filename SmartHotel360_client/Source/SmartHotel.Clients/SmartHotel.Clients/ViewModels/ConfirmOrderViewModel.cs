@@ -1,4 +1,5 @@
 ﻿using SmartHotel.Clients.Core.Models;
+using SmartHotel.Clients.Core.Services.Restaurant;
 using SmartHotel.Clients.Core.ViewModels.Base;
 using SmartHotel.Services.Hotels.Domain.RoomService;
 using System;
@@ -14,9 +15,11 @@ namespace SmartHotel.Clients.Core.ViewModels
 {
     public class ConfirmOrderViewModel : ViewModelBase
     {
+        private IRestaurantService restaurantService;
         public ConfirmOrderViewModel()
         {
-            OrderItems = App.OrderingCart;
+            restaurantService = new RestaurantService();
+        OrderItems = App.OrderingCart;
             TotalPrice = CalTotalPrice();
             EditOrderCommand = new Command<int>(EditOrder);
         }
@@ -111,5 +114,65 @@ namespace SmartHotel.Clients.Core.ViewModels
             return Total.ToString("C");
         }
 
+        public ICommand ConfirmOrderCommand => new Command(ConfirmOrder);
+
+        private async void ConfirmOrder(object obj)
+        {
+            var orderList = App.OrderingCart;
+            int roomid = 205;// int.Parse(AppSettings.RoomId);
+            int hotelId = 11;// AppSettings.HotelId;
+            string roomNumber = "205";// AppSettings.RoomId;
+            string userId = "11";// AppSettings.User.Id;
+            int serviceTaskType = 1;
+            int total = 0;
+            decimal totalPrice = 0;
+           
+            foreach(RestaurantMenuItem item in orderList)
+            {
+                totalPrice = totalPrice + (item.MenuPrice * (decimal)item.Amount);
+                total = total + item.Amount;
+            }
+
+            string mess = $"Total Order : {total}" + $"Total Price : {totalPrice} $";
+
+            if (await DialogService.ShowConfirmAsync(mess, $"Order Room Number {roomNumber} ", "Confirm", "cancel"))
+            {
+
+                List<OrderItem> orderItem = orderList.Select(c => new OrderItem()
+                {
+                    OrderItemAmount = c.Amount,
+                    OrderItemDescription = c.MenuComment,
+                    Item = c.MenuName,
+                    OrderItemId = c.id
+                }).ToList();
+
+                RoomServiceRequest roomServiceRequest = new RoomServiceRequest()
+                {
+                    BookingId = roomid,
+                    HotelId = hotelId,
+                    RoomNumber = roomNumber,
+                    UserId = userId,
+                    ServiceTaskType = serviceTaskType,
+                    OrderItems = orderItem
+                };
+
+            var orderConfirmCallBack = await restaurantService.ConfirmOrderAsync(roomServiceRequest);
+             
+                if(orderConfirmCallBack.Status == "Success")
+                {
+                   await NavigationService.NavigateToAsync<MyRoomViewModel>(true);
+                   await NavigationService.RemoveLastFromBackStackAsync();
+                }
+                else
+                {
+                await DialogService.ShowAlertAsync(orderConfirmCallBack.Status, "Order Error", "Ok");
+                }
+                
+            }
+            // public List<OrderItem> OrderItems { get; set; }
+
+
+
+        }
     }
 }

@@ -94,5 +94,20 @@ namespace SmartHotel.Services.Hotels.Queries
             hotels.ForEach(hsr => hsr.Picture = hsr.NumPhotos > 0 ? $"pichotels/{hsr.Id}_1.png" : "");
             return hotels;
         }
+
+        public List<HotelSearchResult> GetHotelAndId()
+        {
+            var query = _db.Hotels;
+            List<HotelSearchResult> hotels = new List<HotelSearchResult>();
+            foreach (var hotel in query)
+            {
+                hotels.Add(new HotelSearchResult
+                {
+                    Id = hotel.Id,
+                    Name = hotel.Name
+                });
+            }
+            return hotels;
+        }
     }
 }

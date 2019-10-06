@@ -11,12 +11,27 @@ using Firebase.Iid;
 using Firebase.Messaging;
 using Android.Gms.Common;
 using Firebase;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using SmartHotel.Clients.Maintenance.ViewModels;
 
 namespace SmartHotel.Clients.Maintenance.Droid
 {
     [Activity(Label = "SmartHotel.Clients.Maintenance", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public MainActivity()
+        {
+            MessagingCenter.Subscribe<InputPageViewModel, string>(this, "Topic", (sender, arg) =>
+            {
+                FirebaseMessaging.Instance.SubscribeToTopic(arg);
+            });
+        }
+        public void CallAllAgain()
+        {
+            LoadApplication(new App());
+        }
+
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -29,13 +44,19 @@ namespace SmartHotel.Clients.Maintenance.Droid
             FirebaseApp.InitializeApp(this);
             try
             {
-                string notiToken = FirebaseInstanceId.Instance.Token;
-
-                await SecureStorage.SetAsync("notiToken", notiToken);
-
-                FirebaseMessaging.Instance.SubscribeToTopic("Group1_Topic");
+                await SetTopic();
 
                 await SecureStorage.SetAsync("Available", IsPlayServicesAvailable());
+
+                string notiToken = FirebaseInstanceId.Instance.Token;
+
+                if (!String.IsNullOrEmpty(notiToken))
+                {
+                    await SecureStorage.SetAsync("notiToken", notiToken);
+                    App.StatusToken = true;
+                }
+
+                
             }
             catch (Exception e)
             {
@@ -70,6 +91,26 @@ namespace SmartHotel.Clients.Maintenance.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public async Task SetTopic()
+        {
+            try
+            {
+                var topic = await SecureStorage.GetAsync("Topic");
+
+                if (String.IsNullOrEmpty(topic))
+                {
+                    topic = "0";
+                }
+
+                FirebaseMessaging.Instance.SubscribeToTopic(topic);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
     }
 }

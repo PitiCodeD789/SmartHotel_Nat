@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:binding="clr-namespace:SmartHotel.Clients.Maintenance.ViewModels"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="SmartHotel.Clients.Maintenance.Views.InputPage">
+    <ContentPage.BindingContext>
+        <binding:InputPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Picker Title="Input Hotel" 
+                    TitleColor="Black" 
+                    FontSize="18" 
+                    TextColor="Black" 
+                    ItemsSource="{Binding Hotels}" 
+                    SelectedItem="{Binding SelectHotel}" 
+                    HorizontalOptions="Center"
+                    WidthRequest="400"/>
+            <Button Text="Input" 
+                    CornerRadius="20" 
+                    FontSize="28" 
+                    TextColor="Black" 
+                    BackgroundColor="LimeGreen" 
+                    Command="{Binding InputHotel}" 
+                    IsVisible="{Binding ButtonVisible}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

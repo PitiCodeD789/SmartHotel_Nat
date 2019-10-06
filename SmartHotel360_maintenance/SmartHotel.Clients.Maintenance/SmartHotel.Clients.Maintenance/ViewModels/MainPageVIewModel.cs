@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Maintenance.ViewModels
@@ -23,6 +25,13 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
             CompleteDeliveryCommand = new Command<ServiceTask>(CompleteDelivery);
             CompleteMenuDeliveryCommand = new Command(CompleteMenuDelivery);
             RefreshListCommand = new Command(UpdateServiceTask);
+            MessagingCenter.Subscribe<IMyMessagingService>(this, "ReData", (sender) =>
+            {
+                UpdateServiceTask();
+            });
+
+            //TODO : Pre Delete
+            Clear = new Command(ClearSecureStorage);
         }
         public Command DeliverServiceCommand { get; set; }
         public Command CompleteDeliveryCommand { get; set; }
@@ -191,9 +200,14 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        //TODO : Pre Delete
+        public ICommand Clear { get; set; }
+        public void ClearSecureStorage()
+        {
+            SecureStorage.Remove("Topic");
+        }
     }
-
-
 
 
 

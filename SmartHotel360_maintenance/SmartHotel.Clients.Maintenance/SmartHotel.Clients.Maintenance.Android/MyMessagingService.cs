@@ -11,12 +11,15 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Firebase.Messaging;
+using Java.Lang;
+using SmartHotel.Clients.Maintenance.Views;
+using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Maintenance.Droid
 {
     [Service]
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
-    public class MyMessagingService : FirebaseMessagingService
+    public class MyMessagingService : FirebaseMessagingService, IMyMessagingService
     {
         private readonly string NOTIFICATION_CHANNEL_ID = "com.companyname.smarthotel.clients.maintenance";
 
@@ -30,6 +33,7 @@ namespace SmartHotel.Clients.Maintenance.Droid
             {
                 SentNotification(message.Data);
             }
+            MessagingCenter.Send<IMyMessagingService>(this, "ReData");
         }
 
         private void SentNotification(IDictionary<string, string> data)

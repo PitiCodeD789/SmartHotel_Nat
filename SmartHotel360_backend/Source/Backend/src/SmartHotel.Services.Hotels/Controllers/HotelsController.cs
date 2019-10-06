@@ -99,6 +99,11 @@ namespace SmartHotel.Services.Hotels.Controllers
             return Ok(rooms);
         }
 
-
+        [HttpGet]
+        public async Task<ActionResult> GetHotels()
+        {
+            var hotels = _hotelsSearchQuery.GetHotelAndId();
+            return Ok(hotels);
+        }
     }
 }

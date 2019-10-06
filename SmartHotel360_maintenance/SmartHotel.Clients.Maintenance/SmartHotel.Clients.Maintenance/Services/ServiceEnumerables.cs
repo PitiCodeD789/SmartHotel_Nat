@@ -9,8 +9,10 @@ namespace SmartHotel.Clients.Maintenance.Services
         public enum Url
         {
             GetRoomServices,
-            UpdateServiceTask
+            UpdateServiceTask,
+            GetAllHotel
         }
+
         public enum HttpConnectionError
         {
             CannotRetrieveSecureStorage,
@@ -24,6 +26,7 @@ namespace SmartHotel.Clients.Maintenance.Services
             {
                 Values.BaseUrl+"RoomService/order/",
                 Values.BaseUrl+"RoomService/UpdateServiceTask/",
+                Values.BaseUrl+"Hotels",
             };
     }
 }
