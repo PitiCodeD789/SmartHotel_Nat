@@ -206,6 +206,7 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         public void ClearSecureStorage()
         {
             SecureStorage.Remove("Topic");
+            MessagingCenter.Send<MainPageViewModel, string>(this, "Topic", "0");
             Application.Current.MainPage = new NavigationPage(new InputPage());
         }
     }

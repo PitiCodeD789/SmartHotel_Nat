@@ -26,6 +26,10 @@ namespace SmartHotel.Clients.Maintenance.Droid
             {
                 FirebaseMessaging.Instance.SubscribeToTopic(arg);
             });
+            MessagingCenter.Subscribe<MainPageViewModel, string>(this, "Topic", (sender, arg) =>
+            {
+                FirebaseMessaging.Instance.SubscribeToTopic(arg);
+            });
         }
 
         protected async override void OnCreate(Bundle savedInstanceState)

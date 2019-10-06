@@ -17,6 +17,12 @@ namespace SmartHotel.Clients.Maintenance.Views
         {
             InitializeComponent();
             BindingContext = new MainPageViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
             if (!App.StatusToken)
             {
                 DisplayAlert("Error", "ไม่สามารถเปิด Notification ได้\nกรุณาปิดและเปิด Application นี้ใหม่อีกครั้ง", "OK");
