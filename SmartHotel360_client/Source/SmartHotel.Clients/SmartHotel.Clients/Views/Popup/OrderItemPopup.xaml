@@ -43,15 +43,15 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="คำแนะนำพิเศษ " FontSize="22" TextColor="Black"/>
-                                <Span Text="ไม่จำเป็นต้องระบุ"/>
+                                <Span Text="Special Requirements" FontSize="22" TextColor="Black"/>
+                                <Span Text=" Optional"/>
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Entry Text="{Binding OrderComment}" Placeholder="เช่นไม่เผ็ด"/>
+                <Entry Text="{Binding OrderComment}" Placeholder="Not Spicy" MaxLength="100"/>
                 <StackLayout Orientation="Horizontal">
-                    <Stepper Value="{Binding Quantity,Mode=TwoWay}" Minimum="0"/>
+                    <Stepper Value="{Binding Quantity,Mode=TwoWay}" Minimum="0" Maximum="20"/>
                     <Label VerticalOptions="CenterAndExpand">
                         <Label.FormattedText>
                             <FormattedString>

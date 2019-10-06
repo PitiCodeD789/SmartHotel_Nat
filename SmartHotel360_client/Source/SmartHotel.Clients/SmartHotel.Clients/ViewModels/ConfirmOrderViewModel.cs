@@ -22,6 +22,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         OrderItems = App.OrderingCart;
             TotalPrice = CalTotalPrice();
             EditOrderCommand = new Command<int>(EditOrder);
+            Room = "Room No.101";
         }
 
         public virtual ICommand EditOrderCommand { get; set; }
@@ -61,7 +62,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 
         private string room;
 
-        public string Room
+        public string Room 
         {
             get { return room; }
             set { room = value; OnPropertyChanged(); }
@@ -111,7 +112,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 Total = Total + (item.MenuPrice * item.Amount);
             }
-            return Total.ToString("N0");
+            return Total.ToString("C");
         }
 
         public ICommand ConfirmOrderCommand => new Command(ConfirmOrder);

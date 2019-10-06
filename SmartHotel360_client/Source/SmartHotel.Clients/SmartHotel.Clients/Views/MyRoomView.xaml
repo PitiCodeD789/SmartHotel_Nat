@@ -671,7 +671,7 @@
                                     Animate="True"
                                     Checked="False">
                                     <controls:ToggleButton.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding GoMyRestaurantCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding GoServiceHistoryommand}"/>
                                     </controls:ToggleButton.GestureRecognizers>
                                     <controls:ToggleButton.WidthRequest>
                                         <OnIdiom

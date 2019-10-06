@@ -15,5 +15,7 @@ namespace SmartHotel.Services.Hotels.Domain.RoomService
         public string Item { get; set; }
         public int OrderItemAmount { get; set; }
         public string OrderItemDescription { get; set; }
+        public decimal Price { get; set; }
+
     }
 }

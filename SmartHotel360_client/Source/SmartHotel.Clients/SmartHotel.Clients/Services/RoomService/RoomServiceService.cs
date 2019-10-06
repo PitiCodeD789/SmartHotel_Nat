@@ -15,16 +15,18 @@ namespace SmartHotel.Clients.Core.Services.RoomService
         {
             requestService = new RequestService();
         }
-        public Task<IEnumerable<List<Models.RoomService>>> GetRoomServiceHistoryAsync(string token = "")
+        public Task<IEnumerable<Models.RoomService>> GetRoomServiceHistoryAsync(string token = "")
         {
             var builder = new UriBuilder(AppSettings.HotelsEndpoint);
-            int Hotelid = int.Parse(AppSettings.HotelId);
+            int Hotelid = int.Parse( AppSettings.HotelId);
+            Hotelid = 11;
+            int bookingId = 1;
 
-            builder.AppendToPath($"roomservice/{Hotelid}/menus");
+            builder.AppendToPath($"roomservice/order/booking/{bookingId}");
 
             var uri = builder.ToString();
 
-            return requestService.GetAsync<IEnumerable<List<Models.RoomService>>>(uri, token);
+            return requestService.GetAsync<IEnumerable<Models.RoomService>>(uri, token);
         }
     }
 }
