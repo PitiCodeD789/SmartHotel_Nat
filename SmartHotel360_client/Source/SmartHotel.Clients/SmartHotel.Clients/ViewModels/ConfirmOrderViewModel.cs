@@ -119,6 +119,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 
         private async void ConfirmOrder(object obj)
         {
+            IsBusy = true;
             var orderList = App.OrderingCart;
             int roomid = 205;// int.Parse(AppSettings.RoomId);
             int hotelId = 11;// AppSettings.HotelId;
@@ -171,7 +172,7 @@ namespace SmartHotel.Clients.Core.ViewModels
                 
             }
             // public List<OrderItem> OrderItems { get; set; }
-
+            IsBusy = false;
 
 
         }
