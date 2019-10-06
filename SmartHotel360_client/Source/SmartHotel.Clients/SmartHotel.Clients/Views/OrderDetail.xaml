@@ -16,8 +16,8 @@
             <Frame VerticalOptions="FillAndExpand">
                 <StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Order Id."/>
-                        <Label Text="{Binding SelectedItem.Id}" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Order Id. "/>
+                        <Label Text="{Binding SelectedItem.Id}"/>
                     </StackLayout>
                     <Label Text="Order Detail"/>
                     <StackLayout BindableLayout.ItemsSource="{Binding OrderItem}">

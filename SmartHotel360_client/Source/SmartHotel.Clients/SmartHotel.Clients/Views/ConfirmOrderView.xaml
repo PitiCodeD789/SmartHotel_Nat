@@ -10,7 +10,8 @@
              xmlns:ViewModel="clr-namespace:SmartHotel.Clients.Core.ViewModels"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#d6d6d6">
+        <Grid>
+            <StackLayout BackgroundColor="#d6d6d6">
             <Frame>
                 <Label Text="{Binding Room}"
                 HorizontalOptions="CenterAndExpand" 
@@ -18,7 +19,7 @@
             </Frame>
             <ScrollView>
                 <StackLayout>
-                        <Label Text="   TotalOrder" TextColor="Black"/>
+                    <Label Text="   TotalOrder" TextColor="Black"/>
                     <Frame>
                         <StackLayout x:Name="Stack" BindableLayout.ItemsSource="{Binding ItemList}">
                             <BindableLayout.ItemTemplate>
@@ -55,5 +56,10 @@
                 </StackLayout>
             </Frame>
         </StackLayout>
+        <ActivityIndicator
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    Color="Gray" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
