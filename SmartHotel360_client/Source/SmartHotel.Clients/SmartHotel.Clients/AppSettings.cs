@@ -29,7 +29,7 @@ namespace SmartHotel.Clients.Core
 
         // Bots
         const string defaultSkypeBotId = "87e0cdb5-8e79-4592-9dc8-11697ffe79cc";
-        const string defaultDeskPhoneNo = "0856305930";
+        const string defaultDeskPhoneNo = "+66856305930";
 
 
         // B2c

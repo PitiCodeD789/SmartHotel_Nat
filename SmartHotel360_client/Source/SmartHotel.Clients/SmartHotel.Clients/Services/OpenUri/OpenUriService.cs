@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Messaging;
+using System;
 using Xamarin.Forms;
 
 namespace SmartHotel.Clients.Core.Services.OpenUri
@@ -11,7 +12,11 @@ namespace SmartHotel.Clients.Core.Services.OpenUri
 
         public void PhoneCall(string deskPhoneNo)
         {
-            throw new NotImplementedException();
+            var phoneCall = CrossMessaging.Current.PhoneDialer;
+            if (phoneCall.CanMakePhoneCall)
+            {
+                phoneCall.MakePhoneCall(deskPhoneNo, "HotelDesk");
+            }
         }
     }
 }
