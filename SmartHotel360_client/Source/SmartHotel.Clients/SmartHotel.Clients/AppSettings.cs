@@ -29,6 +29,8 @@ namespace SmartHotel.Clients.Core
 
         // Bots
         const string defaultSkypeBotId = "87e0cdb5-8e79-4592-9dc8-11697ffe79cc";
+        const string defaultDeskPhoneNo = "+66856305930";
+
 
         // B2c
         public const string B2cAuthority = "https://login.microsoftonline.com/";
@@ -41,6 +43,7 @@ namespace SmartHotel.Clients.Core
 
 		// Room Devices
 	    const string defaultRoomId = "";
+        const string defaultHotelId = "11";
 
         // Fakes
         const bool defaultUseFakes = false;
@@ -120,6 +123,12 @@ namespace SmartHotel.Clients.Core
             set => Preferences.Set(nameof(SkypeBotId), value);
         }
 
+        public static string DeskPhoneNo
+        {
+            get => Preferences.Get(nameof(DeskPhoneNo), defaultDeskPhoneNo);
+            set => Preferences.Set(nameof(DeskPhoneNo), value);
+        }
+
         // Other settings
 
         public static string BingMapsApiKey
@@ -183,6 +192,12 @@ namespace SmartHotel.Clients.Core
 		    get => Preferences.Get(nameof(RoomId), defaultRoomId);
 		    set => Preferences.Set(nameof(RoomId), value);
 	    }
-        public static int HotelId { get;  set; }
+
+        public static string HotelId
+        {
+            get => Preferences.Get(nameof(HotelId), defaultHotelId);
+            set => Preferences.Set(nameof(HotelId), value);
+        }
+       // public static int HotelId { get;  set; }
     }
 }

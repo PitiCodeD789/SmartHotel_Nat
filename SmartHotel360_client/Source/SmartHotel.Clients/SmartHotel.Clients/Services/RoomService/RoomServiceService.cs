@@ -18,7 +18,7 @@ namespace SmartHotel.Clients.Core.Services.RoomService
         public Task<IEnumerable<Models.RoomService>> GetRoomServiceHistoryAsync(string token = "")
         {
             var builder = new UriBuilder(AppSettings.HotelsEndpoint);
-            int Hotelid = AppSettings.HotelId;
+            int Hotelid = int.Parse( AppSettings.HotelId);
             Hotelid = 11;
             int bookingId = 1;
 
