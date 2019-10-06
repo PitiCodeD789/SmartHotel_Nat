@@ -212,7 +212,9 @@ namespace SmartHotel.Clients.Core.ViewModels
                                                
                     AppSettings.HasBooking = true;
                     AppSettings.HotelId =Hotel.Id.ToString();
-
+                    AppSettings.RoomId = newBooking.Rooms.FirstOrDefault().RoomId.ToString();
+                    App.OrderingCart = null;
+                    App.CatagoriesList = null;
                     await NavigationService.NavigateToAsync<MainViewModel>();
 
                     MessagingCenter.Send(newBooking, MessengerKeys.BookingRequested);

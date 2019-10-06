@@ -86,9 +86,17 @@ namespace SmartHotel.Clients.Core.ViewModels
                     App.RestaurantMenus = restaurantMenus;
                 }
 
-
-
-
+                
+  
+            }else
+            {
+                CatagoriesList = new ObservableRangeCollection<RestaurantCatagoriesList>();
+                 
+               var  catagories = App.CatagoriesList;
+                foreach(RestaurantCatagoriesList list in catagories)
+                {
+                    CatagoriesList.Add(list);
+                }
             }
 
         }

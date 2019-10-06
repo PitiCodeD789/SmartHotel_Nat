@@ -19,7 +19,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         public ConfirmOrderViewModel()
         {
             restaurantService = new RestaurantService();
-        OrderItems = App.OrderingCart;
+            OrderItems = App.OrderingCart;
             TotalPrice = CalTotalPrice();
             EditOrderCommand = new Command<int>(EditOrder);
             Room = "Room No.101";
