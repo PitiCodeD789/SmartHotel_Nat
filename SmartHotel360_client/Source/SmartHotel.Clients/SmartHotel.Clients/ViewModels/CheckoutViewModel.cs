@@ -25,6 +25,8 @@ namespace SmartHotel.Clients.Core.ViewModels
         Task ClosePopupAsync()
         {
             AppSettings.HasBooking = false;
+            App.CatagoriesList = null;
+            App.OrderingCart = null;
 
             MessagingCenter.Send(this, MessengerKeys.CheckoutRequested);
             analyticService.TrackEvent("Checkout");

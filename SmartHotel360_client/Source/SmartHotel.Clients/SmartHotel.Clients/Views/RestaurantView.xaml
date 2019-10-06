@@ -58,7 +58,7 @@
                                                                Text="{Binding MenuName, Mode=TwoWay}" />
                                                                 <Label  Text="{Binding MenuDescription, Mode=TwoWay}" VerticalOptions="Start" FontSize="15" LineBreakMode="TailTruncation"  />
                                                         </StackLayout>
-                                                        <Label Text="{Binding MenuPrice}" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
+                                                        <Label Text="{Binding MenuPrice}" WidthRequest="50" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand"  VerticalOptions="Center"/>
                                                     </StackLayout>                                                    
                                             
                                          </DataTemplate>
@@ -75,7 +75,8 @@
              </Grid>
             </ScrollView>
          
-            <Button Grid.Row="1" Text="{Binding DetailInCart,Mode=TwoWay}" IsVisible="{Binding IsVisbleCart}" Margin="30,0,30,0" Padding="10"
+            <Button Grid.Row="1" Text="{Binding DetailInCart,Mode=TwoWay}" IsVisible="{Binding IsVisbleCart}"  Margin="30,0,30,0" Padding="10"
+                    TextColor="White" FontAttributes="Bold"
                     CornerRadius="7" BackgroundColor="#00B14F" HeightRequest="60" Command="{Binding ConfirmOrderCommand, Mode=TwoWay}"
                       HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
         
