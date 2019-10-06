@@ -8,6 +8,8 @@ using System.Windows.Input;
 using SmartHotel.Clients.Core.Helpers;
 using SmartHotel.Clients.Core.Services.IoT;
 using Xamarin.Forms;
+using SmartHotel.Clients.Core.Models;
+using SmartHotel.Clients.Core.Services.Restaurant;
 
 namespace SmartHotel.Clients.Core.ViewModels
 {
@@ -39,8 +41,9 @@ namespace SmartHotel.Clients.Core.ViewModels
 		readonly IOpenUriService openUrlService;
 		readonly IAnalyticService analyticService;
 		readonly IRoomDevicesDataService roomDevicesDataService;
-
-		public MyRoomViewModel(
+        private IRestaurantService restaurantService;
+        
+        public MyRoomViewModel(
 			IOpenUriService openUrlService,
 			IAnalyticService analyticService,
 			IRoomDevicesDataService roomDevicesDataService )
@@ -48,9 +51,9 @@ namespace SmartHotel.Clients.Core.ViewModels
 			this.openUrlService = openUrlService;
 			this.analyticService = analyticService;
 			this.roomDevicesDataService = roomDevicesDataService;
+            restaurantService = new RestaurantService();
 
-
-			delayedTemperatureChangedTimer = new Timer( sliderInertia,
+            delayedTemperatureChangedTimer = new Timer( sliderInertia,
 				async () => { await UpdateRoomTemperature( DesiredTemperature ); } );
 
 			delayedLightChangedTimer = new Timer( sliderInertia,
@@ -409,5 +412,73 @@ namespace SmartHotel.Clients.Core.ViewModels
 				DialogService.ShowToast( Resources.ActivateEcoMode, 1000 );
 			}
 		}
-	}
+
+        public ICommand ConfirmOrderCommand => new Command(ConfirmOrder);
+
+        private async void ConfirmOrder(object obj)
+        {
+          
+            if (obj != null)
+            {
+
+            var orderList = App.OrderingCart;
+            int roomid = 205;// int.Parse(AppSettings.RoomId);
+            int hotelId = 11;// AppSettings.HotelId;
+            string roomNumber = "205";// AppSettings.RoomId;
+            string userId = "11";// AppSettings.User.Id;
+            int serviceTaskType = int.Parse(obj.ToString());
+         
+                string mess = "";
+                if (serviceTaskType == 2)
+                {
+                    mess = $"Confirm To Need Ice";
+                }else if (serviceTaskType == 3)
+                {
+                    mess = $"Confirm To Need Toothbrush";
+                }
+                else if (serviceTaskType == 4)
+                {
+                    mess = $"Confirm To Need Towels";
+                }
+                else if (serviceTaskType == 5)
+                {
+                    mess = $"Confirm To Need Leaks";
+                }else
+                {
+                    mess = $"Not Support Service";
+                }
+
+
+                if (await DialogService.ShowConfirmAsync(mess, $"Order Room Number {roomNumber} ", "Confirm", "cancel"))
+            {              
+
+                RoomServiceRequest roomServiceRequest = new RoomServiceRequest()
+                {
+                    BookingId = roomid,
+                    HotelId = hotelId,
+                    RoomNumber = roomNumber,
+                    UserId = userId,
+                    ServiceTaskType = serviceTaskType,
+                    OrderItems = new System.Collections.Generic.List<SmartHotel.Services.Hotels.Domain.RoomService.OrderItem>()
+                };
+
+                var orderConfirmCallBack = await restaurantService.ConfirmOrderAsync(roomServiceRequest);
+
+                if (orderConfirmCallBack.Status == "Success")
+                {
+                        await DialogService.ShowAlertAsync(orderConfirmCallBack.Status, "Order Complete", "Ok");
+                    }
+                else
+                {
+                    await DialogService.ShowAlertAsync(orderConfirmCallBack.Status, "Order Error", "Ok");
+                }
+
+            }
+            // public List<OrderItem> OrderItems { get; set; }
+            }
+
+
+
+        }
+    }
 }
