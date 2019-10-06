@@ -22,7 +22,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             OrderItems = App.OrderingCart;
             TotalPrice = CalTotalPrice();
             EditOrderCommand = new Command<int>(EditOrder);
-            Room = "Room No.101";
+            Room = "Room No." + AppSettings.RoomId;
         }
 
         public virtual ICommand EditOrderCommand { get; set; }
@@ -120,10 +120,11 @@ namespace SmartHotel.Clients.Core.ViewModels
         private async void ConfirmOrder(object obj)
         {
             var orderList = App.OrderingCart;
-            int roomid = 205;// int.Parse(AppSettings.RoomId);
-            int hotelId = 11;// AppSettings.HotelId;
-            string roomNumber = "205";// AppSettings.RoomId;
-            string userId = "11";// AppSettings.User.Id;
+            int roomid = int.Parse(AppSettings.RoomId);
+            int hotelId = int.Parse(AppSettings.HotelId);
+            int bookingId = int.Parse(AppSettings.BookingId);
+            string roomNumber =  AppSettings.RoomId;
+            string userId = AppSettings.User.Email;
             int serviceTaskType = 1;
             int total = 0;
             decimal totalPrice = 0;
@@ -149,7 +150,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 
                 RoomServiceRequest roomServiceRequest = new RoomServiceRequest()
                 {
-                    BookingId = roomid,
+                    BookingId = bookingId,
                     HotelId = hotelId,
                     RoomNumber = roomNumber,
                     UserId = userId,

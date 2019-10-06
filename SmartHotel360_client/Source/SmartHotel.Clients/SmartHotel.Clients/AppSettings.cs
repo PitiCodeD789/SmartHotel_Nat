@@ -44,6 +44,8 @@ namespace SmartHotel.Clients.Core
 		// Room Devices
 	    const string defaultRoomId = "";
         const string defaultHotelId = "11";
+        const string defaultBookingId = "1";
+        
 
         // Fakes
         const bool defaultUseFakes = false;
@@ -198,6 +200,12 @@ namespace SmartHotel.Clients.Core
             get => Preferences.Get(nameof(HotelId), defaultHotelId);
             set => Preferences.Set(nameof(HotelId), value);
         }
-       // public static int HotelId { get;  set; }
+
+        public static string BookingId
+        {
+            get => Preferences.Get(nameof(BookingId), defaultBookingId);
+            set => Preferences.Set(nameof(BookingId), value);
+        }
+        // public static int HotelId { get;  set; }
     }
 }

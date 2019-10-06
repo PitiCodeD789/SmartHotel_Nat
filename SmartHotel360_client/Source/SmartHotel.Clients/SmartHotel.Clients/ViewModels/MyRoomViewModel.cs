@@ -426,10 +426,11 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
 
             var orderList = App.OrderingCart;
-            int roomid = 205;// int.Parse(AppSettings.RoomId);
-            int hotelId = 11;// AppSettings.HotelId;
-            string roomNumber = "205";// AppSettings.RoomId;
-            string userId = "11";// AppSettings.User.Id;
+            int roomid =  int.Parse(AppSettings.RoomId);
+                int bookingId = int.Parse(AppSettings.BookingId);
+            int hotelId = int.Parse( AppSettings.HotelId);
+            string roomNumber =  AppSettings.RoomId;
+                string userId = AppSettings.User.Email;
             int serviceTaskType = int.Parse(obj.ToString());
          
                 string mess = "";
@@ -458,7 +459,7 @@ namespace SmartHotel.Clients.Core.ViewModels
 
                 RoomServiceRequest roomServiceRequest = new RoomServiceRequest()
                 {
-                    BookingId = roomid,
+                    BookingId = bookingId,
                     HotelId = hotelId,
                     RoomNumber = roomNumber,
                     UserId = userId,

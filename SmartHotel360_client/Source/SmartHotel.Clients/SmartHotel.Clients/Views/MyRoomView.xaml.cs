@@ -9,6 +9,7 @@ namespace SmartHotel.Clients.Core.Views
         public MyRoomView()
         {
             InitializeComponent();
+            me.Title = "Room No."+AppSettings.RoomId.ToString();
         }
 
         protected override async void OnAppearing()

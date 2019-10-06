@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Name="me"
     x:Class="SmartHotel.Clients.Core.Views.MyRoomView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,7 +8,7 @@
     xmlns:extensions="clr-namespace:SmartHotel.Clients.Core.MarkupExtensions"
     xmlns:utils="clr-namespace:SmartHotel.Clients.Core.Utils;assembly=SmartHotel.Clients.Core"
     xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
-    Title="101"
+    Title="000"
     utils:NavigationBarAttachedProperty.TextColor="{StaticResource WhiteColor}">
     <ContentPage.Resources>
         <ResourceDictionary>

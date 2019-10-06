@@ -20,7 +20,7 @@ namespace SmartHotel.Clients.Core.Services.RoomService
             var builder = new UriBuilder(AppSettings.HotelsEndpoint);
             int Hotelid = int.Parse( AppSettings.HotelId);
             Hotelid = 11;
-            int bookingId = 1;
+            string bookingId = AppSettings.BookingId;
 
             builder.AppendToPath($"roomservice/order/booking/{bookingId}");
 
