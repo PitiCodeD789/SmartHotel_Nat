@@ -40,7 +40,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="40"/>
+                <!--<RowDefinition Height="40"/>-->
             </Grid.RowDefinitions>
             <BoxView BackgroundColor="#203446" HeightRequest="50" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
             <Label Text="REPORTS" TextColor="White" FontSize="Large" VerticalOptions="Center" Margin="20,20"/>
@@ -110,7 +110,7 @@
                 </Frame.GestureRecognizers>
                 <Image Source="ic_refresh" Margin="10"/>
             </Frame>
-            <Button Grid.Row="2" Text="Logout" Command="{Binding Clear}"/>
+            <!--<Button Grid.Row="2" Text="Logout" Command="{Binding Clear}"/>-->
         </Grid>
     </ContentPage.Content>
 </ContentPage>
