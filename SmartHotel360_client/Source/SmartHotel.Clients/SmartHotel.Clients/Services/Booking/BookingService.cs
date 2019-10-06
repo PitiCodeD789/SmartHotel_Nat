@@ -60,14 +60,14 @@ namespace SmartHotel.Clients.Core.Services.Booking
             return requestService.GetAsync<IEnumerable<Models.BookingSummary>>(uri, token);
         }
 
-        public Task<Models.Booking> CreateBookingAsync(Models.Booking booking, string token = "")
+        public Task<Models.UserBooking> CreateBookingAsync(Models.Booking booking, string token = "")
         {
             var builder = new UriBuilder(AppSettings.BookingEndpoint);
             builder.AppendToPath("Bookings");
 
             var uri = builder.ToString();
 
-            return requestService.PostAsync<Models.Booking>(uri, booking, token);
+            return requestService.PostAsync<Models.Booking,Models.UserBooking>(uri, booking, token);
         }
 
         public Task<Models.Occupancy> GetOccupancyInformationAsync(int roomId, DateTime date)

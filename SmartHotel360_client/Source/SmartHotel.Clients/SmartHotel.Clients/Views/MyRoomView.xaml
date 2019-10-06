@@ -541,6 +541,9 @@
                                     Grid.Column="1"
                                     Animate="True"
                                     Checked="False">
+                                    <controls:ToggleButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ConfirmOrderCommand}" CommandParameter="2"/>
+                                    </controls:ToggleButton.GestureRecognizers>
                                     <controls:ToggleButton.WidthRequest>
                                         <OnIdiom
                                             x:TypeArguments="x:Double"
@@ -573,6 +576,9 @@
                                             Phone="110"
                                             Tablet="150" />
                                     </controls:ToggleButton.WidthRequest>
+                                    <controls:ToggleButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ConfirmOrderCommand}" CommandParameter="3"/>
+                                    </controls:ToggleButton.GestureRecognizers>
                                     <controls:ToggleButton.CheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
                                             <On Platform="Android, iOS" Value="ic_toothbrush_on.png" />
@@ -598,6 +604,9 @@
                                             Phone="110"
                                             Tablet="150" />
                                     </controls:ToggleButton.WidthRequest>
+                                    <controls:ToggleButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ConfirmOrderCommand}" CommandParameter="4"/>
+                                    </controls:ToggleButton.GestureRecognizers>
                                     <controls:ToggleButton.CheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
                                             <On Platform="Android, iOS" Value="ic_towels_on.png" />
@@ -623,6 +632,9 @@
                                             Phone="110"
                                             Tablet="150" />
                                     </controls:ToggleButton.WidthRequest>
+                                    <controls:ToggleButton.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ConfirmOrderCommand}" CommandParameter="5"/>
+                                    </controls:ToggleButton.GestureRecognizers>
                                     <controls:ToggleButton.CheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
                                             <On Platform="Android, iOS" Value="ic_leak_on.png" />
@@ -659,13 +671,13 @@
                                     </controls:ToggleButton.CheckedImage>
                                     <controls:ToggleButton.UnCheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
-                                            <On Platform="Android, iOS" Value="ic_restaurant_off.png" />
+                                            <On Platform="Android, iOS" Value="ic_restaurant_on.png" />
                                             <On Platform="UWP" Value="Assets/ic_leak_off.png" />
                                         </OnPlatform>
                                     </controls:ToggleButton.UnCheckedImage>
                                 </controls:ToggleButton>
                                 <controls:ToggleButton
-                                    x:Name="Toggle"
+                                   
                                     Grid.Row="1"
                                     Grid.Column="3"
                                     Animate="True"
@@ -682,13 +694,13 @@
                                     </controls:ToggleButton.WidthRequest>
                                     <controls:ToggleButton.CheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
-                                            <On Platform="Android, iOS" Value="ic_order_on.png" />
+                                            <On Platform="Android, iOS" Value="ic_order_off.png" />
                                             <On Platform="UWP" Value="Assets/ic_leak_on.png" />
                                         </OnPlatform>
                                     </controls:ToggleButton.CheckedImage>
                                     <controls:ToggleButton.UnCheckedImage>
                                         <OnPlatform x:TypeArguments="ImageSource">
-                                            <On Platform="Android, iOS" Value="ic_order_off.png" />
+                                            <On Platform="Android, iOS" Value="ic_order_on.png" />
                                             <On Platform="UWP" Value="Assets/ic_leak_off.png" />
                                         </OnPlatform>
                                     </controls:ToggleButton.UnCheckedImage>
