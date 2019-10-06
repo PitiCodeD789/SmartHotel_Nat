@@ -19,9 +19,9 @@ namespace SmartHotel.Clients.Core.Models
         public List<OrderItem> OrderItems { get; set; }
 
 
-        public string FirstItem
+        public string ServiceType
         {
-            get { return OrderItems.OrderBy(x=>x.Id).FirstOrDefault().OrderItemDescription; }
+            get { return GetTaskTypeString(); }
         }
 
         public string DateString
@@ -31,7 +31,7 @@ namespace SmartHotel.Clients.Core.Models
 
         public string ItemCount
         {
-            get { return OrderItems.Count()+" Items"; }
+            get { return GetItemCount(); }
         }
 
         public string TotalPrice
@@ -41,12 +41,55 @@ namespace SmartHotel.Clients.Core.Models
 
         private string CalTotalPrice()
         {
-            var total = 0;
-            foreach (var item in OrderItems)
+            decimal total = 0;
+            if (OrderItems!=null)
             {
-                total = total + item.OrderItemAmount;
+                foreach (var item in OrderItems)
+                {
+                    total = total + (item.Price * item.OrderItemAmount);
+                }
             }
-            return total.ToString();
+            return total.ToString("C");
+        }
+
+        private string GetTaskTypeString()
+        {
+            if (ServiceTaskType == 1)
+            {
+                return "FoodService";
+            }
+            else if(ServiceTaskType == 2)
+            {
+                return "IceService";
+            }
+            else if (ServiceTaskType == 3)
+            {
+                return "ThoothBrushService";
+            }
+            else if (ServiceTaskType == 4)
+            {
+                return "TowelService";
+            }
+            else
+            {
+                return "MaintenanceService";
+            }
+        }
+
+        private string GetItemCount()
+        {
+            if (ServiceTaskType == 1)
+            {
+                return OrderItems.Count() + " Items";
+            }
+            else if(ServiceTaskType == 2|| ServiceTaskType == 3 || ServiceTaskType == 4)
+            {
+                return "1 Item";
+            }
+            else
+            {
+                return "NoItem";
+            }
         }
     }
 }

@@ -9,6 +9,6 @@ namespace SmartHotel.Clients.Core.Services.RoomService
     public interface IRoomServiceService
     {
         
-        Task<IEnumerable<List<Models.RoomService>>> GetRoomServiceHistoryAsync(string token = "");
+        Task<IEnumerable<Models.RoomService>> GetRoomServiceHistoryAsync(string token = "");
     }
 }
