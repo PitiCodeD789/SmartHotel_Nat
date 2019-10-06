@@ -17,7 +17,7 @@
             <Frame VerticalOptions="FillAndExpand">
                 <ScrollView>
                     <StackLayout>
-                        <Label Text="Pending"/>
+                        <Label Text="Pending" FontSize="18"/>
                         <StackLayout BindableLayout.ItemsSource="{Binding PendingRoomService}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
@@ -46,7 +46,7 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
-                        <Label Text="Delivered"/>
+                        <Label Text="Delivered" FontSize="18"/>
                         <StackLayout BindableLayout.ItemsSource="{Binding DeliveredRoomService}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
