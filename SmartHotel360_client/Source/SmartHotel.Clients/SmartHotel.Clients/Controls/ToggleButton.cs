@@ -129,6 +129,10 @@ namespace SmartHotel.Clients.Core.Controls
                 await toggleButton.ScaleTo(0.9, 50, Easing.Linear);
                 await Task.Delay(100);
                 await toggleButton.ScaleTo(1, 50, Easing.Linear);
+                if(toggleButton.Checked != false)
+                {
+                toggleButton.Checked = false;
+                }
             }
         }
     }

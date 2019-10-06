@@ -62,7 +62,7 @@ namespace SmartHotel.Clients.Core.Services.Booking
             return bookings.Where(b => b.UserId == email);
         }
 
-        public async Task<Models.Booking> CreateBookingAsync(Models.Booking booking, string token = "")
+        public async Task<Models.UserBooking> CreateBookingAsync(Models.Booking booking, string token = "")
         {
             await Task.Delay(500);
 
@@ -74,7 +74,7 @@ namespace SmartHotel.Clients.Core.Services.Booking
                 To = booking.To
             });
 
-            return booking;
+            return new Models.UserBooking();
         }
 
         public async Task<Models.Occupancy> GetOccupancyInformationAsync(int roomId, DateTime date)
