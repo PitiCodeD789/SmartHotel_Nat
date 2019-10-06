@@ -17,26 +17,17 @@ namespace SmartHotel.Clients.Maintenance
 
         protected async override void OnStart()
         {
-            if (StatusToken)
-            {
-                var topic = await SecureStorage.GetAsync("Topic");
+            var topic = await SecureStorage.GetAsync("Topic");
 
-                if (String.IsNullOrEmpty(topic))
-                {
-                    MainPage = new NavigationPage(new InputPage());
-                }
-                else
-                {
-                    MainPage = new NavigationPage(new MainPage());
-                }
+            if (String.IsNullOrEmpty(topic))
+            {
+                MainPage = new NavigationPage(new InputPage());
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert("Error", "บัญชีโรงแรมมีปัญหา", "OK");
+                MainPage = new NavigationPage(new MainPage());
             }
-            
-            //var available = await SecureStorage.GetAsync("Available");
-            //await App.Current.MainPage.DisplayAlert("Message", available, "OK");
+
         }
 
         protected override void OnSleep()

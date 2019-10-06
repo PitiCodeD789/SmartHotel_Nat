@@ -17,6 +17,13 @@ namespace SmartHotel.Clients.Maintenance.Views
         {
             InitializeComponent();
             BindingContext = new MainPageViewModel();
+            if (!App.StatusToken)
+            {
+                DisplayAlert("Error", "ไม่สามารถเปิด Notification ได้\nกรุณาปิดและเปิด Application นี้ใหม่อีกครั้ง", "OK");
+            }
+
+            //var available = await SecureStorage.GetAsync("Available");
+            //await App.Current.MainPage.DisplayAlert("Message", available, "OK");
         }
     }
 }
