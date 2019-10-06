@@ -5,10 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="PageRef"
              mc:Ignorable="d"
-             x:Class="SmartHotel.Clients.Core.Views.OrderHistoryView">
+             x:Class="SmartHotel.Clients.Core.Views.OrderHistoryView"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
-                <Frame>
+            <Frame BackgroundColor="#fafafa">
                     <Label Text="Order History"
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>

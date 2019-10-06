@@ -80,7 +80,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         public void PendingSelected(int id)
         {
             var selectedItem = PendingRoomService.Where(x => x.Id == id).FirstOrDefault();
-            if (selectedItem.ServiceType == "1")
+            if (selectedItem.ServiceTaskType == 1)
             {
                 var navigationParameter = new Dictionary<string, object>
                 {
@@ -93,7 +93,7 @@ namespace SmartHotel.Clients.Core.ViewModels
         public void DeliveredSelected(int id)
         {
             var selectedItem = DeliveredRoomService.Where(x => x.Id == id).FirstOrDefault();
-            if (selectedItem.ServiceType == "1")
+            if (selectedItem.ServiceTaskType == 1)
             {
                 var navigationParameter = new Dictionary<string, object>
                 {

@@ -108,7 +108,7 @@ namespace SmartHotel.Clients.Core.ViewModels
             {
                 Total = Total + (item.MenuPrice * item.Amount);
             }
-            return Total.ToString("N0");
+            return Total.ToString("C");
         }
 
     }

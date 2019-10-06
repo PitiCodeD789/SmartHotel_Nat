@@ -4,10 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SmartHotel.Clients.Core.Views.OrderDetail">
+             x:Class="SmartHotel.Clients.Core.Views.OrderDetail"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#d6d6d6">
-            <Frame>
+            <Frame BackgroundColor="#fafafa">
                 <Label Text="{Binding SelectedItem.DateString}"
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>
@@ -49,7 +50,7 @@
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Total"/>
-                        <Label Text="{Binding TotalPrice}" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding SelectedItem.TotalPrice}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
