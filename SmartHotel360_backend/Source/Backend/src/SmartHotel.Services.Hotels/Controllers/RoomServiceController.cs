@@ -71,14 +71,14 @@ namespace SmartHotel.Services.Hotels.Controllers
             {
                 return BadRequest();
             }
+
+            await _createOrderCommand.Execute(request);
             string notiDto = _notificationService.CallDeskNotification(request.HotelId, request.RoomNumber, "Have a new order.");
 
             if (String.IsNullOrEmpty(notiDto))
             {
                 return BadRequest();
             }
-
-            await _createOrderCommand.Execute(request);
             return Ok(new { Status = "Success" });
         }
 
@@ -170,14 +170,14 @@ namespace SmartHotel.Services.Hotels.Controllers
 
             int hotelId = _hotelsSearchQuery.GetHotelIdFromTaskId(request.TaskId);
 
-            string notiDto = _notificationService.CallDeskNotification(hotelId, "Server", "TaskId " + request.TaskId + "is Success.");
+            await _updateServiceCommand.Execute(request);
+
+            string notiDto = _notificationService.CallDeskNotification(hotelId, "Server", "TaskId " + request.TaskId + " is Success.");
 
             if (String.IsNullOrEmpty(notiDto))
             {
                 return BadRequest();
             }
-
-            await _updateServiceCommand.Execute(request);
             return Ok();
         }
     }

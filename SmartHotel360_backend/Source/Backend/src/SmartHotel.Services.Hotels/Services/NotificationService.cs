@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SmartHotel.Services.Hotels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace SmartHotel.Services.Hotels.Services
                 var model = new
                 {
                     to = "/topics/" + hotelId.ToString(),
-                    notnotification = new
+                    notification = new
                     {
                         title = user,
                         body = message,
@@ -27,18 +28,19 @@ namespace SmartHotel.Services.Hotels.Services
 
                 HttpClient client = new HttpClient();
                 client.Timeout = TimeSpan.FromSeconds(20);
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                var jsonCommand = JsonConvert.SerializeObject(model);
+                HttpContent content = new StringContent(jsonCommand, Encoding.UTF8, "application/json");
                 string url = @"https://fcm.googleapis.com/fcm/send";
-                string token = @"AAAASbggBW8:APA91bF5OIUgPZInwsYU8ro0Nmx0NfGGrYcT4Elciwkw_D404Gjt2TclP51qz15VdCKw5FJFT2Ro_TDLVz3lpS1w_6OoySk2dy5wWVzHY5NA2OOKdn24gN0r_De5c9fiACN7lKjoCp3L";
+                string token = @"=AAAASbggBW8:APA91bF5OIUgPZInwsYU8ro0Nmx0NfGGrYcT4Elciwkw_D404Gjt2TclP51qz15VdCKw5FJFT2Ro_TDLVz3lpS1w_6OoySk2dy5wWVzHY5NA2OOKdn24gN0r_De5c9fiACN7lKjoCp3L";
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("key", token);
                 var result = client.PostAsync(url, content).Result;
                 if (result.IsSuccessStatusCode)
                 {
                     var json_result = result.Content.ReadAsStringAsync().Result;
 
-                    string wordResult = JsonConvert.DeserializeObject<string>(json_result);
+                    MessageNotificationModel wordResult = JsonConvert.DeserializeObject<MessageNotificationModel>(json_result);
 
-                    return wordResult;
+                    return wordResult.message_id;
                 }
                 else
                 {
