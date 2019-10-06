@@ -4,5 +4,6 @@
     {
         void OpenUri(string uri);
         void OpenSkypeBot(string botId);
+        void PhoneCall(string deskPhoneNo);
     }
 }

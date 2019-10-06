@@ -14,8 +14,10 @@ namespace SmartHotel.Clients.Core.ViewModels
 	public class MyRoomViewModel : ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
 	{
 		const string skype = "Skype";
+        const string call = "PhoneCall";
 
-		double desiredAmbientLight;
+
+        double desiredAmbientLight;
 		double currentAmbientLight;
 		double ambientLightMinimum = RoomAmbientLight.DefaultMinimum.RawValue;
 		double ambientLightMaximum = RoomAmbientLight.DefaultMaximum.RawValue;
@@ -339,10 +341,9 @@ namespace SmartHotel.Clients.Core.ViewModels
 
 		async Task OpenBotAsync()
 		{
-			var bots = new[] { skype };
-
-			try
-			{
+			var bots = new[] { skype, call };
+            try
+            {
 				var selectedBot =
 					await DialogService.SelectActionAsync(
 						Resources.BotSelectionMessage,
@@ -355,6 +356,9 @@ namespace SmartHotel.Clients.Core.ViewModels
 						openUrlService.OpenSkypeBot( AppSettings.SkypeBotId );
 						analyticService.TrackEvent( "SkypeBot" );
 						break;
+                    case call:
+                        openUrlService.PhoneCall(AppSettings.DeskPhoneNo);
+                        break;
 				}
 			}
 			catch ( Exception ex )
