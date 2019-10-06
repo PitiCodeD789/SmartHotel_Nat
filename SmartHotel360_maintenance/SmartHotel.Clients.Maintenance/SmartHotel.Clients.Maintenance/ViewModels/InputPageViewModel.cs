@@ -1,10 +1,12 @@
-﻿using SmartHotel.Clients.Maintenance.Models;
+﻿using Newtonsoft.Json;
+using SmartHotel.Clients.Maintenance.Models;
 using SmartHotel.Clients.Maintenance.Services;
 using SmartHotel.Clients.Maintenance.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
@@ -116,12 +118,44 @@ namespace SmartHotel.Clients.Maintenance.ViewModels
         public ICommand InputHotel { get; set; }
         public async void InputHotelMethod()
         {
-            string select = hotelDatas.Where(x => x.Name == selectHotel).Select(y => y.Id).FirstOrDefault().ToString();
+            int selectId = hotelDatas.Where(x => x.Name == selectHotel).Select(y => y.Id).FirstOrDefault();
+            string select = selectId.ToString();
             await SecureStorage.SetAsync("Topic", select);
 
             MessagingCenter.Send<InputPageViewModel, string>(this, "Topic", select);
-            //Environment.Exit(0);
+            CallDeskNotification(selectId, "Server", $"ยินดีตอนรับ {selectHotel} เข้าสู่ระบบ");
             Application.Current.MainPage = new NavigationPage(new MainPage());
+        }
+
+        private void CallDeskNotification(int hotelId, string user, string message)
+        {
+            try
+            {
+                var model = new
+                {
+                    to = "/topics/" + hotelId.ToString(),
+                    notification = new
+                    {
+                        title = user,
+                        body = message,
+                        click_action = "message"
+                    }
+                };
+
+                HttpClient client = new HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(20);
+                var jsonCommand = JsonConvert.SerializeObject(model);
+                HttpContent content = new StringContent(jsonCommand, Encoding.UTF8, "application/json");
+                string url = @"https://fcm.googleapis.com/fcm/send";
+                string token = @"=AAAASbggBW8:APA91bF5OIUgPZInwsYU8ro0Nmx0NfGGrYcT4Elciwkw_D404Gjt2TclP51qz15VdCKw5FJFT2Ro_TDLVz3lpS1w_6OoySk2dy5wWVzHY5NA2OOKdn24gN0r_De5c9fiACN7lKjoCp3L";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("key", token);
+                var result = client.PostAsync(url, content).Result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error : " + e.Message);
+            }
+
         }
 
 

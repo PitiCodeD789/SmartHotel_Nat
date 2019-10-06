@@ -27,10 +27,6 @@ namespace SmartHotel.Clients.Maintenance.Droid
                 FirebaseMessaging.Instance.SubscribeToTopic(arg);
             });
         }
-        public void CallAllAgain()
-        {
-            LoadApplication(new App());
-        }
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
