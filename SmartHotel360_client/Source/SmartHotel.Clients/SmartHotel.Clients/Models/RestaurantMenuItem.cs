@@ -16,7 +16,7 @@ namespace SmartHotel.Clients.Core.Models
 
         public string TotalItemsPrice
         {
-            get { return (MenuPrice*Amount).ToString("N0"); }
+            get { return (MenuPrice*Amount).ToString("C"); }
         }
         public string AmountX
         {

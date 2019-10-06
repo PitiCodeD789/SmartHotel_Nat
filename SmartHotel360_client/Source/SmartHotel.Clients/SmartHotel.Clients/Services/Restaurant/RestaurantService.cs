@@ -16,12 +16,12 @@ namespace SmartHotel.Clients.Core.Services.Restaurant
             requestService = new RequestService();
         }
 
-        public Task<RoomServiceRequest> ConfirmOrderAsync(RoomServiceRequest roomServiceRequest, string token = "")
+        public Task<StatusMessage> ConfirmOrderAsync(RoomServiceRequest roomServiceRequest, string token = "")
         {
             var builder = new UriBuilder(AppSettings.HotelsEndpoint);
             builder.AppendToPath($"roomservice/order");
             var uri = builder.ToString();
-            return requestService.PostAsync<RoomServiceRequest>(uri, roomServiceRequest, token);
+            return requestService.PostAsync<RoomServiceRequest, StatusMessage>(uri, roomServiceRequest, token);
         }
 
         public Task<IEnumerable<MenuSearchResult>> GetMenusAsync(string token = "")
