@@ -109,5 +109,11 @@ namespace SmartHotel.Services.Hotels.Queries
             }
             return hotels;
         }
+
+        public int GetHotelIdFromTaskId(int taskId)
+        {
+            int hotelId = _db.ServiceTasks.Where(x => x.Id == taskId).Select(y => y.HotelId).SingleOrDefault();
+            return hotelId;
+        }
     }
 }
