@@ -211,6 +211,7 @@ namespace SmartHotel.Clients.Core.ViewModels
                     await bookingService.CreateBookingAsync(newBooking, authenticatedUser.Token);
                                                
                     AppSettings.HasBooking = true;
+                    AppSettings.HotelId =Hotel.Id.ToString();
 
                     await NavigationService.NavigateToAsync<MainViewModel>();
 
